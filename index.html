@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orange Portable - Made By: @085_Teuzinnn</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff4500">
+    <link rel="apple-touch-icon" href="icon.png">
+    <style>
+        :root {
+            --primary: #ff4500;
+            --primary-hover: #e63e00;
+            --bg: #0a0a0a;
+            --card-bg: #161616;
+            --text: #ffffff;
+            --text-dim: #b3b3b3;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+        .btn-emulator {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
+            transition: transform 0.2s, background 0.3s;
+            z-index: 1000;
+        }
+        .btn-emulator:hover {
+            transform: scale(1.1);
+            background: var(--primary-hover);
+        }
+        header {
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        h1 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        h2 {
+            color: var(--text-dim);
+            font-weight: 300;
+            margin-top: -10px;
+            margin-bottom: 20px;
+        }
+        .search-container {
+            margin-bottom: 30px;
+        }
+        #searchBar {
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background: var(--card-bg);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        #searchBar:focus {
+            border-color: var(--primary);
+        }
+        .category-title {
+            color: var(--primary);
+            text-align: left;
+            margin: 30px 0 15px 0;
+            font-size: 1.3rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .game-list {
+            display: grid;
+            gap: 15px;
+            text-align: left;
+        }
+        .game-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .game-card:hover {
+            transform: translateX(5px);
+            background: #1f1f1f;
+        }
+        .game-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        .game-info span {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            background: #252525;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .btn-download {
+            background-color: var(--primary);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+        .btn-download:hover {
+            background-color: var(--primary-hover);
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            color: #555;
+            font-size: 0.875rem;
+        }
+        footer a {
+            color: #60a5fa;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        @media (max-width: 600px) {
+            .game-card {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            .btn-download {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="https://www.ppsspp.org/download/" target="_blank" class="btn-emulator" title="Baixar Emulador PPSSPP">🎮</a>
+        <header>
+            <h1>Orange Portable</h1>
+            <h2>Games CSO for PPSSPP</h2>
+        </header>
+        <div class="search-container">
+            <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterGames()">
+        </div>
+        <div id="content"></div>
+        <footer>
+            Made By: <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_Teuzinnn</a>
+        </footer>
+    </div>
+    <script>
+        const games = [
+            { name: "007 From Russia with Love", size: "539.48 MB", link: "https://seulink.net/BZXkMH", category: "🗡️ Ação / Aventura" },
+            { name: "101 in 1 Megamix", size: "498.26 MB", link: "https://seulink.net/PLcb0", category: "🧩 Outros / Variados" },
+            { name: "Aliens vs. Predator Requiem", size: "279.62 MB", link: "https://seulink.net/T3Gl5v08l", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Ape Escape Academy", size: "158.41 MB", link: "https://seulink.net/jyf6ORhh5", category: "🧩 Outros / Variados" },
+            { name: "Armored Core 3 Portable", size: "299.72 MB", link: "https://seulink.net/HXvamWKXgn", category: "🗡️ Ação / Aventura" },
+            { name: "Assassin's Creed Bloodlines", size: "541.94 MB", link: "https://seulink.net/yhSBc47zt", category: "🗡️ Ação / Aventura" },
+            { name: "Avatar The Last Airbender", size: "126.70 MB", link: "https://4br.me/E9sms", category: "🗡️ Ação / Aventura" },
+            { name: "Battlezone", size: "165.88 MB", link: "https://seulink.net/hdvzq1hi04qzuri", category: "🚗 Combate Veicular" },
+            { name: "Ben 10 Protector of Earth", size: "593.00 MB", link: "https://seulink.net/v33WNDu", category: "🗡️ Ação / Aventura" },
+            { name: "Burnout Legends", size: "203.82 MB", link: "https://seulink.net/N667", category: "🏎️ Corrida" },
+            { name: "Cabela's African Safari", size: "432.61 MB", link: "https://seulink.net/3c3FWz", category: "🏹 Caça / Esportes" },
+            { name: "Cabela's Legendary Adventures", size: "374.58 MB", link: "https://seulink.net/T4OlYDAKss", category: "🏹 Caça / Esportes" },
+            { name: "Cabela's North American Adventures", size: "266.79 MB", link: "https://4br.me/YCE8E5krGR", category: "🏹 Caça / Esportes" },
+            { name: "Call of Duty Roads to Victory", size: "478.74 MB", link: "https://seulink.net/YZdJ6pz3", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Chili Con Carnage", size: "595.11 MB", link: "https://4br.me/FoEe5V", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Crash of the Titans", size: "585.42 MB", link: "https://seulink.net/2k07ve", category: "🏃 Plataforma / Aventura" },
+            { name: "Dead to Rights Reckoning", size: "104.21 MB", link: "https://seulink.net/r6pj", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Def Jam Fight for NY The Takeover", size: "389.05 MB", link: "https://seulink.net/BfEw0K0pS", category: "🥊 Luta" },
+            { name: "Disney Pixar Toy Story 3", size: "180.69 MB", link: "https://seulink.net/jHZ2cE", category: "🏃 Plataforma / Aventura" },
+            { name: "Dragon Ball Z Shin Budokai", size: "208.91 MB", link: "https://4br.me/wMAn33C", category: "🥊 Luta" },
+            { name: "Dragoneer's Aria", size: "245.05 MB", link: "https://4br.me/Xe3KByaiT", category: "🔮 RPG" },
+            { name: "Dreamworks Shrek Smash N' Crash", size: "241.12 MB", link: "https://seulink.net/IJe51", category: "🏎️ Corrida" },
+            { name: "DreamWorks Shrek the Third", size: "364.54 MB", link: "https://seulink.net/UnTE", category: "🗡️ Ação / Aventura" },
+            { name: "Dynasty Warriors", size: "115.77 MB", link: "https://seulink.net/4M1D5fRUr", category: "🗡️ Ação / Aventura" },
+            { name: "Eragon", size: "162.61 MB", link: "https://seulink.net/qt9mko8", category: "🗡️ Ação / Aventura" },
+            { name: "FIFA Street 2", size: "219.07 MB", link: "https://seulink.net/elku", category: "⚽ Esportes" },
+            { name: "Fight Night Round 3", size: "522.46 MB", link: "https://4br.me/CeooDWU", category: "🥊 Luta" },
+            { name: "Ford Racing Off Road", size: "334.98 MB", link: "https://seulink.net/7apu3c1Gu", category: "🏎️ Corrida" },
+            { name: "Ghost Rider", size: "721.15 MB", link: "https://seulink.net/9ofT4CN", category: "🗡️ Ação / Aventura" },
+            { name: "Gladiator Begins", size: "341.59 MB", link: "https://seulink.net/ix851vM1zT", category: "🗡️ Ação / Aventura" },
+            { name: "God of War Chains of Olympus", size: "1.03 GB", link: "https://seulink.net/9fK8ParM49", category: "🗡️ Ação / Aventura" },
+            { name: "God of War Ghost of Sparta", size: "1018.86 MB", link: "https://seulink.net/jftTXc", category: "🗡️ Ação / Aventura" },
+            { name: "Grand Theft Auto Chinatown Wars", size: "493.65 MB", link: "https://seulink.net/STT5PJn", category: "🌍 Mundo Aberto / Sandbox" },
+            { name: "Grand Theft Auto Liberty City Stories", size: "316.07 MB", link: "https://seulink.net/6cXbgzBds7", category: "🌍 Mundo Aberto / Sandbox" },
+            { name: "Grand Theft Auto Vice City Stories", size: "537.44 MB", link: "https://seulink.net/zPSs9EjZ", category: "🌍 Mundo Aberto / Sandbox" },
+            { name: "Hannspree Ten Kate Honda SBK", size: "150.60 MB", link: "https://seulink.net/uBiz5yOHW", category: "🏎️ Corrida" },
+            { name: "Harvest Moon Boy & Girl", size: "136.86 MB", link: "https://seulink.net/uUoNJ1teI", category: "🌾 Simulação / Vida" },
+            { name: "Harvest Moon Hero of Leaf Valley", size: "137.21 MB", link: "https://seulink.net/h1DMKzv", category: "🌾 Simulação / Vida" },
+            { name: "Hot Wheels Ultimate Racing", size: "105.95 MB", link: "https://seulink.net/clOTbT", category: "🏎️ Corrida" },
+            { name: "Infected", size: "529.81 MB", link: "https://seulink.net/djKokt7", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Kao Challengers", size: "389.89 MB", link: "https://seulink.net/PYJBsT7", category: "🏃 Plataforma / Aventura" },
+            { name: "Killzone Liberation", size: "477.13 MB", link: "https://seulink.net/CVQf", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "LEGO Batman The Video Game", size: "374.81 MB", link: "https://seulink.net/ydS8eLSb", category: "🧱 LEGO / Aventura" },
+            { name: "LEGO Indiana Jones", size: "486.31 MB", link: "https://seulink.net/zzn1zTwlXD", category: "🧱 LEGO / Aventura" },
+            { name: "Marvel Nemesis Rise of the Imperfects", size: "121.66 MB", link: "https://4br.me/s4q0OKI", category: "🥊 Luta" },
+            { name: "Medal of Honor Heroes", size: "489.21 MB", link: "https://seulink.net/gxqKW", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Miami Vice The Game", size: "225.36 MB", link: "https://seulink.net/SAYUuydVap", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Midnight Club L.A. Remix", size: "434.74 MB", link: "https://seulink.net/9kstT", category: "🏎️ Corrida" },
+            { name: "Monster Hunter Freedom", size: "633.61 MB", link: "https://seulink.net/lXnHosGFHg", category: "🔮 RPG" },
+            { name: "Monster Jam Path of Destruction", size: "201.25 MB", link: "https://seulink.net/RziMbKqeE", category: "🚗 Combate Veicular" },
+            { name: "Mortal Kombat Unchained", size: "335.74 MB", link: "https://4br.me/3FJWEN", category: "🥊 Luta" },
+            { name: "MTX Mototrax", size: "346.84 MB", link: "https://seulink.net/Y5M5S", category: "🏎️ Corrida" },
+            { name: "MX vs. ATV On the Edge", size: "465.02 MB", link: "https://seulink.net/xKYJZe", category: "🏎️ Corrida" },
+            { name: "Naruto Shippuden Ultimate Ninja Heroes", size: "409.01 MB", link: "https://seulink.net/KZ4wLFRhU", category: "🥊 Luta" },
+            { name: "Naruto Ultimate Ninja Heroes", size: "209.51 MB", link: "https://seulink.net/E8bO5mVhWv", category: "🥊 Luta" },
+            { name: "NBA Street Showdown", size: "295.58 MB", link: "https://seulink.net/2eHvSWY20", category: "🏀 Esportes" },
+            { name: "Need for Speed Most Wanted 5-1-0", size: "178.95 MB", link: "https://seulink.net/SpjHYs", category: "🏎️ Corrida" },
+            { name: "Need for Speed ProStreet", size: "323.40 MB", link: "https://seulink.net/WpqvxO", category: "🏎️ Corrida" },
+            { name: "Need for Speed Underground Rivals", size: "219.37 MB", link: "https://seulink.net/jvHO0wuE", category: "🏎️ Corrida" },
+            { name: "Obscure The Aftermath", size: "811.34 MB", link: "https://seulink.net/LNkIe8lO", category: "👻 Survival Horror" },
+            { name: "Pac-Man World Rally", size: "233.75 MB", link: "https://seulink.net/m6kyb04Qx", category: "🏎️ Corrida" },
+            { name: "Patapon 3", size: "379.81 MB", link: "https://4br.me/rwJUdw8s", category: "🧩 Outros / Variados" },
+            { name: "Peter Jackson's King Kong", size: "392.77 MB", link: "https://seulink.net/b2fCuu", category: "🗡️ Ação / Aventura" },
+            { name: "Prince of Persia Rival Swords", size: "1010.46 MB", link: "https://seulink.net/x4sUV", category: "🗡️ Ação / Aventura" },
+            { name: "Shepherd's Crossing", size: "157.89 MB", link: "https://4br.me/xURE", category: "🌾 Simulação / Vida" },
+            { name: "Silent Hill Origins", size: "708.38 MB", link: "https://seulink.net/tdvxnH5A", category: "👻 Survival Horror" },
+            { name: "SOCOM U.S. Navy SEALs Fireteam", size: "380.43 MB", link: "https://4br.me/iSiHx", category: "🔫 Tiro (TPS/FPS)" },
+            { name: "Sonic Rivals", size: "121.22 MB", link: "https://4br.me/IXjvrEhJmQ", category: "🏃 Plataforma / Aventura" },
+            { name: "Soulcalibur Broken Destiny", size: "375.45 MB", link: "https://seulink.net/SoulBreakDest", category: "🥊 Luta" },
+            { name: "Spider Man Friend or Foe", size: "503.40 MB", link: "https://seulink.net/odHGZdoT", category: "🗡️ Ação / Aventura" },
+            { name: "Spider Man Web of Shadows", size: "237.09 MB", link: "https://4br.me/p6hbq", category: "🗡️ Ação / Aventura" },
+            { name: "Street Fighter Alpha 3 Max", size: "113.55 MB", link: "https://seulink.net/VeyLqOCz7", category: "🥊 Luta" },
+            { name: "Surf's Up", size: "491.24 MB", link: "https://seulink.net/54oY3VN9u", category: "🏎️ Corrida" },
+            { name: "Twisted Metal Head On", size: "317.00 MB", link: "https://seulink.net/SMTWsx4", category: "🚗 Combate Veicular" },
+            { name: "Ultimate Ghosts'n Goblins", size: "272.11 MB", link: "https://seulink.net/y98wWc", category: "🏃 Plataforma / Aventura" },
+            { name: "Undead Knights", size: "341.72 MB", link: "https://4br.me/nMqcsE", category: "🗡️ Ação / Aventura" },
+            { name: "Virtua Tennis 3", size: "357.85 MB", link: "https://seulink.net/lhwT", category: "⚽ Esportes" },
+            { name: "WipeOut Pure", size: "153.30 MB", link: "https://seulink.net/LGxsyZKVMi", category: "🏎️ Corrida" },
+            { name: "Worms Open Warfare", size: "199.21 MB", link: "https://seulink.net/OZlPnL8", category: "🧩 Outros / Variados" },
+            { name: "Xiaolin Showdown", size: "328.28 MB", link: "https://seulink.net/xeiBYlAR", category: "🥊 Luta" },
+            { name: "X-Men Origins Wolverine", size: "440.58 MB", link: "https://seulink.net/Q7FQrWqH3", category: "🗡️ Ação / Aventura" }
+        ];
+        function displayGames(gamesToShow) {
+            const content = document.getElementById('content');
+            content.innerHTML = '';
+            const grouped = gamesToShow.reduce((acc, game) => {
+                if (!acc[game.category]) acc[game.category] = [];
+                acc[game.category].push(game);
+                return acc;
+            }, {});
+            const sortedCategories = Object.keys(grouped).sort((a, b) => {
+                const nameA = a.replace(/[^a-zA-Z]/g, '').trim();
+                const nameB = b.replace(/[^a-zA-Z]/g, '').trim();
+                return nameA.localeCompare(nameB);
+            });
+            sortedCategories.forEach(cat => {
+                const catTitle = document.createElement('div');
+                catTitle.className = 'category-title';
+                catTitle.innerText = cat;
+                content.appendChild(catTitle);
+                const list = document.createElement('div');
+                list.className = 'game-list';
+                grouped[cat].sort((a, b) => a.name.localeCompare(b.name)).forEach(game => {
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
+                    card.innerHTML = `
+                        <div class="game-info">
+                            <h3>${game.name}</h3>
+                            <span>${game.size}</span>
+                        </div>
+                        <a href="${game.link}" target="_blank" class="btn-download">Download</a>
+                    `;
+                    list.appendChild(card);
+                });
+                content.appendChild(list);
+            });
+        }
+        function filterGames() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const filtered = games.filter(game => game.name.toLowerCase().includes(query));
+            displayGames(filtered);
+        }
+        displayGames(games);
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado!', reg))
+                    .catch(err => console.log('Erro no SW', err));
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "Orange Portable",
+  "short_name": "OrangeP",
+  "description": "Games CSO for PPSSPP",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#ff4500",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
