@@ -15,6 +15,7 @@
             --card-bg: #161616;
             --text: #ffffff;
             --text-dim: #b3b3b3;
+            --heart: #ff4b4b;
         }
         * {
             margin: 0;
@@ -34,25 +35,6 @@
             text-align: center;
             position: relative;
         }
-        .btn-emulator {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--primary);
-            color: white;
-            text-decoration: none;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.3);
-            transition: transform 0.2s, background 0.3s;
-            z-index: 1000;
-        }
-        .btn-emulator:hover { transform: scale(1.1); background: var(--primary-hover); }
         header { margin-bottom: 40px; padding-top: 20px; }
         h1 { color: var(--primary); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
         h2 { color: var(--text-dim); font-weight: 300; margin-top: -10px; margin-bottom: 20px; }
@@ -66,6 +48,7 @@
             color: white;
             font-size: 1rem;
             outline: none;
+            transition: border-color 0.3s;
         }
         #searchBar:focus { border-color: var(--primary); }
         .category-title {
@@ -87,9 +70,23 @@
             justify-content: space-between;
             align-items: center;
             border-left: 4px solid var(--primary);
+            transition: transform 0.2s;
         }
+        .game-card:hover { transform: translateX(5px); background: #1f1f1f; }
+        .game-info { flex-grow: 1; }
         .game-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
         .game-info span { color: var(--text-dim); font-size: 0.85rem; background: #252525; padding: 2px 8px; border-radius: 4px; }
+        .actions { display: flex; align-items: center; gap: 15px; }
+        .btn-fav {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: transform 0.2s, color 0.2s;
+            padding: 5px;
+        }
+        .btn-fav.active { color: var(--heart); transform: scale(1.2); }
         .btn-download {
             background-color: var(--primary);
             color: white;
@@ -98,7 +95,9 @@
             border-radius: 6px;
             font-weight: bold;
             font-size: 0.9rem;
+            transition: background 0.3s;
         }
+        .btn-download:hover { background-color: var(--primary-hover); }
         #backToTop {
             position: fixed;
             bottom: 30px;
@@ -106,26 +105,26 @@
             background: var(--primary);
             color: white;
             border: none;
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             display: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
             z-index: 1000;
         }
         footer { margin-top: 50px; padding: 20px; color: #555; font-size: 0.875rem; }
         footer a { color: #60a5fa; text-decoration: none; }
         @media (max-width: 600px) {
             .game-card { flex-direction: column; align-items: flex-start; gap: 15px; }
-            .btn-download { width: 100%; text-align: center; }
+            .actions { width: 100%; justify-content: space-between; }
+            .btn-download { flex-grow: 1; text-align: center; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="https://www.ppsspp.org/download/" target="_blank" class="btn-emulator">🎮</a>
         <header>
             <h1>Orange Portable</h1>
             <h2>Games CSO for PPSSPP</h2>
@@ -140,6 +139,7 @@
         </footer>
     </div>
     <script>
+        const emulatorData = { name: "PPSSPP Emulador", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         const games = [
             { name: "007 From Russia with Love", size: "539.48 MB", link: "https://seulink.net/BZXkMH", category: "🗡️ Ação / Aventura" },
             { name: "101 in 1 Megamix", size: "498.26 MB", link: "https://seulink.net/PLcb0", category: "🎮 Plataforma / Puzzle / Família" },
@@ -224,14 +224,66 @@
             { name: "X-Men Origins Wolverine", size: "440.58 MB", link: "https://seulink.net/Q7FQrWqH3", category: "🗡️ Ação / Aventura" }
         ];
 
+        let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
+
+        function toggleFav(gameName) {
+            if (favorites.includes(gameName)) {
+                favorites = favorites.filter(f => f !== gameName);
+            } else {
+                favorites.push(gameName);
+            }
+            localStorage.setItem('orangeFavs', JSON.stringify(favorites));
+            displayGames(games.filter(game => game.name.toLowerCase().includes(document.getElementById('searchBar').value.toLowerCase())));
+        }
+
+        function createCard(item, isEmulator = false) {
+            const isFav = favorites.includes(item.name);
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            card.innerHTML = `
+                <div class="game-info">
+                    <h3>${item.name}</h3>
+                    ${isEmulator ? '' : `<span>${item.size}</span>`}
+                </div>
+                <div class="actions">
+                    ${isEmulator ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\'")}')">❤</button>`}
+                    <a href="${item.link}" target="_blank" class="btn-download">Download</a>
+                </div>
+            `;
+            return card;
+        }
+
         function displayGames(gamesToShow) {
             const content = document.getElementById('content');
             content.innerHTML = '';
+
+            const emuTitle = document.createElement('div');
+            emuTitle.className = 'category-title';
+            emuTitle.innerText = "🎮 Emulador";
+            content.appendChild(emuTitle);
+            const emuList = document.createElement('div');
+            emuList.className = 'game-list';
+            emuList.appendChild(createCard(emulatorData, true));
+            content.appendChild(emuList);
+
+            const favGames = games.filter(g => favorites.includes(g.name));
+            if (favGames.length > 0) {
+                const favTitle = document.createElement('div');
+                favTitle.className = 'category-title';
+                favTitle.innerText = "❤️ Meus Favoritos";
+                content.appendChild(favTitle);
+                const favList = document.createElement('div');
+                favList.className = 'game-list';
+                favGames.forEach(g => favList.appendChild(createCard(g)));
+                content.appendChild(favList);
+            }
+
             const grouped = gamesToShow.reduce((acc, game) => {
                 if (!acc[game.category]) acc[game.category] = [];
                 acc[game.category].push(game);
                 return acc;
             }, {});
+
             const sortedCategories = Object.keys(grouped).sort();
             sortedCategories.forEach(cat => {
                 const catTitle = document.createElement('div');
@@ -241,36 +293,32 @@
                 const list = document.createElement('div');
                 list.className = 'game-list';
                 grouped[cat].sort((a, b) => a.name.localeCompare(b.name)).forEach(game => {
-                    const card = document.createElement('div');
-                    card.className = 'game-card';
-                    card.innerHTML = `
-                        <div class="game-info">
-                            <h3>${game.name}</h3>
-                            <span>${game.size}</span>
-                        </div>
-                        <a href="${game.link}" target="_blank" class="btn-download">Download</a>
-                    `;
-                    list.appendChild(card);
+                    list.appendChild(createCard(game));
                 });
                 content.appendChild(list);
             });
         }
+
         function filterGames() {
             const query = document.getElementById('searchBar').value.toLowerCase();
             const filtered = games.filter(game => game.name.toLowerCase().includes(query));
             displayGames(filtered);
         }
+
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
         window.onscroll = function() {
             const btn = document.getElementById("backToTop");
             if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
                 btn.style.display = "block";
             } else { btn.style.display = "none"; }
         };
+
         displayGames(games);
+
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => console.log('Erro SW', err));
+                navigator.serviceWorker.register('./sw.js').catch(err => {});
             });
         }
     </script>
