@@ -130,15 +130,23 @@
                 return acc;
             }, {});
 
-            const sortedCategoryNames = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
+            const sortedCategoryNames = Object.keys(grouped).sort((a, b) => a.localeCompare(b, 'pt-BR', { sensitivity: 'base' }));
 
-            sortedCategoryNames.forEach(cat => {
-                const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
+            for (const cat of sortedCategoryNames) {
+                const title = document.createElement('div'); 
+                title.className = 'category-title'; 
+                title.innerText = cat;
                 content.appendChild(title);
-                const list = document.createElement('div'); list.className = 'game-list';
-                grouped[cat].forEach(game => list.appendChild(createCard(game)));
+                
+                const list = document.createElement('div'); 
+                list.className = 'game-list';
+                
+                grouped[cat].forEach(game => {
+                    list.appendChild(createCard(game));
+                });
+                
                 content.appendChild(list);
-            });
+            }
         }
 
         function filterGames() {
