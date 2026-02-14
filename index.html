@@ -284,7 +284,8 @@
                 return acc;
             }, {});
 
-            const sortedCategories = Object.keys(grouped).sort();
+            const sortedCategories = Object.keys(grouped).sort((a, b) => a.localeCompare(b, 'pt', { sensitivity: 'base' }));
+            
             sortedCategories.forEach(cat => {
                 const catTitle = document.createElement('div');
                 catTitle.className = 'category-title';
