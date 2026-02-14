@@ -130,7 +130,9 @@
                 return acc;
             }, {});
 
-            Object.keys(grouped).sort().forEach(cat => {
+            const sortedCategoryNames = Object.keys(grouped).sort((a, b) => a.localeCompare(b));
+
+            sortedCategoryNames.forEach(cat => {
                 const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
                 content.appendChild(title);
                 const list = document.createElement('div'); list.className = 'game-list';
