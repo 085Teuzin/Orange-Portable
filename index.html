@@ -78,14 +78,10 @@
     <script src="database.js"></script>
 
     <script>
-        const games = window.gamesData;
-        
-        if (games) {
-            games.sort((a, b) => a.name.localeCompare(b.name));
-        }
+        const games = window.gamesData || [];
+        games.sort((a, b) => a.name.localeCompare(b.name));
 
         const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
-
         const emulatorData = { name: "PPSSPP Emulador", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
 
@@ -119,7 +115,7 @@
             emuList.appendChild(createCard(emulatorData, true));
             content.appendChild(emuList);
 
-            const favGames = games.filter(g => favorites.includes(g.name)).sort((a,b) => a.name.localeCompare(b.name));
+            const favGames = games.filter(g => favorites.includes(g.name));
             if (favGames.length > 0) {
                 const title = document.createElement('div'); title.className = 'category-title'; title.innerText = "❤️ Meus Favoritos";
                 content.appendChild(title);
@@ -138,14 +134,15 @@
                 const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
                 content.appendChild(title);
                 const list = document.createElement('div'); list.className = 'game-list';
-                grouped[cat].sort((a, b) => a.name.localeCompare(b.name)).forEach(game => list.appendChild(createCard(game)));
+                grouped[cat].forEach(game => list.appendChild(createCard(game)));
                 content.appendChild(list);
             });
         }
 
         function filterGames() {
             const query = document.getElementById('searchBar').value.toLowerCase();
-            displayGames(games.filter(g => g.name.toLowerCase().includes(query)));
+            const filtered = games.filter(g => g.name.toLowerCase().includes(query));
+            displayGames(filtered);
         }
 
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
