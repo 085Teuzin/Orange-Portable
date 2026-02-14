@@ -266,7 +266,7 @@
             emuList.appendChild(createCard(emulatorData, true));
             content.appendChild(emuList);
 
-            const favGames = games.filter(g => favorites.includes(g.name));
+            const favGames = games.filter(g => favorites.includes(g.name)).sort((a,b) => a.name.localeCompare(b.name));
             if (favGames.length > 0) {
                 const favTitle = document.createElement('div');
                 favTitle.className = 'category-title';
@@ -284,8 +284,12 @@
                 return acc;
             }, {});
 
-            const sortedCategories = Object.keys(grouped).sort((a, b) => a.localeCompare(b, 'pt', { sensitivity: 'base' }));
-            
+            const sortedCategories = Object.keys(grouped).sort((a, b) => {
+                const cleanA = a.replace(/[^\w\s]/gi, '').trim();
+                const cleanB = b.replace(/[^\w\s]/gi, '').trim();
+                return cleanA.localeCompare(cleanB);
+            });
+
             sortedCategories.forEach(cat => {
                 const catTitle = document.createElement('div');
                 catTitle.className = 'category-title';
