@@ -15,83 +15,89 @@
             --text-dim: #999;
             --btn-red: #dc2626;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); padding: 15px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: 15px; font-style: italic; }
         .container { max-width: 700px; margin: 0 auto; }
         header { margin-bottom: 25px; text-align: center; }
-        h1 { color: var(--primary); font-size: 1.8rem; text-transform: uppercase; letter-spacing: 1px; }
-        h2 { color: var(--text-dim); font-size: 0.8rem; font-weight: 400; }
+        h1 { color: var(--primary); font-size: 2rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 900; }
+        .obs { color: #ffcc00; font-size: 0.85rem; font-weight: bold; margin-top: 5px; display: block; text-transform: uppercase; }
         .search-container { margin-bottom: 20px; }
         #searchBar { 
             width: 100%; padding: 12px; border-radius: 6px; border: 1px solid #222; 
-            background: #111; color: white; font-size: 0.95rem; outline: none;
+            background: #111; color: white; font-size: 0.95rem; outline: none; font-style: italic;
         }
         #searchBar:focus { border-color: var(--primary); }
         .category-title { 
-            color: var(--primary); font-size: 1rem; margin: 25px 0 10px 0; 
-            border-bottom: 1px solid #222; padding-bottom: 3px; font-weight: bold;
+            color: var(--primary); font-size: 1.1rem; margin: 30px 0 10px 0; 
+            border-bottom: 1.5px solid var(--primary); padding-bottom: 3px; font-weight: 800;
         }
-        .game-list { display: grid; gap: 8px; }
+        .game-list { display: grid; gap: 10px; }
         .game-card { 
-            background: var(--card-bg); padding: 10px 15px; border-radius: 6px; 
+            background: var(--card-bg); padding: 12px 15px; border-radius: 8px; 
             display: flex; justify-content: space-between; align-items: center; 
             border: 1px solid #1a1a1a;
         }
-        .game-info h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 2px; }
-        .game-info span { color: var(--primary); font-size: 0.75rem; font-weight: bold; }
-        .actions { display: flex; align-items: center; gap: 12px; }
-        .btn-fav { background: none; border: none; color: #333; font-size: 1.2rem; cursor: pointer; }
+        .game-info { flex: 1; padding-right: 10px; }
+        .game-info h3 { font-size: 1rem; font-weight: 600; margin-bottom: 3px; color: #eee; line-height: 1.2; }
+        .game-info span { color: var(--primary); font-size: 0.8rem; font-weight: bold; }
+        .actions { display: flex; align-items: center; gap: 15px; }
+        .btn-fav { background: none; border: none; color: #333; font-size: 1.3rem; cursor: pointer; }
         .btn-fav.active { color: #ff4b4b; }
         .btn-download { 
             background: var(--btn-red); color: white; text-decoration: none; 
-            padding: 6px 14px; border-radius: 4px; font-weight: bold; font-size: 0.8rem;
+            padding: 8px 16px; border-radius: 5px; font-weight: 900; font-size: 0.8rem;
         }
-        .support-area { margin-top: 40px; padding: 20px; text-align: center; border-top: 1px solid #222; }
-        .pix-qrcode { width: 130px; height: 130px; background: white; padding: 5px; border-radius: 4px; margin: 0 auto 15px auto; }
+        .support-area { margin-top: 50px; padding: 25px; text-align: center; background: #080808; border-radius: 10px; border: 1px dashed #333; }
+        .pix-qrcode { width: 150px; height: 150px; background: white; padding: 8px; border-radius: 8px; margin: 0 auto 20px auto; display: block; }
         .pix-qrcode img { width: 100%; height: 100%; }
+        .btn-group { display: flex; flex-direction: column; gap: 10px; align-items: center; }
         .pix-btn { 
             background: #15803d; color: white; text-decoration: none; 
-            padding: 8px 16px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; cursor: pointer; display: inline-block;
+            padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; cursor: pointer; width: 220px;
         }
-        .complaint-link { display: block; margin-top: 15px; color: var(--text-dim); text-decoration: none; font-size: 0.75rem; }
+        .support-btn { 
+            background: #2563eb; color: white; text-decoration: none; 
+            padding: 10px 20px; border-radius: 6px; font-size: 0.9rem; font-weight: bold; width: 220px; display: inline-block;
+        }
         #backToTop { 
             position: fixed; bottom: 20px; right: 20px; background: var(--primary); 
-            color: white; border: none; width: 40px; height: 40px; border-radius: 4px; 
-            cursor: pointer; display: none; font-weight: bold;
+            color: white; border: none; width: 45px; height: 45px; border-radius: 50%; 
+            cursor: pointer; display: none; font-weight: bold; font-size: 1.2rem;
         }
-        footer { margin-top: 30px; text-align: center; padding-bottom: 20px; color: #444; font-size: 0.7rem; }
-        footer a { color: #666; text-decoration: none; }
-        @media (max-width: 480px) { .game-info h3 { max-width: 180px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; } }
+        footer { margin-top: 40px; text-align: center; padding-bottom: 30px; color: #555; font-size: 0.75rem; font-weight: bold; }
+        footer a { color: var(--primary); text-decoration: none; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Orange Portable</h1>
-            <h2>PPSSPP LIBRARY</h2>
+            <span class="obs">⚠️ OBS: Use o emulador PPSSPP para rodar os jogos .CSO</span>
         </header>
         <div class="search-container">
-            <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterGames()">
+            <input type="text" id="searchBar" placeholder="Pesquisar título..." onkeyup="filterGames()">
         </div>
         <div id="content"></div>
         <div class="support-area">
-            <div class="pix-qrcode">
+            <a href="00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" class="pix-qrcode">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" alt="QR Code">
+            </a>
+            <div class="btn-group">
+                <button class="pix-btn" onclick="copyPix()">COPIAR CHAVE PIX</button>
+                <a href="https://wa.me/5585991272125" target="_blank" class="support-btn">SUPORTE / RECLAMAÇÕES</a>
             </div>
-            <a class="pix-btn" onclick="copyPix()">COPIAR PIX</a>
-            <a href="https://wa.me/5585991272125" target="_blank" class="complaint-link">SUPORTE / RECLAMAÇÕES</a>
         </div>
         <button id="backToTop" onclick="scrollToTop()">↑</button>
-        <footer>BY <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_TEUZINNN</a></footer>
+        <footer>DESENVOLVIDO POR <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_TEUZINNN</a></footer>
     </div>
     <script src="database.js"></script>
     <script>
         const games = window.gamesData || [];
         const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
-        const emulatorData = { name: "PPSSPP EMULADOR", link: "https://www.ppsspp.org/download/", category: "00 SISTEMA" };
+        const emulatorData = { name: "PPSSPP EMULADOR (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "00 SISTEMA" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
 
-        function copyPix() { navigator.clipboard.writeText(pixCode).then(() => alert("Copiado!")); }
+        function copyPix() { navigator.clipboard.writeText(pixCode).then(() => alert("Chave Pix Copiada!")); }
 
         function toggleFav(gameName) {
             favorites = favorites.includes(gameName) ? favorites.filter(f => f !== gameName) : [...favorites, gameName];
@@ -126,7 +132,7 @@
 
             const favGames = games.filter(g => favorites.includes(g.name)).sort((a, b) => a.name.localeCompare(b.name));
             if (favGames.length > 0) {
-                const title = document.createElement('div'); title.className = 'category-title'; title.innerText = "FAVORITOS";
+                const title = document.createElement('div'); title.className = 'category-title'; title.innerText = "⭐ MEUS FAVORITOS";
                 content.appendChild(title);
                 const list = document.createElement('div'); list.className = 'game-list';
                 favGames.forEach(g => list.appendChild(createCard(g)));
@@ -139,8 +145,8 @@
                 return acc;
             }, {});
 
-            Object.keys(grouped).sort().forEach(cat => {
-                const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
+            Object.keys(grouped).sort((a, b) => a.localeCompare(b)).forEach(cat => {
+                const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat.toUpperCase();
                 content.appendChild(title);
                 const list = document.createElement('div'); list.className = 'game-list';
                 grouped[cat].sort((a, b) => a.name.localeCompare(b.name)).forEach(game => list.appendChild(createCard(game)));
