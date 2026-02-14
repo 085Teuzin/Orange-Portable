@@ -16,6 +16,7 @@
             --text: #ffffff;
             --text-dim: #b3b3b3;
             --heart: #ff4b4b;
+            --success: #22c55e;
         }
         * {
             margin: 0;
@@ -98,6 +99,43 @@
             transition: background 0.3s;
         }
         .btn-download:hover { background-color: var(--primary-hover); }
+
+        .support-area {
+            margin-top: 50px;
+            padding: 20px;
+            background: #111;
+            border-radius: 15px;
+            display: inline-block;
+            border: 1px solid #222;
+        }
+        .pix-qrcode {
+            width: 150px;
+            height: 150px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin: 0 auto 15px auto;
+        }
+        .pix-qrcode img { width: 100%; height: 100%; }
+        .dev-links { display: flex; flex-direction: column; gap: 12px; }
+        .pix-btn {
+            background: var(--success);
+            color: white !important;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .complaint-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+        .complaint-link:hover { color: var(--primary); }
+
         #backToTop {
             position: fixed;
             bottom: 30px;
@@ -114,7 +152,7 @@
             box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4);
             z-index: 1000;
         }
-        footer { margin-top: 50px; padding: 20px; color: #555; font-size: 0.875rem; }
+        footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
         footer a { color: #60a5fa; text-decoration: none; }
         @media (max-width: 600px) {
             .game-card { flex-direction: column; align-items: flex-start; gap: 15px; }
@@ -133,12 +171,31 @@
             <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterGames()">
         </div>
         <div id="content"></div>
+
+        <div class="support-area">
+            <div class="pix-qrcode">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" alt="QR Code Pix">
+            </div>
+            <div class="dev-links">
+                <a class="pix-btn" onclick="copyPix()">📋 Copiar Pix Copia e Cola</a>
+                <a href="https://wa.me/5585991272125?text=Olá,%20tenho%20uma%20sugestão/dúvida%20sobre%20o%20Orange%20Portable" target="_blank" class="complaint-link">🗣 Reclamar / Sugestões</a>
+            </div>
+        </div>
+
         <button id="backToTop" onclick="scrollToTop()">↑</button>
         <footer>
             Made By: <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_Teuzinnn</a>
         </footer>
     </div>
     <script>
+        const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
+        
+        function copyPix() {
+            navigator.clipboard.writeText(pixCode).then(() => {
+                alert("Código Pix copiado! Obrigado pelo apoio, lindo! 🧡");
+            });
+        }
+
         const emulatorData = { name: "PPSSPP Emulador", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         const games = [
             { name: "007 From Russia with Love", size: "539.48 MB", link: "https://seulink.net/BZXkMH", category: "🗡️ Ação / Aventura" },
@@ -320,12 +377,6 @@
         };
 
         displayGames(games);
-
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js').catch(err => {});
-            });
-        }
     </script>
 </body>
 </html>
