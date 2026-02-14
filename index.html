@@ -79,6 +79,7 @@
 
     <script>
         const games = window.gamesData;
+games.sort((a, b) =>    a.name.localeCompare(b.name));
         const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
         const emulatorData = { name: "PPSSPP Emulador", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
