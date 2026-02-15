@@ -31,15 +31,16 @@
         #searchBar:focus { border-color: var(--primary); }
         .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.3rem; border-bottom: 1px solid #333; padding-bottom: 5px; text-transform: uppercase; font-weight: bold; }
         .game-list { display: grid; gap: 15px; text-align: left; }
-        .game-card { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); transition: transform 0.2s; }
+        .game-card { background: var(--card-bg); border-radius: 12px; display: flex; align-items: center; border-left: 4px solid var(--primary); transition: transform 0.2s; overflow: hidden; position: relative; min-height: 100px; }
         .game-card:hover { transform: translateX(5px); background: #1f1f1f; }
-        .game-info { flex-grow: 1; }
-        .game-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
-        .game-info span { color: var(--text-dim); font-size: 0.85rem; background: #252525; padding: 2px 8px; border-radius: 4px; }
-        .actions { display: flex; align-items: center; gap: 15px; }
-        .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.4rem; cursor: pointer; transition: transform 0.2s, color 0.2s; padding: 5px; }
+        .game-cover { width: 70px; height: 100px; object-fit: cover; background: #222; flex-shrink: 0; }
+        .game-info { flex-grow: 1; padding: 15px; }
+        .game-info h3 { font-size: 1.05rem; margin-bottom: 5px; padding-right: 30px; }
+        .game-info span { color: var(--text-dim); font-size: 0.8rem; background: #252525; padding: 2px 8px; border-radius: 4px; }
+        .actions { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; padding: 10px; height: 100%; }
+        .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.4rem; cursor: pointer; transition: transform 0.2s, color 0.2s; position: absolute; top: 10px; right: 10px; }
         .btn-fav.active { color: var(--heart); transform: scale(1.2); }
-        .btn-download { background-color: var(--primary); color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; transition: background 0.3s; }
+        .btn-download { background-color: var(--primary); color: white; text-decoration: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; transition: background 0.3s; margin-top: 10px; }
         .btn-download:hover { background-color: var(--primary-hover); }
         .support-area { margin-top: 50px; padding: 20px; background: #111; border-radius: 15px; display: inline-block; border: 1px solid #222; }
         .pix-qrcode { width: 150px; height: 150px; background: white; padding: 10px; border-radius: 10px; margin: 0 auto 15px auto; }
@@ -51,7 +52,7 @@
         #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: none; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4); z-index: 1000; }
         footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
         footer a { color: #60a5fa; text-decoration: none; }
-        @media (max-width: 600px) { .game-card { flex-direction: column; align-items: flex-start; gap: 15px; } .actions { width: 100%; justify-content: space-between; } .btn-download { flex-grow: 1; text-align: center; } }
+        @media (max-width: 600px) { .game-info h3 { font-size: 0.95rem; } .game-cover { width: 60px; height: 90px; } }
     </style>
 </head>
 <body>
@@ -105,16 +106,24 @@
             localStorage.setItem('orangeFavs', JSON.stringify(favorites));
             filterGames();
         }
+        function getCoverUrl(gameName) {
+            const formattedName = encodeURIComponent(gameName);
+            return `https://thumbnails.libretro.com/Sony%20-%20PlayStation%20Portable/Named_Boxarts/${formattedName}.png`;
+        }
         function createCard(item, isEmulator = false) {
             const isFav = favorites.includes(item.name);
             const card = document.createElement('div');
             card.className = 'game-card';
+            const coverImg = isEmulator ? 'icon.png' : getCoverUrl(item.name);
             card.innerHTML = `
-                <div class="game-info"><h3>${item.name}</h3>${isEmulator ? '' : `<span>${item.size}</span>`}</div>
-                <div class="actions">
-                    ${isEmulator ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\'")}')">❤</button>`}
-                    <a href="${item.link}" target="_blank" class="btn-download">Download</a>
-                </div>`;
+                <img class="game-cover" src="${coverImg}" onerror="this.src='icon.png'" alt="capa">
+                <div class="game-info">
+                    <h3>${item.name}</h3>
+                    ${isEmulator ? '' : `<span>${item.size}</span>`}
+                    <div><a href="${item.link}" target="_blank" class="btn-download">Download</a></div>
+                </div>
+                ${isEmulator ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\'")}')">❤</button>`}
+            `;
             return card;
         }
         function displayGames(gamesToShow) {
