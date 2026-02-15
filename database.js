@@ -94,7 +94,11 @@ const gamesData = [
     { name: "WipeOut Pure", size: "153.30 MB", link: "https://seulink.net/LGxsyZKVMi", category: "🏎️ Corrida" },
     { name: "Worms Open Warfare", size: "199.21 MB", link: "https://seulink.net/OZlPnL8", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "X-Men Origins Wolverine", size: "440.58 MB", link: "https://seulink.net/Q7FQrWqH3", category: "🗡️ Ação / Aventura" },
-    { name: "Xiaolin Showdown", size: "328.28 MB", link: "https://seulink.net/xeiBYlAR", category: "🥊 Luta" }
+    { name: "Xiaolin Showdown", size: "328.28 MB", link: "https://seulink.net/xeiBYlAR", category: "🥊 Luta" },     { name: "Death Jr.", size: "244.01 MB", link: "https://4br.me/oKFK1CDO", category: "🏃 Plataforma / Aventura" },
+    { name: "Gripshift", size: "67.13 MB", link: "https://4br.me/3eMlQSh", category: "🏎️ Corrida" },
+    { name: "Hammerin' Hero", size: "99.11 MB", link: "https://4br.me/D8JEt9veM", category: "🏃 Plataforma / Aventura" },
+    { name: "Tokobot", size: "193.94 MB", link: "https://4br.me/QQwaG42f4", category: "🏃 Plataforma / Aventura" }
+
 ];
 
 window.gamesData = gamesData;
