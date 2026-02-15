@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --primary: #ff4500;
@@ -19,151 +20,230 @@
             --text-dim: #b3b3b3;
             --heart: #ff4b4b;
             --success: #22c55e;
-            --modal-overlay: rgba(0, 0, 0, 0.85);
         }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: env(safe-area-inset-top) 20px 20px; }
-
-        /* Header e Busca */
-        header { padding: 40px 0 20px; text-align: center; }
-        .logo { font-size: 28px; font-weight: 800; color: var(--primary); letter-spacing: -1px; margin-bottom: 20px; }
-        .search-container { position: sticky; top: 10px; z-index: 100; margin-bottom: 30px; }
-        input { width: 100%; padding: 15px 20px; border-radius: 12px; border: none; background: #222; color: #fff; font-size: 16px; outline: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-
-        /* Categorias e Grids */
-        .category-title { font-size: 18px; font-weight: 700; margin: 25px 0 15px; color: var(--text-dim); display: flex; align-items: center; gap: 10px; }
-        .game-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
-
-        /* Cards */
-        .card { background: var(--card-bg); border-radius: 15px; padding: 15px; position: relative; transition: transform 0.2s; cursor: pointer; border: 1px solid #222; }
-        .card:active { transform: scale(0.95); }
-        .game-name { font-weight: 600; font-size: 14px; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 40px; }
-        .game-size { font-size: 12px; color: var(--text-dim); }
-        .fav-btn { position: absolute; top: 10px; right: 10px; background: none; border: none; color: #444; font-size: 20px; cursor: pointer; z-index: 10; }
-        .fav-btn.active { color: var(--heart); }
-
-        .dl-link { display: block; margin-top: 12px; padding: 8px; background: var(--primary); color: white; text-align: center; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 600; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--modal-overlay); z-index: 1000; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); }
-        .modal-content { background: #1c1c1c; width: 100%; max-width: 400px; border-radius: 20px; padding: 25px; border: 1px solid var(--primary); position: relative; animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        
-        .modal-title { font-size: 20px; font-weight: 800; color: var(--primary); margin-bottom: 15px; }
-        .modal-info { font-size: 14px; margin-bottom: 10px; color: var(--text-dim); }
-        .modal-info b { color: var(--text); }
-        .modal-desc { font-size: 15px; margin: 15px 0; line-height: 1.5; color: #eee; }
-        .close-modal { position: absolute; top: 15px; right: 15px; color: var(--text-dim); font-size: 24px; cursor: pointer; }
-
-        footer { text-align: center; padding: 40px 0; border-top: 1px solid #222; margin-top: 50px; }
-        .pix-box { background: #111; padding: 20px; border-radius: 15px; margin-top: 20px; border: 1px dashed var(--primary); }
-        .pix-btn { background: var(--primary); border: none; color: white; padding: 10px 20px; border-radius: 8px; margin-top: 10px; font-weight: bold; cursor: pointer; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: env(safe-area-inset-top) 20px 20px 20px; user-select: none; }
+        .container { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
+        header { margin-bottom: 30px; padding-top: 20px; }
+        h1 { color: var(--primary); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
+        h2 { color: var(--text-dim); font-weight: 300; margin-top: -10px; margin-bottom: 10px; }
+        .stats-info { color: var(--primary); font-size: 0.9rem; margin-bottom: 15px; font-weight: bold; }
+        .controls-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
+        .search-row { display: flex; gap: 10px; }
+        #searchBar { flex-grow: 1; padding: 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; }
+        #searchBar:focus { border-color: var(--primary); }
+        #sortOrder { padding: 10px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; cursor: pointer; }
+        .tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; white-space: nowrap; scrollbar-width: none; }
+        .tag-container::-webkit-scrollbar { display: none; }
+        .tag { background: #222; color: var(--text-dim); padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; border: 1px solid #333; transition: 0.3s; }
+        .tag.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .btn-random { background: #333; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 20px; width: 100%; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.1rem; border-left: 4px solid var(--primary); padding-left: 10px; text-transform: uppercase; font-weight: bold; }
+        .game-list { display: grid; gap: 12px; text-align: left; }
+        .game-card { background: var(--card-bg); padding: 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; transition: 0.2s; cursor: pointer; }
+        .game-card:active { transform: scale(0.98); background: #1c1c1c; }
+        .game-info h3 { font-size: 1rem; margin-bottom: 6px; color: #eee; }
+        .badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+        .badge { font-size: 0.7rem; background: #252525; color: var(--text-dim); padding: 2px 8px; border-radius: 4px; text-transform: uppercase; font-weight: 600; border: 1px solid #333; }
+        .badge.size { color: var(--primary); border-color: rgba(255,69,0,0.3); }
+        .actions { display: flex; align-items: center; gap: 12px; }
+        .btn-fav { background: none; border: none; color: #444; cursor: pointer; transition: 0.2s; display: flex; align-items: center; }
+        .btn-fav.active { color: var(--heart); }
+        .btn-download { background-color: var(--primary); color: white; text-decoration: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .support-area { margin-top: 50px; padding: 20px; background: #111; border-radius: 15px; border: 1px solid #222; }
+        .pix-qrcode { width: 150px; height: 150px; background: white; padding: 10px; border-radius: 10px; margin: 0 auto 15px auto; }
+        .pix-qrcode img { width: 100%; height: 100%; }
+        .pix-btn { background: var(--success); color: white; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; transition: 0.3s; }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
+        .modal-content { background: #161616; margin: 15% auto; padding: 25px; border: 1px solid var(--primary); width: 85%; max-width: 450px; border-radius: 20px; position: relative; text-align: left; animation: modalIn 0.3s ease-out; }
+        @keyframes modalIn { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-modal { position: absolute; right: 20px; top: 15px; color: var(--text-dim); font-size: 24px; cursor: pointer; }
+        .modal-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; padding-top: 15px; border-top: 1px solid #333; }
+        .info-item { display: flex; flex-direction: column; gap: 4px; }
+        .info-label { font-size: 0.75rem; color: var(--primary); text-transform: uppercase; font-weight: bold; }
+        .info-value { font-size: 0.9rem; color: #fff; }
+        #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+        @media (max-width: 600px) { .search-row { flex-direction: column; } .modal-content { margin: 30% auto; } }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="logo">ORANGE PORTABLE</div>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Pesquisar jogo..." oninput="render()">
+    <div class="container">
+        <header>
+            <h1>Orange Portable</h1>
+            <h2>Games CSO for PPSSPP</h2>
+        </header>
+        <div class="controls-container">
+            <div class="search-row">
+                <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterAndSort()">
+                <select id="sortOrder" onchange="filterAndSort()">
+                    <option value="az">A-Z</option>
+                    <option value="za">Z-A</option>
+                    <option value="sizeDesc">Tamanho (> <)</option>
+                    <option value="sizeAsc">Tamanho (< >)</option>
+                </select>
+            </div>
+            <div class="tag-container" id="tagContainer"></div>
         </div>
-    </header>
-
-    <div id="content"></div>
+        <div id="stats" class="stats-info"></div>
+        <button class="btn-random" onclick="randomGame()">
+            <i data-lucide="dices"></i> Me surpreenda com um jogo!
+        </button>
+        <div id="content"></div>
+        <div class="support-area">
+            <div class="pix-qrcode">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" alt="QR Code Pix">
+            </div>
+            <a class="pix-btn" id="pixBtn" onclick="copyPix()">
+                <i data-lucide="copy"></i> <span>Copiar Pix</span>
+            </a>
+            <a href="https://wa.me/5585991272125" target="_blank" style="color:var(--text-dim); text-decoration:none; font-size:0.8rem; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                <i data-lucide="message-circle" size="14"></i> Sugerir novo jogo
+            </a>
+        </div>
+        <button id="backToTop" onclick="scrollToTop()"><i data-lucide="arrow-up"></i></button>
+        <footer>Made By: <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_Teuzinnn</a></footer>
+    </div>
 
     <div id="gameModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div id="modalTitle" class="modal-title">Nome do Jogo</div>
-            <div class="modal-info">Lançamento: <b id="modalDate">-</b></div>
-            <div class="modal-info">Compatibilidade: <b id="modalCompat">-</b></div>
-            <div id="modalDesc" class="modal-desc">Descrição do jogo aqui...</div>
-            <a id="modalDownload" href="#" class="dl-link" style="font-size: 16px; padding: 12px;">BAIXAR AGORA</a>
+            <h2 id="modalTitle" style="color:var(--primary); margin-bottom:10px;"></h2>
+            <p id="modalDesc" style="color:var(--text-dim); font-size:0.9rem; line-height:1.4;"></p>
+            <div class="modal-grid">
+                <div class="info-item">
+                    <span class="info-label">Data de Lançamento</span>
+                    <span id="modalDate" class="info-value"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Compatibilidade PPSSPP</span>
+                    <span id="modalCompat" class="info-value"></span>
+                </div>
+            </div>
         </div>
     </div>
-
-    <footer>
-        <p style="color: var(--text-dim)">Made By: @085_Teuzinnn</p>
-        <div class="pix-box">
-            <p>Ajude a manter o projeto!</p>
-            <button class="pix-btn" onclick="copyPix()">COPIAR PIX</button>
-        </div>
-    </footer>
 
     <script src="database.js"></script>
     <script src="infobase.js"></script>
     <script>
-        let favorites = JSON.parse(localStorage.getItem('orange_favs')) || [];
+        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
+        const games = window.gamesData || [];
+        const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador", size: "Oficial" };
+        let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
+        let activeTag = "Todos";
+        let pressTimer;
+        const categoryOrder = ["🗡️ Ação / Aventura", "🚗 Combate Veicular", "🏎️ Corrida", "🏎️ Corrida / Ação", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "🦌 Simulação de Caça", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
 
-        function toggleFav(name, e) {
-            e.stopPropagation();
-            if(favorites.includes(name)) favorites = favorites.filter(f => f !== name);
-            else favorites.push(name);
-            localStorage.setItem('orange_favs', JSON.stringify(favorites));
-            render();
+        function initTags() {
+            const container = document.getElementById('tagContainer');
+            container.innerHTML = '';
+            let tags = ["Todos"];
+            if (favorites.length > 0) tags.push("❤️ Favoritos");
+            const categories = [...new Set(games.map(g => g.category))].sort();
+            tags = [...tags, ...categories];
+            tags.forEach(tag => {
+                const el = document.createElement('div');
+                el.className = `tag ${tag === activeTag ? 'active' : ''}`;
+                el.innerText = tag;
+                el.onclick = () => { activeTag = tag; initTags(); filterAndSort(); };
+                container.appendChild(el);
+            });
         }
 
-        function openInfo(name, link) {
-            const info = window.gamesInfo[name] || { 
-                description: "Sem descrição disponível para este título.", 
-                release: "Desconhecido", 
-                compat: "Não testada" 
-            };
-            
+        function parseSize(s) {
+            if (!s) return 0;
+            let n = parseFloat(s);
+            return s.includes('GB') ? n * 1024 : n;
+        }
+
+        function randomGame() {
+            const game = games[Math.floor(Math.random() * games.length)];
+            showGameInfo(game.name);
+        }
+
+        function toggleFav(name) {
+            favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [...favorites, name];
+            localStorage.setItem('orangeFavs', JSON.stringify(favorites));
+            initTags();
+            filterAndSort();
+        }
+
+        function startPress(name) { pressTimer = setTimeout(() => showGameInfo(name), 1000); }
+        function cancelPress() { clearTimeout(pressTimer); }
+
+        function showGameInfo(name) {
+            const info = (window.gamesInfo && window.gamesInfo[name]) ? window.gamesInfo[name] : { description: "Detalhes em breve...", release: "Desconhecido", compat: "Testando..." };
             document.getElementById('modalTitle').innerText = name;
+            document.getElementById('modalDesc').innerText = info.description;
             document.getElementById('modalDate').innerText = info.release;
             document.getElementById('modalCompat').innerText = info.compat;
-            document.getElementById('modalDesc').innerText = info.description;
-            document.getElementById('modalDownload').href = link;
-            
-            document.getElementById('gameModal').style.display = 'flex';
+            document.getElementById('gameModal').style.display = "block";
         }
 
-        function closeModal() {
-            document.getElementById('gameModal').style.display = 'none';
+        function closeModal() { document.getElementById('gameModal').style.display = "none"; }
+
+        window.onclick = (e) => { if(e.target == document.getElementById('gameModal')) closeModal(); }
+
+        function createCard(item, isEmu = false) {
+            const isFav = favorites.includes(item.name);
+            const div = document.createElement('div');
+            div.className = 'game-card';
+            div.onmousedown = () => startPress(item.name);
+            div.onmouseup = cancelPress;
+            div.ontouchstart = () => startPress(item.name);
+            div.ontouchend = cancelPress;
+            div.innerHTML = `
+                <div class="game-info">
+                    <h3>${item.name}</h3>
+                    <div class="badge-row">
+                        <span class="badge size">${item.size}</span>
+                        <span class="badge">CSO</span>
+                        ${isEmu ? '' : `<span class="badge">PSP</span>`}
+                    </div>
+                </div>
+                <div class="actions">
+                    ${isEmu ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.name.replace(/'/g, "\\'")}')"><i data-lucide="heart" fill="${isFav ? 'currentColor' : 'none'}"></i></button>`}
+                    <a href="${item.link}" target="_blank" class="btn-download" onclick="event.stopPropagation();"><i data-lucide="download"></i></a>
+                </div>`;
+            return div;
         }
 
-        function createCard(game) {
-            const isFav = favorites.includes(game.name);
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.onclick = () => openInfo(game.name, game.link);
-            
-            card.innerHTML = `
-                <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFav('${game.name}', event)">
-                    ${isFav ? '❤️' : '🤍'}
-                </button>
-                <div class="game-name">${game.name}</div>
-                <div class="game-size">💾 ${game.size}</div>
-                <a href="${game.link}" class="dl-link" onclick="event.stopPropagation()">DOWNLOAD</a>
-            `;
-            return card;
+        function filterAndSort() {
+            const query = document.getElementById('searchBar').value.toLowerCase();
+            const order = document.getElementById('sortOrder').value;
+            let filtered = games.filter(g => {
+                const matchSearch = g.name.toLowerCase().includes(query);
+                let matchTag = true;
+                if (activeTag === "❤️ Favoritos") matchTag = favorites.includes(g.name);
+                else if (activeTag !== "Todos") matchTag = g.category === activeTag;
+                return matchSearch && matchTag;
+            });
+            filtered.sort((a, b) => {
+                if (order === 'az') return a.name.localeCompare(b.name);
+                if (order === 'za') return b.name.localeCompare(a.name);
+                if (order === 'sizeDesc') return parseSize(b.size) - parseSize(a.size);
+                if (order === 'sizeAsc') return parseSize(a.size) - parseSize(b.size);
+            });
+            document.getElementById('stats').innerText = `${filtered.length} jogos encontrados`;
+            displayGames(filtered);
+            lucide.createIcons();
         }
 
-        function render() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
+        function displayGames(list) {
             const content = document.getElementById('content');
             content.innerHTML = '';
-
-            const filtered = gamesData.filter(g => g.name.toLowerCase().includes(query));
-            
-            const categoryOrder = ["⭐ Favoritos", "🕹️ Emuladores", "🗡️ Ação / Aventura", "🔫 Tiro (TPS/FPS)", "🏎️ Corrida", "⚽ Esportes", "🥊 Luta", "🧙‍♂️ RPG / Ação", "🎮 Plataforma / Puzzle / Família", "🧟 Terror"];
-
-            const favGames = filtered.filter(g => favorites.includes(g.name));
-            if (favGames.length > 0) {
-                const t = document.createElement('div'); t.className = 'category-title'; t.innerText = "⭐ MEUS FAVORITOS";
-                content.appendChild(t);
-                const l = document.createElement('div'); l.className = 'game-list';
-                favGames.forEach(g => l.appendChild(createCard(g)));
-                content.appendChild(l);
+            if (activeTag !== "❤️ Favoritos") {
+                const emuDiv = document.createElement('div');
+                emuDiv.className = 'game-list';
+                emuDiv.appendChild(createCard(emulatorData, true));
+                content.appendChild(emuDiv);
             }
-
-            const grouped = filtered.reduce((acc, g) => {
+            const grouped = list.reduce((acc, g) => {
                 if (!acc[g.category]) acc[g.category] = [];
                 acc[g.category].push(g);
                 return acc;
             }, {});
-
             Object.keys(grouped).sort((a,b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b)).forEach(cat => {
                 const t = document.createElement('div'); t.className = 'category-title'; t.innerText = cat;
                 content.appendChild(t);
@@ -174,15 +254,26 @@
         }
 
         function copyPix() {
-            navigator.clipboard.writeText("SUA_CHAVE_PIX_AQUI");
-            alert("Chave PIX copiada! Obrigado pelo apoio, vida.");
+            const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
+            navigator.clipboard.writeText(pixCode).then(() => {
+                const btn = document.getElementById('pixBtn');
+                const span = btn.querySelector('span');
+                const originalText = span.innerText;
+                btn.style.background = "#fff";
+                btn.style.color = "#000";
+                span.innerText = "Copiado! 🧡";
+                setTimeout(() => {
+                    btn.style.background = "var(--success)";
+                    btn.style.color = "white";
+                    span.innerText = originalText;
+                }, 2000);
+            });
         }
 
-        window.onclick = function(event) {
-            if (event.target == document.getElementById('gameModal')) closeModal();
-        }
-
-        render();
+        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+        window.onscroll = () => { document.getElementById("backToTop").style.display = window.scrollY > 300 ? "block" : "none"; };
+        initTags();
+        filterAndSort();
     </script>
 </body>
 </html>
