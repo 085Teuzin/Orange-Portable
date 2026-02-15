@@ -26,9 +26,11 @@
         header { margin-bottom: 40px; padding-top: 20px; }
         h1 { color: var(--primary); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
         h2 { color: var(--text-dim); font-weight: 300; margin-top: -10px; margin-bottom: 20px; }
-        .search-container { margin-bottom: 30px; }
-        #searchBar { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s; }
+        .controls-container { display: flex; gap: 10px; margin-bottom: 30px; }
+        #searchBar { flex-grow: 1; padding: 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s; }
         #searchBar:focus { border-color: var(--primary); }
+        #sortOrder { padding: 10px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; cursor: pointer; outline: none; }
+        #sortOrder:focus { border-color: var(--primary); }
         .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.3rem; border-bottom: 1px solid #333; padding-bottom: 5px; text-transform: uppercase; font-weight: bold; }
         .game-list { display: grid; gap: 15px; text-align: left; }
         .game-card { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); transition: transform 0.2s; }
@@ -51,7 +53,7 @@
         #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: none; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4); z-index: 1000; }
         footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
         footer a { color: #60a5fa; text-decoration: none; }
-        @media (max-width: 600px) { .game-card { flex-direction: column; align-items: flex-start; gap: 15px; } .actions { width: 100%; justify-content: space-between; } .btn-download { flex-grow: 1; text-align: center; } }
+        @media (max-width: 600px) { .controls-container { flex-direction: column; } .game-card { flex-direction: column; align-items: flex-start; gap: 15px; } .actions { width: 100%; justify-content: space-between; } .btn-download { flex-grow: 1; text-align: center; } }
     </style>
 </head>
 <body>
@@ -60,8 +62,14 @@
             <h1>Orange Portable</h1>
             <h2>Games CSO for PPSSPP</h2>
         </header>
-        <div class="search-container">
-            <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterGames()">
+        <div class="controls-container">
+            <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterAndSort()">
+            <select id="sortOrder" onchange="filterAndSort()">
+                <option value="az">Nome (A-Z)</option>
+                <option value="za">Nome (Z-A)</option>
+                <option value="sizeDesc">Tamanho (> <)</option>
+                <option value="sizeAsc">Tamanho (< >)</option>
+            </select>
         </div>
         <div id="content"></div>
         <div class="support-area">
@@ -79,32 +87,26 @@
     <script src="database.js"></script>
     <script>
         const games = window.gamesData || [];
-        games.sort((a, b) => a.name.localeCompare(b.name));
         const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
         const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
-        const categoryOrder = [
-            "🗡️ Ação / Aventura",
-            "🚗 Combate Veicular",
-            "🏎️ Corrida",
-            "🏎️ Corrida / Ação",
-            "🏆 Esportes",
-            "🥊 Luta",
-            "🌍 Mundo Aberto / Sandbox",
-            "🏃 Plataforma / Aventura",
-            "🎮 Plataforma / Puzzle / Família",
-            "🧙‍♂️ RPG / Ação",
-            "🌾 Simulação / Vida",
-            "🦌 Simulação de Caça",
-            "👻 Survival Horror",
-            "🔫 Tiro (TPS/FPS)"
-        ];
+        const categoryOrder = ["🗡️ Ação / Aventura", "🚗 Combate Veicular", "🏎️ Corrida", "🏎️ Corrida / Ação", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "🦌 Simulação de Caça", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
+
+        function parseSize(sizeStr) {
+            if (!sizeStr) return 0;
+            const num = parseFloat(sizeStr.split(' ')[0]);
+            if (sizeStr.includes('GB')) return num * 1024;
+            return num;
+        }
+
         function copyPix() { navigator.clipboard.writeText(pixCode).then(() => alert("Código Cópiado! 🧡")); }
+
         function toggleFav(gameName) {
             favorites = favorites.includes(gameName) ? favorites.filter(f => f !== gameName) : [...favorites, gameName];
             localStorage.setItem('orangeFavs', JSON.stringify(favorites));
-            filterGames();
+            filterAndSort();
         }
+
         function createCard(item, isEmulator = false) {
             const isFav = favorites.includes(item.name);
             const card = document.createElement('div');
@@ -117,6 +119,7 @@
                 </div>`;
             return card;
         }
+
         function displayGames(gamesToShow) {
             const content = document.getElementById('content');
             content.innerHTML = '';
@@ -153,14 +156,23 @@
                 content.appendChild(list);
             });
         }
-        function filterGames() {
+
+        function filterAndSort() {
             const query = document.getElementById('searchBar').value.toLowerCase();
-            const filtered = games.filter(g => g.name.toLowerCase().includes(query));
+            const order = document.getElementById('sortOrder').value;
+            let filtered = games.filter(g => g.name.toLowerCase().includes(query));
+            filtered.sort((a, b) => {
+                if (order === 'az') return a.name.localeCompare(b.name);
+                if (order === 'za') return b.name.localeCompare(a.name);
+                if (order === 'sizeDesc') return parseSize(b.size) - parseSize(a.size);
+                if (order === 'sizeAsc') return parseSize(a.size) - parseSize(b.size);
+            });
             displayGames(filtered);
         }
+
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         window.onscroll = () => { document.getElementById("backToTop").style.display = (window.scrollY > 300) ? "block" : "none"; };
-        displayGames(games);
+        filterAndSort();
     </script>
 </body>
 </html>
