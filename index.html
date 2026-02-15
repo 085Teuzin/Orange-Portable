@@ -9,6 +9,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
             --primary: #ff4500;
@@ -36,26 +37,28 @@
         .tag-container::-webkit-scrollbar { display: none; }
         .tag { background: #222; color: var(--text-dim); padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; border: 1px solid #333; transition: 0.3s; }
         .tag.active { background: var(--primary); color: white; border-color: var(--primary); }
-        .btn-random { background: #333; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 20px; width: 100%; transition: 0.3s; }
-        .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.3rem; border-bottom: 1px solid #333; padding-bottom: 5px; text-transform: uppercase; font-weight: bold; }
-        .game-list { display: grid; gap: 15px; text-align: left; }
-        .game-card { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); transition: 0.2s; }
-        .game-card:hover { transform: translateX(5px); background: #1f1f1f; }
-        .game-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
-        .game-info span { color: var(--text-dim); font-size: 0.85rem; background: #252525; padding: 2px 8px; border-radius: 4px; }
-        .empty-state { padding: 40px; color: var(--text-dim); }
-        .actions { display: flex; align-items: center; gap: 15px; }
-        .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.4rem; cursor: pointer; padding: 5px; }
-        .btn-fav.active { color: var(--heart); transform: scale(1.2); }
-        .btn-download { background-color: var(--primary); color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
+        .btn-random { background: #333; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 20px; width: 100%; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.1rem; border-left: 4px solid var(--primary); padding-left: 10px; text-transform: uppercase; font-weight: bold; }
+        .game-list { display: grid; gap: 12px; text-align: left; }
+        .game-card { background: var(--card-bg); padding: 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; transition: 0.2s; }
+        .game-card:hover { border-color: var(--primary); background: #1c1c1c; }
+        .game-info h3 { font-size: 1rem; margin-bottom: 6px; color: #eee; }
+        .badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+        .badge { font-size: 0.7rem; background: #252525; color: var(--text-dim); padding: 2px 8px; border-radius: 4px; text-transform: uppercase; font-weight: 600; border: 1px solid #333; }
+        .badge.size { color: var(--primary); border-color: rgba(255,69,0,0.3); }
+        .actions { display: flex; align-items: center; gap: 12px; }
+        .btn-fav { background: none; border: none; color: #444; cursor: pointer; transition: 0.2s; display: flex; align-items: center; }
+        .btn-fav.active { color: var(--heart); }
+        .btn-download { background-color: var(--primary); color: white; text-decoration: none; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .btn-download:hover { background: var(--primary-hover); transform: scale(1.1); }
         .support-area { margin-top: 50px; padding: 20px; background: #111; border-radius: 15px; border: 1px solid #222; }
         .pix-qrcode { width: 150px; height: 150px; background: white; padding: 10px; border-radius: 10px; margin: 0 auto 15px auto; }
         .pix-qrcode img { width: 100%; height: 100%; }
-        .pix-btn { background: var(--success); color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; display: block; margin-bottom: 10px; }
-        #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; z-index: 1000; }
+        .pix-btn { background: var(--success); color: white; text-decoration: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; transition: 0.3s; }
+        #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
-        footer a { color: #60a5fa; text-decoration: none; }
-        @media (max-width: 600px) { .search-row { flex-direction: column; } .game-card { flex-direction: column; align-items: flex-start; gap: 15px; } .actions { width: 100%; justify-content: space-between; } }
+        footer a { color: var(--primary); text-decoration: none; }
+        @media (max-width: 600px) { .search-row { flex-direction: column; } .game-card { padding: 12px; } .game-info h3 { font-size: 0.95rem; } }
     </style>
 </head>
 <body>
@@ -77,23 +80,29 @@
             <div class="tag-container" id="tagContainer"></div>
         </div>
         <div id="stats" class="stats-info"></div>
-        <button class="btn-random" onclick="randomGame()">🎲 Me surpreenda com um jogo!</button>
+        <button class="btn-random" onclick="randomGame()">
+            <i data-lucide="dices"></i> Me surpreenda com um jogo!
+        </button>
         <div id="content"></div>
         <div class="support-area">
             <div class="pix-qrcode">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" alt="QR Code Pix">
             </div>
-            <a class="pix-btn" onclick="copyPix()">📋 Copiar Pix</a>
-            <a href="https://wa.me/5585991272125" target="_blank" style="color:var(--text-dim); text-decoration:none; font-size:0.8rem;">Sugerir novo jogo</a>
+            <a class="pix-btn" id="pixBtn" onclick="copyPix()">
+                <i data-lucide="copy"></i> <span>Copiar Pix</span>
+            </a>
+            <a href="https://wa.me/5585991272125" target="_blank" style="color:var(--text-dim); text-decoration:none; font-size:0.8rem; display: flex; align-items: center; justify-content: center; gap: 5px;">
+                <i data-lucide="message-circle" size="14"></i> Sugerir novo jogo
+            </a>
         </div>
-        <button id="backToTop" onclick="scrollToTop()">↑</button>
+        <button id="backToTop" onclick="scrollToTop()"><i data-lucide="arrow-up"></i></button>
         <footer>Made By: <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_Teuzinnn</a></footer>
     </div>
     <script src="database.js"></script>
     <script>
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
         const games = window.gamesData || [];
-        const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
+        const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador", size: "Oficial" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
         let activeTag = "Todos";
         const categoryOrder = ["🗡️ Ação / Aventura", "🚗 Combate Veicular", "🏎️ Corrida", "🏎️ Corrida / Ação", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "🦌 Simulação de Caça", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
@@ -138,10 +147,17 @@
             const div = document.createElement('div');
             div.className = 'game-card';
             div.innerHTML = `
-                <div class="game-info"><h3>${item.name}</h3>${isEmu ? '' : `<span>${item.size}</span>`}</div>
+                <div class="game-info">
+                    <h3>${item.name}</h3>
+                    <div class="badge-row">
+                        <span class="badge size">${item.size}</span>
+                        <span class="badge">CSO</span>
+                        ${isEmu ? '' : `<span class="badge">PSP</span>`}
+                    </div>
+                </div>
                 <div class="actions">
-                    ${isEmu ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\'")}')">❤</button>`}
-                    <a href="${item.link}" target="_blank" class="btn-download">Download</a>
+                    ${isEmu ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\'")}')"><i data-lucide="heart" fill="${isFav ? 'currentColor' : 'none'}"></i></button>`}
+                    <a href="${item.link}" target="_blank" class="btn-download"><i data-lucide="download"></i></a>
                 </div>`;
             return div;
         }
@@ -163,6 +179,7 @@
             });
             document.getElementById('stats').innerText = `${filtered.length} jogos encontrados`;
             displayGames(filtered);
+            lucide.createIcons();
         }
         function displayGames(list) {
             const content = document.getElementById('content');
@@ -190,7 +207,23 @@
                 content.appendChild(l);
             });
         }
-        function copyPix() { navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2").then(() => alert("Copiado! 🧡")); }
+        function copyPix() { 
+            const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
+            navigator.clipboard.writeText(pixCode).then(() => {
+                const btn = document.getElementById('pixBtn');
+                const span = btn.querySelector('span');
+                const icon = btn.querySelector('i');
+                const originalText = span.innerText;
+                btn.style.background = "#ffffff";
+                btn.style.color = "#000000";
+                span.innerText = "Copiado! 🧡";
+                setTimeout(() => {
+                    btn.style.background = "var(--success)";
+                    btn.style.color = "white";
+                    span.innerText = originalText;
+                }, 2000);
+            });
+        }
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         window.onscroll = () => { document.getElementById("backToTop").style.display = window.scrollY > 300 ? "block" : "none"; };
         initTags();
