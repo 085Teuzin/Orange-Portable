@@ -18,39 +18,31 @@
             --text: #ffffff;
             --text-dim: #b3b3b3;
             --heart: #ff4b4b;
-            --success: #22c55e;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--bg); color: var(--text); line-height: 1.6; padding: env(safe-area-inset-top) 20px 20px 20px; }
-        .container { max-width: 800px; margin: 0 auto; text-align: center; position: relative; }
-        header { margin-bottom: 40px; padding-top: 20px; }
-        h1 { color: var(--primary); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
-        h2 { color: var(--text-dim); font-weight: 300; margin-top: -10px; margin-bottom: 20px; }
-        .search-container { margin-bottom: 30px; }
-        #searchBar { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding: env(safe-area-inset-top) 15px 20px 15px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { padding: 30px 0; text-align: center; }
+        h1 { color: var(--primary); font-size: 2.2rem; text-transform: uppercase; }
+        h2 { color: var(--text-dim); font-size: 0.9rem; font-weight: 300; margin-bottom: 20px; }
+        #searchBar { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; margin-bottom: 20px; outline: none; }
         #searchBar:focus { border-color: var(--primary); }
-        .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.3rem; border-bottom: 1px solid #333; padding-bottom: 5px; text-transform: uppercase; font-weight: bold; }
-        .game-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; text-align: left; }
-        .game-card { background: var(--card-bg); border-radius: 12px; display: flex; flex-direction: column; border: 1px solid #222; overflow: hidden; transition: transform 0.2s; position: relative; }
-        .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
-        .card-top { display: flex; padding: 15px; align-items: flex-start; gap: 15px; }
-        .game-cover { width: 90px; height: 130px; object-fit: cover; border-radius: 6px; background: #222; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .game-info { flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
-        .game-info h3 { font-size: 1.1rem; color: #fff; line-height: 1.2; padding-right: 25px; }
-        .game-info span { color: var(--primary); font-weight: bold; font-size: 0.9rem; }
-        .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.5rem; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 2; }
+        .category-title { color: var(--primary); margin: 25px 0 10px 0; font-size: 1.1rem; border-bottom: 1px solid #222; padding-bottom: 5px; text-transform: uppercase; font-weight: bold; }
+        .game-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+        .game-card { background: var(--card-bg); border-radius: 10px; display: flex; align-items: center; padding: 10px; border: 1px solid #222; position: relative; gap: 12px; }
+        .game-cover { width: 55px; height: 80px; object-fit: cover; border-radius: 5px; background: #222; flex-shrink: 0; }
+        .game-info { flex-grow: 1; min-width: 0; }
+        .game-info h3 { font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 4px; color: #fff; }
+        .game-info span { color: var(--text-dim); font-size: 0.75rem; display: block; margin-bottom: 8px; }
+        .btn-download { background: var(--primary); color: white; text-decoration: none; padding: 6px 12px; border-radius: 4px; font-weight: bold; font-size: 0.75rem; display: inline-block; transition: 0.2s; }
+        .btn-download:hover { background: var(--primary-hover); }
+        .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.2rem; cursor: pointer; position: absolute; top: 8px; right: 8px; }
         .btn-fav.active { color: var(--heart); }
-        .btn-download { background-color: var(--primary); color: white; text-decoration: none; width: 100%; padding: 15px; text-align: center; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; transition: background 0.3s; display: block; border: none; }
-        .btn-download:hover { background-color: var(--primary-hover); }
-        .support-area { margin-top: 50px; padding: 25px; background: #111; border-radius: 15px; display: inline-block; border: 1px solid #222; max-width: 100%; }
-        .pix-qrcode { width: 150px; height: 150px; background: white; padding: 10px; border-radius: 10px; margin: 0 auto 15px auto; }
-        .pix-qrcode img { width: 100%; height: 100%; }
-        .dev-links { display: flex; flex-direction: column; gap: 12px; }
-        .pix-btn { background: var(--success); color: white !important; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: none; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4); z-index: 1000; }
-        footer { margin-top: 40px; padding: 20px; color: #555; font-size: 0.875rem; }
-        footer a { color: var(--primary); text-decoration: none; }
-        @media (max-width: 400px) { .game-list { grid-template-columns: 1fr; } }
+        .support-area { margin-top: 40px; text-align: center; padding: 20px; background: #111; border-radius: 12px; border: 1px solid #222; }
+        .pix-btn { background: #22c55e; color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; display: inline-block; margin-top: 10px; }
+        #backToTop { position: fixed; bottom: 20px; right: 20px; background: var(--primary); color: white; border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: none; z-index: 100; }
+        footer { text-align: center; padding: 30px; color: #444; font-size: 0.8rem; }
+        @media (max-width: 600px) { .game-list { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -59,99 +51,85 @@
             <h1>Orange Portable</h1>
             <h2>Games CSO for PPSSPP</h2>
         </header>
-        <div class="search-container">
-            <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterGames()">
-        </div>
+        <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterGames()">
         <div id="content"></div>
         <div class="support-area">
-            <div class="pix-qrcode">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" alt="QR Code Pix">
-            </div>
-            <div class="dev-links">
-                <a class="pix-btn" onclick="copyPix()">📋 Copiar Pix Copia e Cola</a>
-                <a href="https://wa.me/5585991272125?text=Olá,%20tenho%20uma%20sugestão/dúvida" target="_blank" style="color:#b3b3b3; text-decoration:none; font-size:0.8rem;">🗣 Reclamar / Sugestões</a>
-            </div>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" style="background:white; padding:5px; border-radius:8px;">
+            <br><a class="pix-btn" onclick="copyPix()">📋 Copiar Pix</a>
         </div>
         <button id="backToTop" onclick="scrollToTop()">↑</button>
-        <footer>Made By: <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_Teuzinnn</a></footer>
+        <footer>Made By: @085_Teuzinnn</footer>
     </div>
     <script src="database.js"></script>
     <script>
         const games = window.gamesData || [];
         games.sort((a, b) => a.name.localeCompare(b.name));
-        const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
-        const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
-        const categoryOrder = ["🗡️ Ação / Aventura", "🚗 COMBATE VEICULAR", "🏎️ CORRIDA", "🏎️ CORRIDA / AÇÃO", "🏆 ESPORTES", "🥊 LUTA", "🌍 MUNDO ABERTO / SANDBOX", "🏃 PLATAFORMA / AVENTURA", "🎮 PLATAFORMA / PUZZLE / FAMÍLIA", "🧙‍♂️ RPG / AÇÃO", "🌾 SIMULAÇÃO / VIDA", "🦌 SIMULAÇÃO DE CAÇA", "👻 SURVIVAL HORROR", "🔫 TIRO (TPS/FPS)"];
-        
-        function copyPix() { navigator.clipboard.writeText(pixCode).then(() => alert("Código Cópiado! 🧡")); }
-        function toggleFav(gameName) {
-            favorites = favorites.includes(gameName) ? favorites.filter(f => f !== gameName) : [...favorites, gameName];
+
+        function toggleFav(name) {
+            favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [...favorites, name];
             localStorage.setItem('orangeFavs', JSON.stringify(favorites));
             filterGames();
         }
+
         function getCoverUrl(gameName) {
-            let name = gameName;
-            if(name.includes(" - ")) name = name.split(" - ")[0];
-            const formattedName = encodeURIComponent(name).replace(/'/g, "%27");
-            return `https://thumbnails.libretro.com/Sony%20-%20PlayStation%20Portable/Named_Boxarts/${formattedName}.png`;
+            let cleanName = gameName.split(' - ')[0].split(' : ')[0];
+            return `https://thumbnails.libretro.com/Sony%20-%20PlayStation%20Portable/Named_Boxarts/${encodeURIComponent(cleanName)}.png`;
         }
-        function createCard(item, isEmulator = false) {
+
+        function createCard(item, isEmu = false) {
             const isFav = favorites.includes(item.name);
-            const card = document.createElement('div');
-            card.className = 'game-card';
-            const coverImg = isEmulator ? 'icon.png' : getCoverUrl(item.name);
-            card.innerHTML = `
-                <div class="card-top">
-                    <img class="game-cover" src="${coverImg}" onerror="this.src='icon.png'">
-                    <div class="game-info">
-                        <h3>${item.name}</h3>
-                        ${isEmulator ? '' : `<span>${item.size}</span>`}
-                    </div>
-                    ${isEmulator ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\"')}')">❤</button>`}
+            const div = document.createElement('div');
+            div.className = 'game-card';
+            div.innerHTML = `
+                <img class="game-cover" src="${isEmu ? 'icon.png' : getCoverUrl(item.name)}" onerror="this.src='icon.png'">
+                <div class="game-info">
+                    <h3>${item.name}</h3>
+                    <span>${isEmu ? 'App Oficial' : item.size}</span>
+                    <a href="${item.link}" target="_blank" class="btn-download">Download</a>
                 </div>
-                <a href="${item.link}" target="_blank" class="btn-download">Botão de Download</a>
+                ${isEmu ? '' : `<button class="btn-fav ${isFav?'active':''}" onclick="toggleFav('${item.name.replace(/'/g, "\\'")}')">❤</button>`}
             `;
-            return card;
+            return div;
         }
-        function displayGames(gamesToShow) {
+
+        function displayGames(list) {
             const content = document.getElementById('content');
             content.innerHTML = '';
-            const emuList = document.createElement('div');
-            emuList.className = 'game-list';
-            emuList.appendChild(createCard(emulatorData, true));
-            content.appendChild(emuList);
-            const favGames = games.filter(g => favorites.includes(g.name));
-            if (favGames.length > 0) {
-                const title = document.createElement('div'); title.className = 'category-title'; title.innerText = "❤️ Meus Favoritos";
-                content.appendChild(title);
-                const list = document.createElement('div'); list.className = 'game-list';
-                favGames.forEach(g => list.appendChild(createCard(g)));
-                content.appendChild(list);
+            
+            const emuSection = document.createElement('div');
+            emuSection.className = 'game-list';
+            emuSection.appendChild(createCard({name: "PPSSPP Emulador", link: "https://www.ppsspp.org/download/"}, true));
+            content.appendChild(emuSection);
+
+            const favs = list.filter(g => favorites.includes(g.name));
+            if(favs.length > 0) {
+                const t = document.createElement('div'); t.className = 'category-title'; t.innerText = "❤️ Favoritos";
+                content.appendChild(t);
+                const l = document.createElement('div'); l.className = 'game-list';
+                favs.forEach(g => l.appendChild(createCard(g)));
+                content.appendChild(l);
             }
-            const grouped = gamesToShow.reduce((acc, game) => {
-                const cat = game.category.toUpperCase();
-                if (!acc[cat]) acc[cat] = [];
-                acc[cat].push(game);
-                return acc;
-            }, {});
-            categoryOrder.forEach(cat => {
-                if (grouped[cat]) {
-                    const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
-                    content.appendChild(title);
-                    const list = document.createElement('div'); list.className = 'game-list';
-                    grouped[cat].forEach(game => list.appendChild(createCard(game)));
-                    content.appendChild(list);
-                }
+
+            const cats = [...new Set(list.map(g => g.category))].sort();
+            cats.forEach(cat => {
+                const t = document.createElement('div'); t.className = 'category-title'; t.innerText = cat;
+                content.appendChild(t);
+                const l = document.createElement('div'); l.className = 'game-list';
+                list.filter(g => g.category === cat).forEach(g => l.appendChild(createCard(g)));
+                content.appendChild(l);
             });
         }
+
         function filterGames() {
             const query = document.getElementById('searchBar').value.toLowerCase();
-            const filtered = games.filter(g => g.name.toLowerCase().includes(query));
-            displayGames(filtered);
+            displayGames(games.filter(g => g.name.toLowerCase().includes(query)));
         }
-        function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-        window.onscroll = () => { document.getElementById("backToTop").style.display = (window.scrollY > 300) ? "block" : "none"; };
+
+        function copyPix() { navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2").then(() => alert("Pix copiado! 🧡")); }
+        function scrollToTop() { window.scrollTo({top: 0, behavior: 'smooth'}); }
+        window.onscroll = () => { document.getElementById("backToTop").style.display = window.scrollY > 300 ? "block" : "none"; };
+        
         displayGames(games);
     </script>
 </body>
