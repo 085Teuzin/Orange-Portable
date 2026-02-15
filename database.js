@@ -61,7 +61,7 @@ const gamesData = [
     { name: "Monster Jam Path of Destruction", size: "201.25 MB", link: "https://seulink.net/RziMbKqeE", category: "🚗 Combate Veicular" },
     { name: "Mortal Kombat Unchained", size: "335.74 MB", link: "https://4br.me/3FJWEN", category: "🥊 Luta" },
     { name: "NBA Street Showdown", size: "295.58 MB", link: "https://seulink.net/2eHvSWY20", category: "🏆 Esportes" },
-    { name: "Naruto Shippuden Ultimate Ninja Heroes", size: "409.01 MB", link: "https://seulink.net/KZ4wLFRhU", category: "🥊 Luta" },
+    { name: "Naruto Shippuden Ultimate Ninja Heroes 3", size: "409.01 MB", link: "https://seulink.net/KZ4wLFRhU", category: "🥊 Luta" },
     { name: "Naruto Ultimate Ninja Heroes", size: "209.51 MB", link: "https://seulink.net/E8bO5mVhWv", category: "🥊 Luta" },
     { name: "Need for Speed Most Wanted 5-1-0", size: "178.95 MB", link: "https://seulink.net/SpjHYs", category: "🏎️ Corrida" },
     { name: "Need for Speed ProStreet", size: "323.40 MB", link: "https://seulink.net/WpqvxO", category: "🏎️ Corrida" },
