@@ -1,11 +1,12 @@
 {
   "name": "Orange Portable",
   "short_name": "Orange PSP",
-  "description": "Games CSO for PPSSPP",
-  "start_url": "index.html",
+  "description": "A melhor biblioteca de Games CSO para PPSSPP",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0a0a0a",
   "theme_color": "#ff4500",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "icon.png",
