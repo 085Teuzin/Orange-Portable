@@ -29,9 +29,11 @@
         h2 { color: var(--text-dim); font-weight: 300; margin-top: -10px; margin-bottom: 10px; }
         .stats-info { color: var(--primary); font-size: 0.9rem; margin-bottom: 15px; font-weight: bold; }
         .controls-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
-        .search-row { display: flex; gap: 10px; }
-        #searchBar { flex-grow: 1; padding: 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; }
+        .search-row { display: flex; gap: 10px; position: relative; }
+        .search-wrapper { flex-grow: 1; position: relative; display: flex; align-items: center; }
+        #searchBar { width: 100%; padding: 15px 40px 15px 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; }
         #searchBar:focus { border-color: var(--primary); }
+        .clear-search { position: absolute; right: 10px; color: var(--text-dim); cursor: pointer; display: none; }
         #sortOrder { padding: 10px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; cursor: pointer; }
         .tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; white-space: nowrap; scrollbar-width: none; }
         .tag-container::-webkit-scrollbar { display: none; }
@@ -40,8 +42,10 @@
         .btn-random { background: #333; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 20px; width: 100%; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
         .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.1rem; border-left: 4px solid var(--primary); padding-left: 10px; text-transform: uppercase; font-weight: bold; }
         .game-list { display: grid; gap: 12px; text-align: left; }
-        .game-card { background: var(--card-bg); padding: 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; transition: 0.2s; cursor: pointer; }
-        .game-card:active { transform: scale(0.98); background: #1c1c1c; }
+        .game-card { background: var(--card-bg); padding: 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid #222; transition: all 0.2s ease; cursor: pointer; position: relative; overflow: hidden; }
+        .game-card:active { transform: scale(0.96); border-color: var(--primary); background: #1c1c1c; }
+        .game-card.pressing { animation: pulseBorder 1s infinite; }
+        @keyframes pulseBorder { 0% { border-color: #222; } 50% { border-color: var(--primary); } 100% { border-color: #222; } }
         .game-info h3 { font-size: 1rem; margin-bottom: 6px; color: #eee; }
         .badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
         .badge { font-size: 0.7rem; background: #252525; color: var(--text-dim); padding: 2px 8px; border-radius: 4px; text-transform: uppercase; font-weight: 600; border: 1px solid #333; }
@@ -65,6 +69,7 @@
         #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
         footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
         footer a { color: var(--primary); text-decoration: none; }
+        .error-msg { color: #ff4b4b; padding: 40px 20px; background: #1a1111; border-radius: 12px; border: 1px solid #331111; margin-top: 20px; }
         @media (max-width: 600px) { .search-row { flex-direction: column; } .modal-content { margin: 30% auto; } }
     </style>
 </head>
@@ -76,7 +81,10 @@
         </header>
         <div class="controls-container">
             <div class="search-row">
-                <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterAndSort()">
+                <div class="search-wrapper">
+                    <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="handleSearch()">
+                    <i data-lucide="x" class="clear-search" id="clearSearch" onclick="clearSearch()"></i>
+                </div>
                 <select id="sortOrder" onchange="filterAndSort()">
                     <option value="az">A-Z</option>
                     <option value="za">Z-A</option>
@@ -127,16 +135,37 @@
     <script src="database.js"></script>
     <script src="infobase.js"></script>
     <script>
-        if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => console.log("SW error", err));
+            });
+        }
+
         const games = window.gamesData || [];
         const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador", size: "Oficial" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
         let activeTag = "Todos";
         let pressTimer;
+
         const categoryOrder = ["🗡️ Ação / Aventura", "🚗 Combate Veicular", "🏎️ Corrida", "🏎️ Corrida / Ação", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "🦌 Simulação de Caça", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
+
+        function checkDatabase() {
+            if (games.length === 0) {
+                document.getElementById('content').innerHTML = `
+                    <div class="error-msg">
+                        <i data-lucide="alert-circle" size="40"></i>
+                        <p style="margin-top:10px">Opa! Não consegui carregar a lista de jogos.</p>
+                        <small>Verifique se o arquivo database.js está presente.</small>
+                    </div>`;
+                lucide.createIcons();
+                return false;
+            }
+            return true;
+        }
 
         function initTags() {
             const container = document.getElementById('tagContainer');
+            if (!container) return;
             container.innerHTML = '';
             let tags = ["Todos"];
             if (favorites.length > 0) tags.push("❤️ Favoritos");
@@ -151,13 +180,27 @@
             });
         }
 
+        function handleSearch() {
+            const val = document.getElementById('searchBar').value;
+            document.getElementById('clearSearch').style.display = val.length > 0 ? "block" : "none";
+            filterAndSort();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('searchBar');
+            input.value = "";
+            document.getElementById('clearSearch').style.display = "none";
+            filterAndSort();
+        }
+
         function parseSize(s) {
-            if (!s) return 0;
-            let n = parseFloat(s);
-            return s.includes('GB') ? n * 1024 : n;
+            if (!s || s === "Oficial") return 0;
+            let n = parseFloat(s.replace(',', '.'));
+            return s.toUpperCase().includes('GB') ? n * 1024 : n;
         }
 
         function randomGame() {
+            if (games.length === 0) return;
             const game = games[Math.floor(Math.random() * games.length)];
             showGameInfo(game.name);
         }
@@ -169,8 +212,19 @@
             filterAndSort();
         }
 
-        function startPress(name) { pressTimer = setTimeout(() => showGameInfo(name), 1000); }
-        function cancelPress() { clearTimeout(pressTimer); }
+        function startPress(e, name) {
+            const card = e.currentTarget;
+            card.classList.add('pressing');
+            pressTimer = setTimeout(() => {
+                card.classList.remove('pressing');
+                showGameInfo(name);
+            }, 700);
+        }
+
+        function cancelPress(e) {
+            e.currentTarget.classList.remove('pressing');
+            clearTimeout(pressTimer);
+        }
 
         function showGameInfo(name) {
             const info = (window.gamesInfo && window.gamesInfo[name]) ? window.gamesInfo[name] : { description: "Detalhes em breve...", release: "Desconhecido", compat: "Testando..." };
@@ -189,10 +243,13 @@
             const isFav = favorites.includes(item.name);
             const div = document.createElement('div');
             div.className = 'game-card';
-            div.onmousedown = () => startPress(item.name);
-            div.onmouseup = cancelPress;
-            div.ontouchstart = () => startPress(item.name);
-            div.ontouchend = cancelPress;
+            if (!isEmu) {
+                div.addEventListener('mousedown', (e) => startPress(e, item.name));
+                div.addEventListener('mouseup', cancelPress);
+                div.addEventListener('mouseleave', cancelPress);
+                div.addEventListener('touchstart', (e) => startPress(e, item.name));
+                div.addEventListener('touchend', cancelPress);
+            }
             div.innerHTML = `
                 <div class="game-info">
                     <h3>${item.name}</h3>
@@ -210,6 +267,7 @@
         }
 
         function filterAndSort() {
+            if (!checkDatabase()) return;
             const query = document.getElementById('searchBar').value.toLowerCase();
             const order = document.getElementById('sortOrder').value;
             let filtered = games.filter(g => {
@@ -272,6 +330,8 @@
 
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         window.onscroll = () => { document.getElementById("backToTop").style.display = window.scrollY > 300 ? "block" : "none"; };
+        
+        checkDatabase();
         initTags();
         filterAndSort();
     </script>
