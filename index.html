@@ -30,29 +30,27 @@
         #searchBar { width: 100%; padding: 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; transition: border-color 0.3s; }
         #searchBar:focus { border-color: var(--primary); }
         .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.3rem; border-bottom: 1px solid #333; padding-bottom: 5px; text-transform: uppercase; font-weight: bold; }
-        .game-list { display: grid; gap: 15px; text-align: left; }
-        .game-card { background: var(--card-bg); border-radius: 12px; display: flex; align-items: center; border-left: 4px solid var(--primary); transition: transform 0.2s; overflow: hidden; position: relative; min-height: 100px; }
-        .game-card:hover { transform: translateX(5px); background: #1f1f1f; }
-        .game-cover { width: 70px; height: 100px; object-fit: cover; background: #222; flex-shrink: 0; }
-        .game-info { flex-grow: 1; padding: 15px; }
-        .game-info h3 { font-size: 1.05rem; margin-bottom: 5px; padding-right: 30px; }
-        .game-info span { color: var(--text-dim); font-size: 0.8rem; background: #252525; padding: 2px 8px; border-radius: 4px; }
-        .actions { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; padding: 10px; height: 100%; }
-        .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.4rem; cursor: pointer; transition: transform 0.2s, color 0.2s; position: absolute; top: 10px; right: 10px; }
-        .btn-fav.active { color: var(--heart); transform: scale(1.2); }
-        .btn-download { background-color: var(--primary); color: white; text-decoration: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; font-size: 0.85rem; transition: background 0.3s; margin-top: 10px; }
+        .game-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; text-align: left; }
+        .game-card { background: var(--card-bg); border-radius: 12px; display: flex; flex-direction: column; border: 1px solid #222; overflow: hidden; transition: transform 0.2s; position: relative; }
+        .game-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .card-top { display: flex; padding: 15px; align-items: flex-start; gap: 15px; }
+        .game-cover { width: 90px; height: 130px; object-fit: cover; border-radius: 6px; background: #222; flex-shrink: 0; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .game-info { flex-grow: 1; display: flex; flex-direction: column; gap: 8px; }
+        .game-info h3 { font-size: 1.1rem; color: #fff; line-height: 1.2; padding-right: 25px; }
+        .game-info span { color: var(--primary); font-weight: bold; font-size: 0.9rem; }
+        .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.5rem; cursor: pointer; position: absolute; top: 15px; right: 15px; z-index: 2; }
+        .btn-fav.active { color: var(--heart); }
+        .btn-download { background-color: var(--primary); color: white; text-decoration: none; width: 100%; padding: 15px; text-align: center; font-weight: bold; text-transform: uppercase; font-size: 0.9rem; transition: background 0.3s; display: block; border: none; }
         .btn-download:hover { background-color: var(--primary-hover); }
-        .support-area { margin-top: 50px; padding: 20px; background: #111; border-radius: 15px; display: inline-block; border: 1px solid #222; }
+        .support-area { margin-top: 50px; padding: 25px; background: #111; border-radius: 15px; display: inline-block; border: 1px solid #222; max-width: 100%; }
         .pix-qrcode { width: 150px; height: 150px; background: white; padding: 10px; border-radius: 10px; margin: 0 auto 15px auto; }
         .pix-qrcode img { width: 100%; height: 100%; }
         .dev-links { display: flex; flex-direction: column; gap: 12px; }
-        .pix-btn { background: var(--success); color: white !important; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; cursor: pointer; }
-        .complaint-link { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
-        .complaint-link:hover { color: var(--primary); }
+        .pix-btn { background: var(--success); color: white !important; text-decoration: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; }
         #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; font-size: 1.5rem; display: none; box-shadow: 0 4px 15px rgba(255, 69, 0, 0.4); z-index: 1000; }
-        footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
-        footer a { color: #60a5fa; text-decoration: none; }
-        @media (max-width: 600px) { .game-info h3 { font-size: 0.95rem; } .game-cover { width: 60px; height: 90px; } }
+        footer { margin-top: 40px; padding: 20px; color: #555; font-size: 0.875rem; }
+        footer a { color: var(--primary); text-decoration: none; }
+        @media (max-width: 400px) { .game-list { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -71,7 +69,7 @@
             </div>
             <div class="dev-links">
                 <a class="pix-btn" onclick="copyPix()">📋 Copiar Pix Copia e Cola</a>
-                <a href="https://wa.me/5585991272125?text=Olá,%20tenho%20uma%20sugestão/dúvida" target="_blank" class="complaint-link">🗣 Reclamar / Sugestões</a>
+                <a href="https://wa.me/5585991272125?text=Olá,%20tenho%20uma%20sugestão/dúvida" target="_blank" style="color:#b3b3b3; text-decoration:none; font-size:0.8rem;">🗣 Reclamar / Sugestões</a>
             </div>
         </div>
         <button id="backToTop" onclick="scrollToTop()">↑</button>
@@ -84,22 +82,8 @@
         const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
         const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
-        const categoryOrder = [
-            "🗡️ Ação / Aventura",
-            "🚗 Combate Veicular",
-            "🏎️ Corrida",
-            "🏎️ Corrida / Ação",
-            "🏆 Esportes",
-            "🥊 Luta",
-            "🌍 Mundo Aberto / Sandbox",
-            "🏃 Plataforma / Aventura",
-            "🎮 Plataforma / Puzzle / Família",
-            "🧙‍♂️ RPG / Ação",
-            "🌾 Simulação / Vida",
-            "🦌 Simulação de Caça",
-            "👻 Survival Horror",
-            "🔫 Tiro (TPS/FPS)"
-        ];
+        const categoryOrder = ["🗡️ Ação / Aventura", "🚗 COMBATE VEICULAR", "🏎️ CORRIDA", "🏎️ CORRIDA / AÇÃO", "🏆 ESPORTES", "🥊 LUTA", "🌍 MUNDO ABERTO / SANDBOX", "🏃 PLATAFORMA / AVENTURA", "🎮 PLATAFORMA / PUZZLE / FAMÍLIA", "🧙‍♂️ RPG / AÇÃO", "🌾 SIMULAÇÃO / VIDA", "🦌 SIMULAÇÃO DE CAÇA", "👻 SURVIVAL HORROR", "🔫 TIRO (TPS/FPS)"];
+        
         function copyPix() { navigator.clipboard.writeText(pixCode).then(() => alert("Código Cópiado! 🧡")); }
         function toggleFav(gameName) {
             favorites = favorites.includes(gameName) ? favorites.filter(f => f !== gameName) : [...favorites, gameName];
@@ -107,7 +91,9 @@
             filterGames();
         }
         function getCoverUrl(gameName) {
-            const formattedName = encodeURIComponent(gameName);
+            let name = gameName;
+            if(name.includes(" - ")) name = name.split(" - ")[0];
+            const formattedName = encodeURIComponent(name).replace(/'/g, "%27");
             return `https://thumbnails.libretro.com/Sony%20-%20PlayStation%20Portable/Named_Boxarts/${formattedName}.png`;
         }
         function createCard(item, isEmulator = false) {
@@ -116,13 +102,15 @@
             card.className = 'game-card';
             const coverImg = isEmulator ? 'icon.png' : getCoverUrl(item.name);
             card.innerHTML = `
-                <img class="game-cover" src="${coverImg}" onerror="this.src='icon.png'" alt="capa">
-                <div class="game-info">
-                    <h3>${item.name}</h3>
-                    ${isEmulator ? '' : `<span>${item.size}</span>`}
-                    <div><a href="${item.link}" target="_blank" class="btn-download">Download</a></div>
+                <div class="card-top">
+                    <img class="game-cover" src="${coverImg}" onerror="this.src='icon.png'">
+                    <div class="game-info">
+                        <h3>${item.name}</h3>
+                        ${isEmulator ? '' : `<span>${item.size}</span>`}
+                    </div>
+                    ${isEmulator ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\"')}')">❤</button>`}
                 </div>
-                ${isEmulator ? '' : `<button class="btn-fav ${isFav ? 'active' : ''}" onclick="toggleFav('${item.name.replace(/'/g, "\\'")}')">❤</button>`}
+                <a href="${item.link}" target="_blank" class="btn-download">Botão de Download</a>
             `;
             return card;
         }
@@ -142,24 +130,19 @@
                 content.appendChild(list);
             }
             const grouped = gamesToShow.reduce((acc, game) => {
-                if (!acc[game.category]) acc[game.category] = [];
-                acc[game.category].push(game);
+                const cat = game.category.toUpperCase();
+                if (!acc[cat]) acc[cat] = [];
+                acc[cat].push(game);
                 return acc;
             }, {});
-            const currentCategories = Object.keys(grouped);
-            currentCategories.sort((a, b) => {
-                let indexA = categoryOrder.indexOf(a);
-                let indexB = categoryOrder.indexOf(b);
-                if (indexA === -1) indexA = 99;
-                if (indexB === -1) indexB = 99;
-                return indexA - indexB;
-            });
-            currentCategories.forEach(cat => {
-                const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
-                content.appendChild(title);
-                const list = document.createElement('div'); list.className = 'game-list';
-                grouped[cat].forEach(game => list.appendChild(createCard(game)));
-                content.appendChild(list);
+            categoryOrder.forEach(cat => {
+                if (grouped[cat]) {
+                    const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
+                    content.appendChild(title);
+                    const list = document.createElement('div'); list.className = 'game-list';
+                    grouped[cat].forEach(game => list.appendChild(createCard(game)));
+                    content.appendChild(list);
+                }
             });
         }
         function filterGames() {
