@@ -488,7 +488,38 @@ const gamesInfo = {
         description: "Baseado no desenho animado, lute contra vilões e colete objetos mágicos para salvar o mundo com seus poderes elementais.",
         release: "14/11/2006",
         compat: "Boa"
+    },
+    "God of War Ghost of Sparta": {
+        description: "Embarque em uma jornada pessoal com Kratos para descobrir as origens de seu passado e enfrentar os perigos do submundo.",
+        release: "02/11/2010",
+        compat: "Boa"
+    },
+    "Ben 10 Protector of Earth": {
+        description: "Assuma o controle de Ben e suas transformações alienígenas para recuperar as peças perdidas do Omnitrix e salvar o planeta.",
+        release: "30/10/2007",
+        compat: "Boa"
+    },
+    "Disney Pixar Toy Story 3": {
+        description: "Aventure-se com Woody e Buzz em fases baseadas no filme e um modo de mundo aberto muito divertido.",
+        release: "15/06/2010",
+        compat: "Ótima"
+    },
+    "Grand Theft Auto Chinatown Wars": {
+        description: "Uma aventura de tirar o fôlego em Liberty City com uma perspectiva clássica, focada em tráfico, estratégia e muita ação.",
+        release: "20/10/2009",
+        compat: "Ótima"
+    },
+    "Kao Challengers": {
+        description: "Controle o canguru Kao em uma aventura de plataforma vibrante, enfrentando inimigos com suas luvas de boxe em mundos coloridos.",
+        release: "28/10/2005",
+        compat: "Boa"
+    },
+    "Surf's Up": {
+        description: "Entre na onda com os pinguins do filme 'Tá Dando Onda' em competições de surf cheias de manobras radicais e diversão.",
+        release: "22/05/2007",
+        compat: "Ótima"
     }
+
 };
 
 window.gamesInfo = gamesInfo;
