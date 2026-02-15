@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orange Portable - Made By: @085_Teuzinnn</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#ff4500">
+    <meta name="theme-color" content="#0a0a0a">
     <link rel="apple-touch-icon" href="icon.png">
     <style>
         :root {
@@ -74,20 +74,16 @@
         <button id="backToTop" onclick="scrollToTop()">↑</button>
         <footer>Made By: <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_Teuzinnn</a></footer>
     </div>
-
     <script src="database.js"></script>
-
     <script>
         const games = window.gamesData || [];
         games.sort((a, b) => a.name.localeCompare(b.name));
-
         const pixCode = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
-        const emulatorData = { name: "PPSSPP Emulador", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
+        const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
-
         const categoryOrder = [
             "🗡️ Ação / Aventura",
-            "🚗 COMBATE VEICULAR",
+            "🚗 Combate Veicular",
             "🏎️ Corrida",
             "🏎️ Corrida / Ação",
             "🏆 Esportes",
@@ -101,15 +97,12 @@
             "👻 Survival Horror",
             "🔫 Tiro (TPS/FPS)"
         ];
-
         function copyPix() { navigator.clipboard.writeText(pixCode).then(() => alert("Código Cópiado! 🧡")); }
-
         function toggleFav(gameName) {
             favorites = favorites.includes(gameName) ? favorites.filter(f => f !== gameName) : [...favorites, gameName];
             localStorage.setItem('orangeFavs', JSON.stringify(favorites));
             filterGames();
         }
-
         function createCard(item, isEmulator = false) {
             const isFav = favorites.includes(item.name);
             const card = document.createElement('div');
@@ -122,16 +115,13 @@
                 </div>`;
             return card;
         }
-
         function displayGames(gamesToShow) {
             const content = document.getElementById('content');
             content.innerHTML = '';
-            
             const emuList = document.createElement('div');
             emuList.className = 'game-list';
             emuList.appendChild(createCard(emulatorData, true));
             content.appendChild(emuList);
-
             const favGames = games.filter(g => favorites.includes(g.name));
             if (favGames.length > 0) {
                 const title = document.createElement('div'); title.className = 'category-title'; title.innerText = "❤️ Meus Favoritos";
@@ -140,13 +130,11 @@
                 favGames.forEach(g => list.appendChild(createCard(g)));
                 content.appendChild(list);
             }
-
             const grouped = gamesToShow.reduce((acc, game) => {
                 if (!acc[game.category]) acc[game.category] = [];
                 acc[game.category].push(game);
                 return acc;
             }, {});
-
             const currentCategories = Object.keys(grouped);
             currentCategories.sort((a, b) => {
                 let indexA = categoryOrder.indexOf(a);
@@ -155,7 +143,6 @@
                 if (indexB === -1) indexB = 99;
                 return indexA - indexB;
             });
-
             currentCategories.forEach(cat => {
                 const title = document.createElement('div'); title.className = 'category-title'; title.innerText = cat;
                 content.appendChild(title);
@@ -164,16 +151,13 @@
                 content.appendChild(list);
             });
         }
-
         function filterGames() {
             const query = document.getElementById('searchBar').value.toLowerCase();
             const filtered = games.filter(g => g.name.toLowerCase().includes(query));
             displayGames(filtered);
         }
-
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         window.onscroll = () => { document.getElementById("backToTop").style.display = (window.scrollY > 300) ? "block" : "none"; };
-        
         displayGames(games);
     </script>
 </body>
