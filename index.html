@@ -26,45 +26,35 @@
         header { margin-bottom: 30px; padding-top: 20px; }
         h1 { color: var(--primary); font-size: 2.5rem; text-transform: uppercase; letter-spacing: 2px; }
         h2 { color: var(--text-dim); font-weight: 300; margin-top: -10px; margin-bottom: 10px; }
-        
         .stats-info { color: var(--primary); font-size: 0.9rem; margin-bottom: 15px; font-weight: bold; }
-        
         .controls-container { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; }
         .search-row { display: flex; gap: 10px; }
         #searchBar { flex-grow: 1; padding: 15px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; font-size: 1rem; outline: none; }
         #searchBar:focus { border-color: var(--primary); }
         #sortOrder { padding: 10px; border-radius: 8px; border: 1px solid #333; background: var(--card-bg); color: white; cursor: pointer; }
-        
         .tag-container { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; white-space: nowrap; scrollbar-width: none; }
         .tag-container::-webkit-scrollbar { display: none; }
         .tag { background: #222; color: var(--text-dim); padding: 6px 15px; border-radius: 20px; font-size: 0.85rem; cursor: pointer; border: 1px solid #333; transition: 0.3s; }
         .tag.active { background: var(--primary); color: white; border-color: var(--primary); }
-        
         .btn-random { background: #333; color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-bottom: 20px; width: 100%; transition: 0.3s; }
-        .btn-random:hover { background: #444; color: var(--primary); }
-
         .category-title { color: var(--primary); text-align: left; margin: 30px 0 15px 0; font-size: 1.3rem; border-bottom: 1px solid #333; padding-bottom: 5px; text-transform: uppercase; font-weight: bold; }
         .game-list { display: grid; gap: 15px; text-align: left; }
         .game-card { background: var(--card-bg); padding: 20px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border-left: 4px solid var(--primary); transition: 0.2s; }
         .game-card:hover { transform: translateX(5px); background: #1f1f1f; }
         .game-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
         .game-info span { color: var(--text-dim); font-size: 0.85rem; background: #252525; padding: 2px 8px; border-radius: 4px; }
-        
         .empty-state { padding: 40px; color: var(--text-dim); }
         .actions { display: flex; align-items: center; gap: 15px; }
         .btn-fav { background: none; border: none; color: var(--text-dim); font-size: 1.4rem; cursor: pointer; padding: 5px; }
         .btn-fav.active { color: var(--heart); transform: scale(1.2); }
         .btn-download { background-color: var(--primary); color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; font-size: 0.9rem; }
-
         .support-area { margin-top: 50px; padding: 20px; background: #111; border-radius: 15px; border: 1px solid #222; }
         .pix-qrcode { width: 150px; height: 150px; background: white; padding: 10px; border-radius: 10px; margin: 0 auto 15px auto; }
         .pix-qrcode img { width: 100%; height: 100%; }
         .pix-btn { background: var(--success); color: white; text-decoration: none; padding: 10px 20px; border-radius: 6px; font-weight: bold; cursor: pointer; display: block; margin-bottom: 10px; }
-        
         #backToTop { position: fixed; bottom: 30px; right: 30px; background: var(--primary); color: white; border: none; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: none; z-index: 1000; }
         footer { margin-top: 20px; padding: 20px; color: #555; font-size: 0.875rem; }
         footer a { color: #60a5fa; text-decoration: none; }
-
         @media (max-width: 600px) { .search-row { flex-direction: column; } .game-card { flex-direction: column; align-items: flex-start; gap: 15px; } .actions { width: 100%; justify-content: space-between; } }
     </style>
 </head>
@@ -74,7 +64,6 @@
             <h1>Orange Portable</h1>
             <h2>Games CSO for PPSSPP</h2>
         </header>
-
         <div class="controls-container">
             <div class="search-row">
                 <input type="text" id="searchBar" placeholder="Buscar jogo..." onkeyup="filterAndSort()">
@@ -87,12 +76,9 @@
             </div>
             <div class="tag-container" id="tagContainer"></div>
         </div>
-
         <div id="stats" class="stats-info"></div>
         <button class="btn-random" onclick="randomGame()">🎲 Me surpreenda com um jogo!</button>
-        
         <div id="content"></div>
-
         <div class="support-area">
             <div class="pix-qrcode">
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" alt="QR Code Pix">
@@ -100,57 +86,53 @@
             <a class="pix-btn" onclick="copyPix()">📋 Copiar Pix</a>
             <a href="https://wa.me/5585991272125" target="_blank" style="color:var(--text-dim); text-decoration:none; font-size:0.8rem;">Sugerir novo jogo</a>
         </div>
-
         <button id="backToTop" onclick="scrollToTop()">↑</button>
         <footer>Made By: <a href="https://instagram.com/085_Teuzinnn" target="_blank">@085_Teuzinnn</a></footer>
     </div>
-
     <script src="database.js"></script>
     <script>
         if ('serviceWorker' in navigator) { window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js'); }); }
-
         const games = window.gamesData || [];
         const emulatorData = { name: "PPSSPP Emulador (OFICIAL)", link: "https://www.ppsspp.org/download/", category: "🎮 Emulador" };
         let favorites = JSON.parse(localStorage.getItem('orangeFavs')) || [];
         let activeTag = "Todos";
-
         const categoryOrder = ["🗡️ Ação / Aventura", "🚗 Combate Veicular", "🏎️ Corrida", "🏎️ Corrida / Ação", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "🦌 Simulação de Caça", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
-
         function initTags() {
-            const tags = ["Todos", ...new Set(games.map(g => g.category))].sort();
             const container = document.getElementById('tagContainer');
+            container.innerHTML = '';
+            let tags = ["Todos"];
+            if (favorites.length > 0) tags.push("❤️ Favoritos");
+            const categories = [...new Set(games.map(g => g.category))].sort();
+            tags = [...tags, ...categories];
             tags.forEach(tag => {
                 const el = document.createElement('div');
                 el.className = `tag ${tag === activeTag ? 'active' : ''}`;
-                el.innerText = tag.split(' ')[0] + " " + (tag.split(' ')[1] || "");
+                el.innerText = tag;
                 el.onclick = () => {
-                    document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
-                    el.classList.add('active');
                     activeTag = tag;
+                    initTags();
                     filterAndSort();
                 };
                 container.appendChild(el);
             });
         }
-
         function parseSize(s) {
             if (!s) return 0;
             let n = parseFloat(s);
             return s.includes('GB') ? n * 1024 : n;
         }
-
         function randomGame() {
             const game = games[Math.floor(Math.random() * games.length)];
             alert("Sorteamos para você: " + game.name);
             window.open(game.link, '_blank');
         }
-
         function toggleFav(name) {
             favorites = favorites.includes(name) ? favorites.filter(f => f !== name) : [...favorites, name];
             localStorage.setItem('orangeFavs', JSON.stringify(favorites));
+            if (activeTag === "❤️ Favoritos" && !favorites.includes(name) && favorites.length === 0) activeTag = "Todos";
+            initTags();
             filterAndSort();
         }
-
         function createCard(item, isEmu = false) {
             const isFav = favorites.includes(item.name);
             const div = document.createElement('div');
@@ -163,48 +145,43 @@
                 </div>`;
             return div;
         }
-
         function filterAndSort() {
             const query = document.getElementById('searchBar').value.toLowerCase();
             const order = document.getElementById('sortOrder').value;
-            
             let filtered = games.filter(g => {
                 const matchSearch = g.name.toLowerCase().includes(query);
-                const matchTag = activeTag === "Todos" || g.category === activeTag;
+                let matchTag = true;
+                if (activeTag === "❤️ Favoritos") matchTag = favorites.includes(g.name);
+                else if (activeTag !== "Todos") matchTag = g.category === activeTag;
                 return matchSearch && matchTag;
             });
-
             filtered.sort((a, b) => {
                 if (order === 'az') return a.name.localeCompare(b.name);
                 if (order === 'za') return b.name.localeCompare(a.name);
                 if (order === 'sizeDesc') return parseSize(b.size) - parseSize(a.size);
                 if (order === 'sizeAsc') return parseSize(a.size) - parseSize(b.size);
             });
-
             document.getElementById('stats').innerText = `${filtered.length} jogos encontrados`;
             displayGames(filtered);
         }
-
         function displayGames(list) {
             const content = document.getElementById('content');
             content.innerHTML = '';
-            
             if (list.length === 0) {
-                content.innerHTML = `<div class="empty-state">Nenhum jogo encontrado com esses filtros. 😕</div>`;
+                content.innerHTML = `<div class="empty-state">Nenhum jogo encontrado. 😕</div>`;
                 return;
             }
-
-            const emuDiv = document.createElement('div');
-            emuDiv.className = 'game-list';
-            emuDiv.appendChild(createCard(emulatorData, true));
-            content.appendChild(emuDiv);
-
+            if (activeTag !== "❤️ Favoritos") {
+                const emuDiv = document.createElement('div');
+                emuDiv.className = 'game-list';
+                emuDiv.appendChild(createCard(emulatorData, true));
+                content.appendChild(emuDiv);
+            }
             const grouped = list.reduce((acc, g) => {
                 if (!acc[g.category]) acc[g.category] = [];
                 acc[g.category].push(g);
                 return acc;
             }, {});
-
             Object.keys(grouped).sort((a,b) => categoryOrder.indexOf(a) - categoryOrder.indexOf(b)).forEach(cat => {
                 const t = document.createElement('div'); t.className = 'category-title'; t.innerText = cat;
                 content.appendChild(t);
@@ -213,11 +190,9 @@
                 content.appendChild(l);
             });
         }
-
         function copyPix() { navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2").then(() => alert("Copiado! 🧡")); }
         function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
         window.onscroll = () => { document.getElementById("backToTop").style.display = window.scrollY > 300 ? "block" : "none"; };
-        
         initTags();
         filterAndSort();
     </script>
