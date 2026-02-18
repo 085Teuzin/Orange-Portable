@@ -4,36 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Orange Portable</title>
-    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff4500">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Orange PSP">
     <link rel="apple-touch-icon" href="icon.png">
-
     <style>
-        :root{--p:#f40;--b:#000;--c:#111;--t:#fff}
-        *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+        :root{--p:#f40;--p-rgb:255,68,0;--b:#000;--c:#111;--t:#fff}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;-webkit-tap-highlight-color:transparent}
         body{background:var(--b);color:var(--t);padding:20px;user-select:none;touch-action:manipulation}
         h1{color:var(--p);letter-spacing:2px;text-align:center}
         h2{color:#999;font-size:14px;margin-bottom:20px;text-align:center}
         #stats{color:var(--p);font-weight:700;margin-bottom:10px;font-size:13px;text-align:center}
-        input,select{background:var(--c);border:1px solid #333;color:#fff;padding:12px;border-radius:8px;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px;font-size:16px} /* Fonte 16px evita zoom no iOS */
-        .row{display:flex;gap:8px}
-        .tags{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;--ms-overflow-style:none}
+        .search-container{display:flex;gap:8px;position:relative}
+        input,select{background:var(--c);border:1px solid #333;color:#fff;padding:12px;border-radius:8px;outline:none;appearance:none;-webkit-appearance:none;margin-bottom:10px;font-size:16px}
+        input{flex:1}
+        .tags{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px;scrollbar-width:none;mask-image:linear-gradient(to right, black 90%, transparent 100%)}
         .tags::-webkit-scrollbar{display:none}
-        .tag{background:var(--c);padding:6px 14px;border-radius:20px;font-size:12px;border:1px solid #222;white-space:nowrap}
+        .tag{background:var(--c);padding:6px 14px;border-radius:20px;font-size:12px;border:1px solid #222;white-space:nowrap;cursor:pointer;transition:0.2s}
         .tag.active{background:var(--p);border-color:var(--p)}
-        .rnd{background:var(--c);color:var(--p);border:1px solid var(--p);padding:10px;border-radius:8px;width:100%;font-weight:700;margin-bottom:20px;cursor:pointer}
-        .card{background:var(--c);padding:14px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid #222;transition:0.2s;margin-bottom:10px}
-        .card.active{border-color:var(--p);transform:scale(0.98)}
+        .rnd{background:var(--c);color:var(--p);border:1px solid var(--p);padding:10px;border-radius:8px;width:100%;font-weight:700;margin-bottom:20px;cursor:pointer;transition:0.2s}
+        .rnd:active{transform:scale(0.95);background:rgba(255,68,0,0.1)}
+        .card{background:var(--c);padding:14px;border-radius:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid #222;transition:transform 0.1s, border-color 0.2s;margin-bottom:10px;cursor:pointer}
+        .card:active{border-color:var(--p);transform:scale(0.97)}
         .card h3{font-size:15px;color:#eee}
         .sz{font-size:11px;color:var(--p);background:#000;padding:2px 6px;border-radius:4px;border:1px solid #333}
         .btns{display:flex;gap:15px;align-items:center}
-        .f{background:none;border:none;font-size:18px;filter:grayscale(1);cursor:pointer}
+        .f{background:none;border:none;font-size:18px;filter:grayscale(1);cursor:pointer;transition:0.2s}
         .f.a{filter:grayscale(0)}
-        .dl{background:var(--p);color:#fff;text-decoration:none;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+        .dl{background:var(--p);color:#fff;text-decoration:none;width:35px;height:35px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:0.2s}
+        .dl:active{transform:scale(1.2)}
         .sup{margin-top:40px;padding:20px;background:#080808;border-radius:15px;border:1px solid #111;text-align:center}
         .qr{width:140px;margin:0 auto 15px;background:#fff;padding:5px;border-radius:8px}
         .qr img{width:100%}
@@ -41,90 +42,118 @@
         #pix{background:#22c55e}
         #wa{background:var(--c);border:1px solid var(--p);color:var(--p)}
         .m{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.95);z-index:9}
-        .mc{background:var(--c);margin:25% auto;padding:25px;border:1px solid var(--p);width:85%;border-radius:15px;position:relative}
+        .mc{background:var(--c);margin:25% auto;padding:25px;border:1px solid var(--p);width:85%;border-radius:15px;position:relative;animation:pop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)}
+        @keyframes pop{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
         .inf{margin-top:15px;padding-top:15px;border-top:1px solid #222;font-size:12px;display:flex;justify-content:space-between}
-        #up{position:fixed;bottom:20px;right:20px;background:var(--p);color:#fff;border:none;width:45px;height:45px;border-radius:50%;display:none;cursor:pointer;z-index:8}
+        #up{position:fixed;bottom:20px;right:20px;background:var(--p);color:#fff;border:none;width:45px;height:45px;border-radius:50%;display:none;cursor:pointer;z-index:8;box-shadow:0 4px 15px rgba(0,0,0,0.5)}
     </style>
 </head>
 <body>
     <div style="max-width:800px;margin:0 auto">
         <h1>Orange Portable</h1>
         <h2>Games CSO for PPSSPP</h2>
-        <div class="row">
-            <input type="text" id="s" placeholder="Buscar..." onkeyup="f()">
-            <select id="o" onchange="f()" style="width:40%"><option value="az">A-Z</option><option value="za">Z-A</option></select>
+        <div class="search-container">
+            <input type="text" id="s" placeholder="Buscar jogo..." oninput="f()" aria-label="Buscar jogo">
+            <select id="o" onchange="f()" style="width:35%" aria-label="Ordenar">
+                <option value="az">A-Z</option>
+                <option value="za">Z-A</option>
+            </select>
         </div>
         <div class="tags" id="ts"></div>
         <div id="stats"></div>
         <button class="rnd" onclick="rd()">🎲 Me surpreenda!</button>
         <div id="ct"></div>
         <div class="sup">
-            <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2"></div>
+            <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" alt="QR Code Pix"></div>
             <a class="btn" id="pix" onclick="cp()">📋 <span>Copiar Pix</span></a>
-            <a href="https://api.whatsapp.com/send?phone=5585991272125&text=Fala,%20Teuzin!%20Preciso%20de%20uma%20ajuda%20aqui%20no%20Orange%20Portable.%20Pode%20me%20dar%20um%20suporte%20?" id="wa" class="btn">💬 Suporte</a>
+            <a href="https://api.whatsapp.com/send?phone=5585991272125&text=Fala,%20Teuzin!%20Preciso%20de%20uma%20ajuda%20aqui%20no%20Orange%20Portable." id="wa" class="btn">💬 Suporte</a>
         </div>
-        <button id="up" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+        <button id="up" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Voltar ao topo">▲</button>
     </div>
-    <div id="md" class="m" onclick="cl()"><div class="mc" onclick="event.stopPropagation()"><span onclick="cl()" style="position:absolute;right:15px;top:10px;cursor:pointer">✕</span><h2 id="mt" style="color:var(--p);text-align:left"></h2><p id="mds" style="font-size:14px;line-height:1.5;color:#bbb"></p><div class="inf"><span>📅 <b id="mrl"></b></span><span>🎮 <b id="mcp"></b></span></div></div></div>
+    <div id="md" class="m" onclick="cl()">
+        <div class="mc" onclick="event.stopPropagation()">
+            <span onclick="cl()" style="position:absolute;right:15px;top:10px;cursor:pointer;font-size:20px">✕</span>
+            <h2 id="mt" style="color:var(--p);text-align:left;margin-bottom:10px"></h2>
+            <p id="mds" style="font-size:14px;line-height:1.5;color:#bbb"></p>
+            <div class="inf">
+                <span>📅 <b id="mrl"></b></span>
+                <span>🎮 <b id="mcp"></b></span>
+            </div>
+        </div>
+    </div>
 
     <script src="database.js"></script>
     <script src="infobase.js"></script>
     <script>
-
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                .then(reg => console.log('SW registrado!', reg))
-                .catch(err => console.log('Erro no SW:', err));
+                navigator.serviceWorker.register('./sw.js').catch(() => {});
             });
         }
 
-        const gs=window.gamesData||[],ct=document.getElementById('ct');
-        let fv=JSON.parse(localStorage.getItem('fav'))||[],at="Todos",pt;
+        const gs = window.gamesData || [], ct = document.getElementById('ct');
+        let fv = JSON.parse(localStorage.getItem('fav')) || [], at = "Todos", pt;
         
         function it(){
-            const t=document.getElementById('ts');t.innerHTML='';
-            let l=["Todos"];if(fv.length)l.push("❤️ Favoritos");
-            [...new Set(gs.map(g=>g.category))].sort().forEach(x=>l.push(x));
-            l.forEach(x=>{
-                const e=document.createElement('div');e.className=`tag ${x==at?'active':''}`;e.innerText=x;
-                e.onclick=()=>{at=x;it();f()};t.appendChild(e);
+            const t = document.getElementById('ts'); t.innerHTML = '';
+            let l = ["Todos"]; if(fv.length) l.push("❤️ Favoritos");
+            [...new Set(gs.map(g => g.category))].sort().forEach(x => l.push(x));
+            l.forEach(x => {
+                const e = document.createElement('div');
+                e.className = `tag ${x == at ? 'active' : ''}`;
+                e.textContent = x;
+                e.onclick = () => { at = x; it(); f(); };
+                t.appendChild(e);
             });
         }
         
         function f(){
-            const q=document.getElementById('s').value.toLowerCase(),ord=document.getElementById('o').value;
-            let res=gs.filter(g=>(g.name.toLowerCase().includes(q))&&(at=="Todos"||(at=="❤️ Favoritos"?fv.includes(g.name):g.category==at)));
-            res.sort((a,b)=>ord=='az'?a.name.localeCompare(b.name):b.name.localeCompare(a.name));
-            document.getElementById('stats').innerText=`${res.length} jogos encontrados`;ct.innerHTML='';
-            res.forEach(g=>{
-                const d=document.createElement('div'),is=fv.includes(g.name);d.className='card';
-                d.onmousedown=d.ontouchstart=(e)=>{pt=setTimeout(()=>sh(g.name),600);d.classList.add('active')};
-                d.onmouseup=d.onmouseleave=d.ontouchend=()=>{clearTimeout(pt);d.classList.remove('active')};
-                d.innerHTML=`<div><h3>${g.name}</h3><span class="sz">${g.size}</span></div><div class="btns"><button class="f ${is?'a':''}" onclick="event.stopPropagation();tf('${g.name.replace(/'/g,"\\'")}')">❤️</button><a href="${g.link}" class="dl" onclick="event.stopPropagation()">⬇️</a></div>`;
+            const q = document.getElementById('s').value.toLowerCase(), ord = document.getElementById('o').value;
+            let res = gs.filter(g => (g.name.toLowerCase().includes(q)) && (at == "Todos" || (at == "❤️ Favoritos" ? fv.includes(g.name) : g.category == at)));
+            res.sort((a,b) => ord == 'az' ? a.name.localeCompare(b.name) : b.name.localeCompare(a.name));
+            document.getElementById('stats').textContent = `${res.length} jogos encontrados`;
+            ct.innerHTML = '';
+            res.forEach(g => {
+                const d = document.createElement('div'), is = fv.includes(g.name);
+                d.className = 'card';
+                d.onclick = () => sh(g.name);
+                d.innerHTML = `<div><h3>${g.name}</h3><span class="sz">${g.size}</span></div>
+                    <div class="btns">
+                        <button class="f ${is ? 'a' : ''}" onclick="event.stopPropagation(); tf('${g.name.replace(/'/g, "\\'")}')" aria-label="Favoritar">❤️</button>
+                        <a href="${g.link}" class="dl" onclick="event.stopPropagation()" aria-label="Download">⬇️</a>
+                    </div>`;
                 ct.appendChild(d);
             });
         }
         
-        function tf(n){fv=fv.includes(n)?fv.filter(x=>x!=n):[...fv,n];localStorage.setItem('fav',JSON.stringify(fv));it();f()}
-        
-        function sh(n){
-            const i=(window.gamesInfo&&window.gamesInfo[n])?window.gamesInfo[n]:{description:"Informações não disponíveis.",release:"-",compat:"-"};
-            document.getElementById('mt').innerText=n;
-            document.getElementById('mds').innerText=i.description;
-            document.getElementById('mrl').innerText=i.release;
-            const cpEl=document.getElementById('mcp');
-            cpEl.innerText=i.compat;
-            cpEl.style.color=i.compat=="Ótima"?"#22c55e":(i.compat=="Boa"?"#facc15":"#f40");
-            document.getElementById('md').style.display="block";
+        function tf(n){
+            fv = fv.includes(n) ? fv.filter(x => x != n) : [...fv, n];
+            localStorage.setItem('fav', JSON.stringify(fv));
+            it(); f();
         }
         
-        function cl(){document.getElementById('md').style.display="none"}
-        function rd(){if(gs.length)sh(gs[Math.floor(Math.random()*gs.length)].name)}
-        function cp(){navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");const s=document.querySelector('#pix span');s.innerText="Copiado!";setTimeout(()=>s.innerText="Copiar Pix",2e3)}
+        function sh(n){
+            const i = (window.gamesInfo && window.gamesInfo[n]) ? window.gamesInfo[n] : {description:"Informações não disponíveis.", release:"-", compat:"-"};
+            document.getElementById('mt').textContent = n;
+            document.getElementById('mds').textContent = i.description;
+            document.getElementById('mrl').textContent = i.release;
+            const cpEl = document.getElementById('mcp');
+            cpEl.textContent = i.compat;
+            cpEl.style.color = i.compat == "Ótima" ? "#22c55e" : (i.compat == "Boa" ? "#facc15" : "#f40");
+            document.getElementById('md').style.display = "block";
+        }
         
-        window.onscroll=()=>document.getElementById("up").style.display=window.scrollY>300?"block":"none";
-        it();f();
+        function cl(){ document.getElementById('md').style.display = "none" }
+        function rd(){ if(gs.length) sh(gs[Math.floor(Math.random() * gs.length)].name) }
+        function cp(){
+            navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");
+            const s = document.querySelector('#pix span');
+            s.textContent = "Copiado!";
+            setTimeout(() => s.textContent = "Copiar Pix", 2000);
+        }
+        
+        window.onscroll = () => document.getElementById("up").style.display = window.scrollY > 300 ? "block" : "none";
+        it(); f();
     </script>
 </body>
 </html>
