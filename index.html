@@ -10,162 +10,139 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
     <style>
-        :root{--p:#f40;--p-h:#ff5511;--b:#050505;--c:#121212;--t:#fff;--br:12px}
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
-        body{background:var(--b);color:var(--t);padding:20px;user-select:none;touch-action:manipulation;line-height:1.6}
-        h1{color:var(--p);letter-spacing:1px;text-align:center;font-size:28px;margin-bottom:5px}
-        h2{color:#666;font-size:13px;margin-bottom:25px;text-align:center;text-transform:uppercase;letter-spacing:1px}
-        
-        .search-box{display:flex;gap:10px;margin-bottom:15px;position:relative}
-        .input-wrapper{position:relative;flex:1}
-        input,select{background:var(--c);border:1px solid #222;color:#fff;padding:14px;border-radius:var(--br);outline:none;font-size:16px;transition:0.3s}
-        input{width:100%;padding-right:40px}
-        input:focus{border-color:var(--p);box-shadow:0 0 0 2px rgba(255,68,0,0.2)}
-        .clear-btn{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:#555;font-size:18px;display:none;cursor:pointer}
-        
-        .tags{display:flex;gap:10px;overflow-x:auto;padding:5px 0 20px;scrollbar-width:none;mask-image:linear-gradient(to right, black 90%, transparent)}
+        :root{--p:#f40;--p-h:#ff5511;--b:#000;--c:#0a0a0a;--c2:#161616;--t:#fff;--ts:#888;--s:#22c55e}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
+        html{scroll-behavior:smooth}
+        body{background:var(--b);color:var(--t);padding:15px;user-select:none;line-height:1.4}
+        .header{padding:20px 0;text-align:center}
+        h1{font-size:28px;font-weight:900;text-transform:uppercase;background:linear-gradient(to bottom, #fff, var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        h2{color:var(--ts);font-size:12px;letter-spacing:1px;margin-bottom:20px}
+        .search-box{position:sticky;top:10px;z-index:5;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);padding:10px;border-radius:15px;margin-bottom:15px;display:flex;gap:8px;border:1px solid #222}
+        input,select{background:var(--c2);border:1px solid #333;color:#fff;padding:12px;border-radius:10px;outline:none;font-size:16px;transition:0.3s}
+        input:focus{border-color:var(--p)}
+        #s{flex:1}
+        #o{width:110px}
+        .tags{display:flex;gap:8px;overflow-x:auto;padding:5px 0 15px;scrollbar-width:none}
         .tags::-webkit-scrollbar{display:none}
-        .tag{background:var(--c);padding:8px 18px;border-radius:25px;font-size:13px;border:1px solid #222;white-space:nowrap;cursor:pointer;transition:0.2s;color:#888}
-        .tag.active{background:var(--p);border-color:var(--p);color:#fff;box-shadow:0 4px 12px rgba(255,68,0,0.3)}
-        
-        #stats{color:#555;font-size:12px;text-align:left;margin-bottom:10px;padding-left:5px}
-        .rnd{background:linear-gradient(45deg, var(--c), #1a1a1a);color:var(--p);border:1px solid #222;padding:14px;border-radius:var(--br);width:100%;font-weight:700;margin-bottom:20px;cursor:pointer;transition:0.2s}
-        .rnd:active{transform:scale(0.98)}
-
-        #ct{display:grid;gap:12px}
-        .card{background:var(--c);padding:16px;border-radius:var(--br);display:flex;justify-content:space-between;align-items:center;border:1px solid #1a1a1a;transition:0.2s;animation:fadeIn 0.4s ease forwards}
+        .tag{background:var(--c2);padding:8px 16px;border-radius:20px;font-size:13px;border:1px solid #222;white-space:nowrap;transition:0.2s;cursor:pointer;color:var(--ts)}
+        .tag.active{background:var(--p);border-color:var(--p);color:#fff;font-weight:bold;box-shadow:0 4px 15px rgba(255,68,0,0.3)}
+        #stats{color:var(--ts);font-size:11px;margin-bottom:15px;text-transform:uppercase;letter-spacing:1px;text-align:center}
+        .rnd{background:linear-gradient(45deg, var(--c2), #111);color:var(--p);border:1px solid var(--p);padding:14px;border-radius:12px;width:100%;font-weight:bold;margin-bottom:20px;cursor:pointer;transition:0.3s}
+        .rnd:active{transform:scale(0.96)}
+        .grid{display:grid;gap:12px}
+        .card{background:var(--c2);padding:16px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;border:1px solid #222;transition:0.3s;animation:fadeIn 0.4s ease forwards}
         @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        .card:active{transform:scale(0.96);background:#1a1a1a}
-        .card h3{font-size:16px;color:#eee;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:180px}
-        .sz{font-size:10px;color:#aaa;background:#000;padding:3px 8px;border-radius:5px;border:1px solid #222;text-transform:uppercase}
-        
+        .card:active{background:#1a1a1a;border-color:var(--p)}
+        .card h3{font-size:15px;margin-bottom:5px;color:#f0f0f0}
+        .card-meta{display:flex;align-items:center;gap:8px}
+        .sz{font-size:10px;color:var(--p);background:rgba(255,68,0,0.1);padding:2px 8px;border-radius:4px;font-weight:bold}
         .btns{display:flex;gap:12px;align-items:center}
-        .f{background:none;border:none;font-size:20px;filter:grayscale(1);cursor:pointer;transition:0.3s;padding:5px}
-        .f.a{filter:grayscale(0);transform:scale(1.1)}
-        .dl{background:var(--p);color:#fff;text-decoration:none;width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(255,68,0,0.2)}
-        
-        .sup{margin-top:40px;padding:25px;background:linear-gradient(180deg, #0a0a0a, #050505);border-radius:20px;border:1px solid #111;text-align:center}
-        .qr{width:150px;margin:0 auto 20px;background:#fff;padding:8px;border-radius:12px;box-shadow:0 10px 20px rgba(0,0,0,0.5)}
+        .f{background:none;border:none;font-size:22px;cursor:pointer;transition:0.3s;filter:grayscale(1);opacity:0.5}
+        .f.a{filter:grayscale(0);opacity:1;transform:scale(1.1)}
+        .dl{background:var(--p);color:#fff;text-decoration:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(255,68,0,0.2)}
+        .sup{margin-top:40px;padding:25px;background:linear-gradient(to bottom, #080808, #000);border-radius:20px;border:1px solid #151515;text-align:center}
+        .qr{width:160px;margin:0 auto 20px;background:#fff;padding:8px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
         .qr img{width:100%;display:block}
-        .btn{color:#fff;text-decoration:none;padding:14px;border-radius:var(--br);font-weight:700;display:block;margin-bottom:12px;transition:0.2s}
-        .btn:active{transform:scale(0.98)}
-        #pix{background:#22c55e;box-shadow:0 4px 12px rgba(34,197,94,0.2)}
-        #wa{background:transparent;border:1px solid var(--p);color:var(--p)}
-        
-        .m{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:99;backdrop-filter:blur(5px)}
-        .mc{background:#111;margin:20% auto;padding:30px;border:1px solid #222;width:90%;max-width:400px;border-radius:20px;position:relative;box-shadow:0 20px 40px rgba(0,0,0,0.8)}
+        .btn{color:#fff;text-decoration:none;padding:14px;border-radius:12px;font-weight:bold;display:block;margin-bottom:12px;transition:0.3s}
+        #pix{background:var(--s)}
+        #wa{background:transparent;border:1px solid #333;color:#eee}
+        #pix:active, #wa:active{transform:scale(0.98)}
+        .m{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10;backdrop-filter:blur(8px)}
+        .mc{background:var(--c2);margin:15% auto;padding:30px;border:1px solid #333;width:90%;max-width:400px;border-radius:24px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,0.5)}
         .mc h2{text-align:left;color:var(--p);font-size:22px;margin-bottom:15px}
-        .mc p{font-size:15px;color:#aaa;line-height:1.6}
-        .inf{margin-top:20px;padding-top:20px;border-top:1px solid #222;display:flex;justify-content:space-between;font-size:13px}
-        
-        #up{position:fixed;bottom:25px;right:20px;background:var(--p);color:#fff;border:none;width:50px;height:50px;border-radius:50%;display:none;cursor:pointer;z-index:8;box-shadow:0 5px 15px rgba(255,68,0,0.4)}
+        #mds{font-size:15px;color:#aaa;line-height:1.6;margin-bottom:20px}
+        .inf{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid #333;font-size:13px}
+        #up{position:fixed;bottom:25px;right:25px;background:var(--p);color:#fff;border:none;width:50px;height:50px;border-radius:15px;display:none;cursor:pointer;z-index:8;box-shadow:0 5px 15px rgba(255,68,0,0.4)}
+        .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--p);color:#fff;padding:12px 25px;border-radius:30px;font-weight:bold;z-index:20;display:none;box-shadow:0 10px 20px rgba(0,0,0,0.3)}
+        #empty{text-align:center;padding:50px 20px;display:none}
+        #empty span{font-size:50px;display:block;margin-bottom:10px}
     </style>
 </head>
 <body>
+    <div id="tst" class="toast"></div>
     <div style="max-width:600px;margin:0 auto">
-        <h1>Orange Portable</h1>
-        <h2>Premium PSP Library</h2>
-        
+        <div class="header">
+            <h1>Orange Portable</h1>
+            <h2>BIBLIOTECA DEFINITIVA PSP</h2>
+        </div>
         <div class="search-box">
-            <div class="input-wrapper">
-                <input type="text" id="s" placeholder="Procurar jogo..." oninput="updateSearch()">
-                <span id="c" class="clear-btn" onclick="clearSearch()">✕</span>
-            </div>
-            <select id="o" onchange="f()" style="width:110px">
+            <input type="text" id="s" placeholder="O que vamos jogar?" onkeyup="f()">
+            <select id="o" onchange="f()">
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
+                <option value="size">Tamanho</option>
             </select>
         </div>
-
         <div class="tags" id="ts"></div>
         <div id="stats"></div>
-        <button class="rnd" onclick="rd()">🎲 Sugestão Aleatória</button>
-        <div id="ct"></div>
-
+        <button class="rnd" onclick="rd()">🎲 Jogo Aleatório</button>
+        <div id="empty"><span>🔍</span>Nenhum jogo encontrado...</div>
+        <div id="ct" class="grid"></div>
         <div class="sup">
             <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2"></div>
-            <a class="btn" id="pix" onclick="cp()">📋 <span>Copiar Chave Pix</span></a>
-            <a href="https://api.whatsapp.com/send?phone=5585991272125&text=Opa!%20Vim%20pelo%20Orange%20Portable." id="wa" class="btn">💬 Suporte Direto</a>
+            <a class="btn" id="pix" onclick="cp()">COPIAR CHAVE PIX</a>
+            <a href="https://api.whatsapp.com/send?phone=5585991272125&text=Fala,%20Teuzin!%20Suporte%20Orange%20Portable." id="wa" class="btn">FALAR COM SUPORTE</a>
         </div>
-        <button id="up" onclick="window.scrollTo({top:0,behavior:'smooth'})">▲</button>
+        <button id="up" onclick="window.scrollTo({top:0})">▲</button>
     </div>
-
-    <div id="md" class="m" onclick="cl()"><div class="mc" onclick="event.stopPropagation()"><h2 id="mt"></h2><p id="mds"></p><div class="inf"><span>📅 <b id="mrl"></b></span><span>🎮 <b id="mcp"></b></span></div></div></div>
-
+    <div id="md" class="m" onclick="cl()"><div class="mc" onclick="event.stopPropagation()"><span onclick="cl()" style="position:absolute;right:20px;top:20px;font-size:20px">✕</span><h2 id="mt"></h2><p id="mds"></p><div class="inf"><span>📅 <b id="mrl"></b></span><span>🎮 <b id="mcp"></b></span></div></div></div>
     <script src="database.js"></script>
     <script src="infobase.js"></script>
     <script>
-        const gs=window.gamesData||[], ct=document.getElementById('ct'), sInp=document.getElementById('s'), cBtn=document.getElementById('c');
-        let fv=JSON.parse(localStorage.getItem('fav'))||[], at="Todos";
-
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(()=>{}); });
+        }
+        const gs=window.gamesData||[],ct=document.getElementById('ct'),emp=document.getElementById('empty');
+        let fv=JSON.parse(localStorage.getItem('fav'))||[],at="Todos",pt;
+        function showT(m){const t=document.getElementById('tst');t.innerText=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000)}
         function it(){
-            const t=document.getElementById('ts'); t.innerHTML='';
-            let l=["Todos", ...(fv.length?["❤️ Favoritos"]:[]), ...[...new Set(gs.map(g=>g.category))].sort()];
+            const t=document.getElementById('ts');t.innerHTML='';
+            let l=["Todos"];if(fv.length)l.push("❤️ Favoritos");
+            [...new Set(gs.map(g=>g.category))].sort().forEach(x=>l.push(x));
             l.forEach(x=>{
-                const e=document.createElement('div');
-                e.className=`tag ${x==at?'active':''}`; e.textContent=x;
-                e.onclick=()=>{at=x; it(); f(); window.scrollTo({top:0,behavior:'smooth'})};
-                t.appendChild(e);
+                const e=document.createElement('div');e.className=`tag ${x==at?'active':''}`;e.innerText=x;
+                e.onclick=()=>{at=x;it();f()};t.appendChild(e);
             });
         }
-
-        function updateSearch(){
-            cBtn.style.display = sInp.value ? 'block' : 'none';
-            f();
+        function parseS(s){
+            const v=parseFloat(s);
+            return s.includes('GB')?v*1024:v;
         }
-
-        function clearSearch(){
-            sInp.value='';
-            updateSearch();
-            sInp.focus();
-        }
-
         function f(){
-            const q=sInp.value.toLowerCase(), ord=document.getElementById('o').value;
-            let res=gs.filter(g=>(g.name.toLowerCase().includes(q))&&(at=="Todos"||(at=="❤️ Favoritos"?fv.includes(g.name):g.category==at)));
-            res.sort((a,b)=>ord=='az'?a.name.localeCompare(b.name):b.name.localeCompare(a.name));
-            document.getElementById('stats').textContent=`${res.length} Títulos disponíveis`;
+            const q=document.getElementById('s').value.toLowerCase(),ord=document.getElementById('o').value;
+            let res=gs.filter(g=>(g.name.toLowerCase().includes(q) || g.category.toLowerCase().includes(q)) && (at=="Todos"||(at=="❤️ Favoritos"?fv.includes(g.name):g.category==at)));
+            if(ord=='az') res.sort((a,b)=>a.name.localeCompare(b.name));
+            else if(ord=='za') res.sort((a,b)=>b.name.localeCompare(a.name));
+            else res.sort((a,b)=>parseS(b.size)-parseS(a.size));
+            document.getElementById('stats').innerText=`${res.length} Títulos Disponíveis`;
             ct.innerHTML='';
-            res.forEach((g, i)=>{
-                const d=document.createElement('div');
-                d.className='card'; d.style.animationDelay=`${i*0.03}s`;
+            emp.style.display=res.length?'none':'block';
+            res.forEach((g,i)=>{
+                const d=document.createElement('div'),is=fv.includes(g.name);
+                d.className='card';d.style.animationDelay=`${i*0.05}s`;
+                d.onmousedown=d.ontouchstart=()=>{pt=setTimeout(()=>sh(g.name),600)};
+                d.onmouseup=d.onmouseleave=d.ontouchend=()=>{clearTimeout(pt)};
                 d.onclick=()=>sh(g.name);
-                d.innerHTML=`<div><h3>${g.name}</h3><span class="sz">${g.size}</span></div>
-                    <div class="btns">
-                        <button class="f ${fv.includes(g.name)?'a':''}" onclick="event.stopPropagation();tf('${g.name.replace(/'/g,"\\'")}')">❤️</button>
-                        <a href="${g.link}" class="dl" onclick="event.stopPropagation()">⬇️</a>
-                    </div>`;
+                d.innerHTML=`<div><h3>${g.name}</h3><div class="card-meta"><span class="sz">${g.size}</span><span style="font-size:10px;color:#555">${g.category}</span></div></div><div class="btns"><button class="f ${is?'a':''}" onclick="event.stopPropagation();tf('${g.name.replace(/'/g,"\\'")}')">❤️</button><a href="${g.link}" class="dl" onclick="event.stopPropagation()">⬇️</a></div>`;
                 ct.appendChild(d);
             });
         }
-
-        function tf(n){
-            fv=fv.includes(n)?fv.filter(x=>x!=n):[...fv,n];
-            localStorage.setItem('fav',JSON.stringify(fv));
-            it(); f();
-        }
-
+        function tf(n){fv=fv.includes(n)?fv.filter(x=>x!=n):[...fv,n];localStorage.setItem('fav',JSON.stringify(fv));showT(fv.includes(n)?'Adicionado aos favoritos!':'Removido dos favoritos');it();f()}
         function sh(n){
-            const i=(window.gamesInfo&&window.gamesInfo[n])?window.gamesInfo[n]:{description:"Sem descrição disponível.",release:"N/A",compat:"-"};
-            document.getElementById('mt').textContent=n;
-            document.getElementById('mds').textContent=i.description;
-            document.getElementById('mrl').textContent=i.release;
+            const i=(window.gamesInfo&&window.gamesInfo[n])?window.gamesInfo[n]:{description:"Sem descrição disponível.",release:"Desconhecido",compat:"Boa"};
+            document.getElementById('mt').innerText=n;
+            document.getElementById('mds').innerText=i.description;
+            document.getElementById('mrl').innerText=i.release;
             const cpEl=document.getElementById('mcp');
-            cpEl.textContent=i.compat;
+            cpEl.innerText=i.compat;
             cpEl.style.color=i.compat=="Ótima"?"#22c55e":(i.compat=="Boa"?"#facc15":"#f40");
             document.getElementById('md').style.display="block";
         }
-
         function cl(){document.getElementById('md').style.display="none"}
         function rd(){if(gs.length)sh(gs[Math.floor(Math.random()*gs.length)].name)}
-        function cp(){
-            navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");
-            const s=document.querySelector('#pix span'); s.textContent="Copiado!";
-            setTimeout(()=>s.textContent="Copiar Chave Pix",2000);
-        }
-
-        window.onscroll=()=>document.getElementById("up").style.display=window.scrollY>300?"block":"none";
-        it(); f();
+        function cp(){navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");showT("Pix copiado com sucesso!");}
+        window.onscroll=()=>document.getElementById("up").style.display=window.scrollY>400?"block":"none";
+        it();f();
     </script>
 </body>
 </html>
