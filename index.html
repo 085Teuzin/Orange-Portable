@@ -4,144 +4,143 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Orange Portable</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff4500">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="icon.png">
     <style>
-        :root{--p:#f40;--p-h:#ff5511;--b:#000;--c:#0a0a0a;--c2:#161616;--t:#fff;--ts:#888;--s:#22c55e}
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-        html{scroll-behavior:smooth}
-        body{background:var(--b);color:var(--t);padding:15px;user-select:none;line-height:1.4}
-        .header{padding:20px 0;text-align:center}
-        h1{font-size:28px;font-weight:900;text-transform:uppercase;background:linear-gradient(to bottom, #fff, var(--p));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-        h2{color:var(--ts);font-size:12px;letter-spacing:1px;margin-bottom:20px}
-        .search-box{position:sticky;top:10px;z-index:5;background:rgba(0,0,0,0.8);backdrop-filter:blur(10px);padding:10px;border-radius:15px;margin-bottom:15px;display:flex;gap:8px;border:1px solid #222}
-        input,select{background:var(--c2);border:1px solid #333;color:#fff;padding:12px;border-radius:10px;outline:none;font-size:16px;transition:0.3s}
-        input:focus{border-color:var(--p)}
-        #s{flex:1}
-        #o{width:110px}
-        .tags{display:flex;gap:8px;overflow-x:auto;padding:5px 0 15px;scrollbar-width:none}
-        .tags::-webkit-scrollbar{display:none}
-        .tag{background:var(--c2);padding:8px 16px;border-radius:20px;font-size:13px;border:1px solid #222;white-space:nowrap;transition:0.2s;cursor:pointer;color:var(--ts)}
-        .tag.active{background:var(--p);border-color:var(--p);color:#fff;font-weight:bold;box-shadow:0 4px 15px rgba(255,68,0,0.3)}
-        #stats{color:var(--ts);font-size:11px;margin-bottom:15px;text-transform:uppercase;letter-spacing:1px;text-align:center}
-        .rnd{background:linear-gradient(45deg, var(--c2), #111);color:var(--p);border:1px solid var(--p);padding:14px;border-radius:12px;width:100%;font-weight:bold;margin-bottom:20px;cursor:pointer;transition:0.3s}
-        .rnd:active{transform:scale(0.96)}
-        .grid{display:grid;gap:12px}
-        .card{background:var(--c2);padding:16px;border-radius:14px;display:flex;justify-content:space-between;align-items:center;border:1px solid #222;transition:0.3s;animation:fadeIn 0.4s ease forwards}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-        .card:active{background:#1a1a1a;border-color:var(--p)}
-        .card h3{font-size:15px;margin-bottom:5px;color:#f0f0f0}
-        .card-meta{display:flex;align-items:center;gap:8px}
-        .sz{font-size:10px;color:var(--p);background:rgba(255,68,0,0.1);padding:2px 8px;border-radius:4px;font-weight:bold}
-        .btns{display:flex;gap:12px;align-items:center}
-        .f{background:none;border:none;font-size:22px;cursor:pointer;transition:0.3s;filter:grayscale(1);opacity:0.5}
-        .f.a{filter:grayscale(0);opacity:1;transform:scale(1.1)}
-        .dl{background:var(--p);color:#fff;text-decoration:none;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 10px rgba(255,68,0,0.2)}
-        .sup{margin-top:40px;padding:25px;background:linear-gradient(to bottom, #080808, #000);border-radius:20px;border:1px solid #151515;text-align:center}
-        .qr{width:160px;margin:0 auto 20px;background:#fff;padding:8px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
-        .qr img{width:100%;display:block}
-        .btn{color:#fff;text-decoration:none;padding:14px;border-radius:12px;font-weight:bold;display:block;margin-bottom:12px;transition:0.3s}
-        #pix{background:var(--s)}
-        #wa{background:transparent;border:1px solid #333;color:#eee}
-        #pix:active, #wa:active{transform:scale(0.98)}
-        .m{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10;backdrop-filter:blur(8px)}
-        .mc{background:var(--c2);margin:15% auto;padding:30px;border:1px solid #333;width:90%;max-width:400px;border-radius:24px;position:relative;box-shadow:0 20px 50px rgba(0,0,0,0.5)}
-        .mc h2{text-align:left;color:var(--p);font-size:22px;margin-bottom:15px}
-        #mds{font-size:15px;color:#aaa;line-height:1.6;margin-bottom:20px}
-        .inf{display:flex;justify-content:space-between;padding-top:20px;border-top:1px solid #333;font-size:13px}
-        #up{position:fixed;bottom:25px;right:25px;background:var(--p);color:#fff;border:none;width:50px;height:50px;border-radius:15px;display:none;cursor:pointer;z-index:8;box-shadow:0 5px 15px rgba(255,68,0,0.4)}
-        .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%);background:var(--p);color:#fff;padding:12px 25px;border-radius:30px;font-weight:bold;z-index:20;display:none;box-shadow:0 10px 20px rgba(0,0,0,0.3)}
-        #empty{text-align:center;padding:50px 20px;display:none}
-        #empty span{font-size:50px;display:block;margin-bottom:10px}
+        :root { --p: #ff4500; }
+        body { background-color: #000; color: #fff; -webkit-tap-highlight-color: transparent; overflow-x: hidden; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+        .card-active:active { transform: scale(0.98); border-color: var(--p); }
+        #offline-screen { display: none; }
+        body.is-offline #app-content { display: none; }
+        body.is-offline #offline-screen { display: flex; }
     </style>
 </head>
-<body>
-    <div id="tst" class="toast"></div>
-    <div style="max-width:600px;margin:0 auto">
-        <div class="header">
-            <h1>Orange Portable</h1>
-            <h2>BIBLIOTECA DEFINITIVA PSP</h2>
-        </div>
-        <div class="search-box">
-            <input type="text" id="s" placeholder="O que vamos jogar?" onkeyup="f()">
-            <select id="o" onchange="f()">
-                <option value="az">A-Z</option>
-                <option value="za">Z-A</option>
-                <option value="size">Tamanho</option>
-            </select>
-        </div>
-        <div class="tags" id="ts"></div>
-        <div id="stats"></div>
-        <button class="rnd" onclick="rd()">🎲 Jogo Aleatório</button>
-        <div id="empty"><span>🔍</span>Nenhum jogo encontrado...</div>
-        <div id="ct" class="grid"></div>
-        <div class="sup">
-            <div class="qr"><img src="https://api.qrserver.com/v1/create-qr-code/?data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2"></div>
-            <a class="btn" id="pix" onclick="cp()">COPIAR CHAVE PIX</a>
-            <a href="https://api.whatsapp.com/send?phone=5585991272125&text=Fala,%20Teuzin!%20Suporte%20Orange%20Portable." id="wa" class="btn">FALAR COM SUPORTE</a>
-        </div>
-        <button id="up" onclick="window.scrollTo({top:0})">▲</button>
+<body class="min-h-screen">
+    <div id="offline-screen" class="fixed inset-0 z-[100] bg-black flex-col items-center justify-center p-6 text-center">
+        <span class="text-6xl mb-4">📡</span>
+        <h1 class="text-2xl font-bold text-[#ff4500] mb-2">Sem Conexão</h1>
+        <p class="text-gray-400">O Orange Portable requer internet para carregar a biblioteca. Verifique sua rede e tente novamente.</p>
+        <button onclick="window.location.reload()" class="mt-6 bg-[#ff4500] px-8 py-3 rounded-full font-bold">Tentar Novamente</button>
     </div>
-    <div id="md" class="m" onclick="cl()"><div class="mc" onclick="event.stopPropagation()"><span onclick="cl()" style="position:absolute;right:20px;top:20px;font-size:20px">✕</span><h2 id="mt"></h2><p id="mds"></p><div class="inf"><span>📅 <b id="mrl"></b></span><span>🎮 <b id="mcp"></b></span></div></div></div>
+
+    <div id="app-content" class="w-full min-h-screen flex flex-col p-4 md:p-8">
+        <header class="text-center mb-6">
+            <h1 class="text-4xl font-black text-[#ff4500] tracking-tighter italic">Orange Portable</h1>
+            <h2 class="text-gray-500 text-sm mt-1 uppercase tracking-widest">Games CSO for PPSSPP</h2>
+        </header>
+
+        <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4">
+            <input type="text" id="s" placeholder="Buscar..." onkeyup="f()" class="w-full bg-[#111] border border-zinc-800 p-4 rounded-xl mb-3 focus:border-[#ff4500] outline-none text-lg">
+            <div class="flex gap-2">
+                <select id="o" onchange="f()" class="w-full bg-[#111] border border-zinc-800 p-3 rounded-xl outline-none text-sm">
+                    <option value="az">A-Z</option>
+                    <option value="za">Z-A</option>
+                </select>
+            </div>
+        </section>
+
+        <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-2"></nav>
+
+        <div id="stats" class="text-center text-[10px] text-[#ff4500] font-bold mb-4 uppercase tracking-tighter"></div>
+
+        <button class="w-full bg-[#111] border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform" onclick="rd()">🎲 Me surpreenda!</button>
+
+        <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow"></main>
+
+        <section class="mt-10 p-6 bg-zinc-950 border border-zinc-900 rounded-3xl text-center">
+            <div class="bg-white p-2 inline-block rounded-xl mb-4">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?data=00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2" class="w-32 h-32">
+            </div>
+            <button id="pix" onclick="cp()" class="w-full bg-[#22c55e] py-4 rounded-xl font-bold mb-3">📋 <span>Copiar Pix</span></button>
+            <a href="https://api.whatsapp.com/send?phone=5585991272125&text=Fala,%20Teuzin!%20Suporte%20Orange%20Portable." class="block w-full border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold">💬 Suporte</a>
+        </section>
+
+        <button id="up" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="fixed bottom-6 right-6 bg-[#ff4500] w-12 h-12 rounded-full hidden z-50 shadow-lg shadow-orange-900/20">▲</button>
+    </div>
+
+    <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4" onclick="cl()">
+        <div class="bg-[#111] border border-[#ff4500] w-full max-w-md p-8 rounded-3xl relative" onclick="event.stopPropagation()">
+            <button onclick="cl()" class="absolute top-4 right-4 text-zinc-500 text-xl">✕</button>
+            <h2 id="mt" class="text-2xl font-bold text-[#ff4500] mb-4"></h2>
+            <p id="mds" class="text-zinc-400 text-sm leading-relaxed mb-6"></p>
+            <div class="flex justify-between pt-4 border-t border-zinc-800 text-xs">
+                <span>📅 <b id="mrl" class="text-white"></b></span>
+                <span>🎮 <b id="mcp" class="uppercase"></b></span>
+            </div>
+        </div>
+    </div>
+
     <script src="database.js"></script>
     <script src="infobase.js"></script>
     <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => { navigator.serviceWorker.register('./sw.js').catch(()=>{}); });
+        function checkConn() {
+            if (!navigator.onLine) document.body.classList.add('is-offline');
+            else document.body.classList.remove('is-offline');
         }
-        const gs=window.gamesData||[],ct=document.getElementById('ct'),emp=document.getElementById('empty');
-        let fv=JSON.parse(localStorage.getItem('fav'))||[],at="Todos",pt;
-        function showT(m){const t=document.getElementById('tst');t.innerText=m;t.style.display='block';setTimeout(()=>t.style.display='none',2000)}
-        function it(){
-            const t=document.getElementById('ts');t.innerHTML='';
-            let l=["Todos"];if(fv.length)l.push("❤️ Favoritos");
+        window.addEventListener('online', checkConn);
+        window.addEventListener('offline', checkConn);
+        checkConn();
+
+        const gs=window.gamesData||[], ct=document.getElementById('ct');
+        let fv=JSON.parse(localStorage.getItem('fav'))||[], at="Todos", pt;
+
+        function it() {
+            const t=document.getElementById('ts'); t.innerHTML='';
+            let l=["Todos"]; if(fv.length) l.push("❤️ Favoritos");
             [...new Set(gs.map(g=>g.category))].sort().forEach(x=>l.push(x));
             l.forEach(x=>{
-                const e=document.createElement('div');e.className=`tag ${x==at?'active':''}`;e.innerText=x;
-                e.onclick=()=>{at=x;it();f()};t.appendChild(e);
+                const e=document.createElement('div');
+                e.className=`px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer transition ${x==at?'bg-[#ff4500] text-white font-bold':'bg-zinc-900 text-zinc-500 border border-zinc-800'}`;
+                e.innerText=x; e.onclick=()=>{at=x; it(); f()};
+                t.appendChild(e);
             });
         }
-        function parseS(s){
-            const v=parseFloat(s);
-            return s.includes('GB')?v*1024:v;
-        }
-        function f(){
-            const q=document.getElementById('s').value.toLowerCase(),ord=document.getElementById('o').value;
-            let res=gs.filter(g=>(g.name.toLowerCase().includes(q) || g.category.toLowerCase().includes(q)) && (at=="Todos"||(at=="❤️ Favoritos"?fv.includes(g.name):g.category==at)));
-            if(ord=='az') res.sort((a,b)=>a.name.localeCompare(b.name));
-            else if(ord=='za') res.sort((a,b)=>b.name.localeCompare(a.name));
-            else res.sort((a,b)=>parseS(b.size)-parseS(a.size));
-            document.getElementById('stats').innerText=`${res.length} Títulos Disponíveis`;
+
+        function f() {
+            const q=document.getElementById('s').value.toLowerCase(), ord=document.getElementById('o').value;
+            let res=gs.filter(g=>(g.name.toLowerCase().includes(q))&&(at=="Todos"||(at=="❤️ Favoritos"?fv.includes(g.name):g.category==at)));
+            res.sort((a,b)=>ord=='az'?a.name.localeCompare(b.name):b.name.localeCompare(a.name));
+            document.getElementById('stats').innerText=`${res.length} jogos encontrados`;
             ct.innerHTML='';
-            emp.style.display=res.length?'none':'block';
-            res.forEach((g,i)=>{
-                const d=document.createElement('div'),is=fv.includes(g.name);
-                d.className='card';d.style.animationDelay=`${i*0.05}s`;
+            res.forEach(g=>{
+                const is=fv.includes(g.name);
+                const d=document.createElement('div');
+                d.className='bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex justify-between items-center card-active transition-all';
                 d.onmousedown=d.ontouchstart=()=>{pt=setTimeout(()=>sh(g.name),600)};
                 d.onmouseup=d.onmouseleave=d.ontouchend=()=>{clearTimeout(pt)};
-                d.onclick=()=>sh(g.name);
-                d.innerHTML=`<div><h3>${g.name}</h3><div class="card-meta"><span class="sz">${g.size}</span><span style="font-size:10px;color:#555">${g.category}</span></div></div><div class="btns"><button class="f ${is?'a':''}" onclick="event.stopPropagation();tf('${g.name.replace(/'/g,"\\'")}')">❤️</button><a href="${g.link}" class="dl" onclick="event.stopPropagation()">⬇️</a></div>`;
+                d.innerHTML=`
+                    <div class="overflow-hidden">
+                        <h3 class="text-zinc-100 font-medium truncate pr-2">${g.name}</h3>
+                        <span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded border border-zinc-800 font-bold uppercase">${g.size}</span>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <button class="text-2xl transition ${is?'grayscale-0 scale-110':'grayscale opacity-30'}" onclick="event.stopPropagation();tf('${g.name.replace(/'/g,"\\'")}')">❤️</button>
+                        <a href="${g.link}" class="bg-[#ff4500] w-10 h-10 rounded-full flex items-center justify-center shadow-lg shadow-orange-900/20" onclick="event.stopPropagation()">⬇️</a>
+                    </div>`;
                 ct.appendChild(d);
             });
         }
-        function tf(n){fv=fv.includes(n)?fv.filter(x=>x!=n):[...fv,n];localStorage.setItem('fav',JSON.stringify(fv));showT(fv.includes(n)?'Adicionado aos favoritos!':'Removido dos favoritos');it();f()}
+
+        function tf(n){fv=fv.includes(n)?fv.filter(x=>x!=n):[...fv,n];localStorage.setItem('fav',JSON.stringify(fv));it();f()}
         function sh(n){
-            const i=(window.gamesInfo&&window.gamesInfo[n])?window.gamesInfo[n]:{description:"Sem descrição disponível.",release:"Desconhecido",compat:"Boa"};
+            const i=(window.gamesInfo&&window.gamesInfo[n])?window.gamesInfo[n]:{description:"Informações não disponíveis.",release:"-",compat:"-"};
             document.getElementById('mt').innerText=n;
             document.getElementById('mds').innerText=i.description;
             document.getElementById('mrl').innerText=i.release;
             const cpEl=document.getElementById('mcp');
             cpEl.innerText=i.compat;
             cpEl.style.color=i.compat=="Ótima"?"#22c55e":(i.compat=="Boa"?"#facc15":"#f40");
-            document.getElementById('md').style.display="block";
+            document.getElementById('md').style.display="flex";
         }
         function cl(){document.getElementById('md').style.display="none"}
         function rd(){if(gs.length)sh(gs[Math.floor(Math.random()*gs.length)].name)}
-        function cp(){navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");showT("Pix copiado com sucesso!");}
-        window.onscroll=()=>document.getElementById("up").style.display=window.scrollY>400?"block":"none";
+        function cp(){navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");const s=document.querySelector('#pix span');s.innerText="Copiado!";setTimeout(()=>s.innerText="Copiar Pix",2e3)}
+        window.onscroll=()=>document.getElementById("up").style.display=window.scrollY>300?"block":"none";
         it();f();
     </script>
 </body>
