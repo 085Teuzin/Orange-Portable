@@ -21,6 +21,8 @@
     </style>
 </head>
 <body class="min-h-screen">
+    <audio id="bg-music" src="sound.mp3" loop></audio>
+
     <div id="offline-screen" class="fixed inset-0 z-[100] bg-black flex-col items-center justify-center p-6 text-center">
         <span class="text-6xl mb-4">📡</span>
         <h1 class="text-2xl font-bold text-[#ff4500] mb-2">Sem Conexão</h1>
@@ -31,7 +33,10 @@
     <div id="app-content" class="w-full min-h-screen flex flex-col p-4 md:p-8">
         <header class="text-center mb-6">
             <h1 class="text-4xl font-black text-[#ff4500] tracking-tighter italic">Orange Portable</h1>
-            <h2 class="text-gray-500 text-sm mt-1 uppercase tracking-widest">Games CSO for PPSSPP</h2>
+            <div class="flex items-center justify-center gap-2 mt-1">
+                <h2 class="text-gray-500 text-sm uppercase tracking-widest">Games CSO for PPSSPP</h2>
+                <button onclick="toggleMute()" id="m-btn" class="text-xs bg-zinc-900 border border-zinc-800 px-2 py-1 rounded text-[#ff4500]">🔇</button>
+            </div>
         </header>
 
         <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4">
@@ -86,8 +91,19 @@
         window.addEventListener('offline', checkConn);
         checkConn();
 
-        const gs=window.gamesData||[], ct=document.getElementById('ct');
+        const gs=window.gamesData||[], ct=document.getElementById('ct'), audio=document.getElementById('bg-music');
         let fv=JSON.parse(localStorage.getItem('fav'))||[], at="Todos", pt;
+
+        function playMusic() {
+            audio.play().catch(() => {
+                document.addEventListener('click', () => { audio.play(); }, { once: true });
+            });
+        }
+
+        function toggleMute() {
+            audio.muted = !audio.muted;
+            document.getElementById('m-btn').innerText = audio.muted ? '🔊' : '🔇';
+        }
 
         function it() {
             const t=document.getElementById('ts'); t.innerHTML='';
@@ -141,7 +157,7 @@
         function rd(){if(gs.length)sh(gs[Math.floor(Math.random()*gs.length)].name)}
         function cp(){navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");const s=document.querySelector('#pix span');s.innerText="Copiado!";setTimeout(()=>s.innerText="Copiar Pix",2e3)}
         window.onscroll=()=>document.getElementById("up").style.display=window.scrollY>300?"block":"none";
-        it();f();
+        it();f();playMusic();
     </script>
 </body>
 </html>
