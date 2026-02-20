@@ -35,7 +35,7 @@
             <h1 class="text-4xl font-black text-[#ff4500] tracking-tighter italic">Orange Portable</h1>
             <div class="flex items-center justify-center gap-2 mt-1">
                 <h2 class="text-gray-500 text-sm uppercase tracking-widest">Games CSO for PPSSPP</h2>
-                <button onclick="toggleMute()" id="m-btn" class="text-xs bg-zinc-900 border border-zinc-800 px-2 py-1 rounded text-[#ff4500]">🔇</button>
+                <button onclick="toggleMute()" id="m-btn" class="text-xs bg-zinc-900 border border-zinc-800 px-2 py-1 rounded text-[#ff4500]">🔊</button>
             </div>
         </header>
 
@@ -102,7 +102,7 @@
 
         function toggleMute() {
             audio.muted = !audio.muted;
-            document.getElementById('m-btn').innerText = audio.muted ? '🔊' : '🔇';
+            document.getElementById('m-btn').innerText = audio.muted ? '🔇' : '🔊';
         }
 
         function it() {
