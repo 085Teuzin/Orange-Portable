@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Orange Portable</title>
+    <title>Orange Portable - Made By: @085_Teuzinnn</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#ff4500">
@@ -45,6 +45,8 @@
                 <select id="o" onchange="f()" class="w-full bg-[#111] border border-zinc-800 p-3 rounded-xl outline-none text-sm">
                     <option value="az">A-Z</option>
                     <option value="za">Z-A</option>
+                    <option value="sizeAsc">Menor ao Maior</option>
+                    <option value="sizeDesc">Maior ao Menor</option>
                 </select>
             </div>
         </section>
@@ -105,10 +107,17 @@
             document.getElementById('m-btn').innerText = audio.muted ? '🔇' : '🔊';
         }
 
+        function pz(s) {
+            const n = parseFloat(s.split(' ')[0]);
+            const u = s.split(' ')[1];
+            return u === 'GB' ? n * 1024 : n;
+        }
+
         function it() {
             const t=document.getElementById('ts'); t.innerHTML='';
             let l=["Todos"]; if(fv.length) l.push("❤️ Favoritos");
-            [...new Set(gs.map(g=>g.category))].sort().forEach(x=>l.push(x));
+            const cats = ["🗡️ Ação / Aventura", "🔫 Tiro (TPS/FPS)", "🏎️ Corrida", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌍 Mundo Aberto / Sandbox", "🏆 Esportes", "👻 Survival Horror", "🌾 Simulação / Vida"];
+            cats.forEach(x=>l.push(x));
             l.forEach(x=>{
                 const e=document.createElement('div');
                 e.className=`px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer transition ${x==at?'bg-[#ff4500] text-white font-bold':'bg-zinc-900 text-zinc-500 border border-zinc-800'}`;
@@ -120,7 +129,14 @@
         function f() {
             const q=document.getElementById('s').value.toLowerCase(), ord=document.getElementById('o').value;
             let res=gs.filter(g=>(g.name.toLowerCase().includes(q))&&(at=="Todos"||(at=="❤️ Favoritos"?fv.includes(g.name):g.category==at)));
-            res.sort((a,b)=>ord=='az'?a.name.localeCompare(b.name):b.name.localeCompare(a.name));
+            
+            res.sort((a,b)=>{
+                if(ord=='az') return a.name.localeCompare(b.name);
+                if(ord=='za') return b.name.localeCompare(a.name);
+                if(ord=='sizeAsc') return pz(a.size) - pz(b.size);
+                if(ord=='sizeDesc') return pz(b.size) - pz(a.size);
+            });
+
             document.getElementById('stats').innerText=`${res.length} jogos encontrados`;
             ct.innerHTML='';
             res.forEach(g=>{
