@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Orange Portable - Made By: @085_Teuzinnn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="theme-color" content="#ff4500">
+    <style>
+        :root {
+            --p: #ff4500;
+            --c: #ffffff;
+        }
+
+        * {
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input,
+        textarea {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        body {
+            background-color: #000;
+            color: #fff;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+            min-height: 100dvh;
+        }
+
+        .hide-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card-active:active {
+            transform: scale(0.98);
+            border-color: var(--p);
+        }
+
+        #offline-screen {
+            display: none;
+        }
+
+        body.is-offline #app-content {
+            display: none;
+        }
+
+        body.is-offline #offline-screen {
+            display: flex;
+        }
+
+        .cat-item {
+            transition: all .2s;
+        }
+
+        .cat-selected {
+            background-color: var(--p) !important;
+            color: var(--c) !important;
+            border-color: var(--p) !important;
+        }
+
+        #toast-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            z-index: 1000;
+            transition: transform .5s cubic-bezier(.175, .885, .32, 1.275);
+        }
+
+        #toast-container.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+
+<body class="flex flex-col">
+
+    <div id="toast-container" class="w-[90%] max-w-sm bg-zinc-900 border border-zinc-800 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
+        <div id="toast-icon" class="text-2xl"></div>
+        <div id="toast-msg" class="text-sm font-bold theme-text-orange"></div>
+    </div>
+
+    <div id="offline-screen" class="fixed inset-0 z-[100] bg-black flex-col items-center justify-center p-6 text-center">
+        <span id="off-emoji" class="text-6xl mb-4">📡</span>
+        <h1 class="text-2xl font-bold text-[#ff4500] mb-2">Sem Conexão</h1>
+        <p class="text-gray-400">O Orange Portable requer internet para carregar a biblioteca. Verifique sua rede e tente novamente.</p>
+        <button onclick="window.location.reload()" class="mt-6 bg-[#ff4500] px-8 py-3 rounded-full font-bold">Tentar Novamente</button>
+    </div>
+
+    <div id="app-content" class="w-full min-h-screen flex flex-col p-4 md:p-8">
+        <header class="text-center mb-6">
+            <h1 id="main-title" class="text-4xl font-black text-[#ff4500] tracking-tighter italic">Orange Portable</h1>
+            <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
+        </header>
+
+        <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4">
+            <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] border border-zinc-800 p-4 rounded-xl mb-3 outline-none text-lg">
+            <select id="o" class="w-full bg-[#111] border border-zinc-800 p-3 rounded-xl outline-none text-sm">
+                <option value="az">A-Z</option>
+                <option value="za">Z-A</option>
+                <option value="sizeAsc">Menor ao Maior</option>
+                <option value="sizeDesc">Maior ao Menor</option>
+            </select>
+        </section>
+
+        <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-2"></nav>
+
+        <div id="stats" class="text-center text-[10px] text-[#ff4500] font-bold mb-4 uppercase tracking-tighter"></div>
+
+        <button id="btn-rnd" class="w-full bg-[#111] border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform">🎲 Me surpreenda!</button>
+
+        <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow"></main>
+
+        <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
+
+        <section class="mt-10 p-6 bg-zinc-950 border border-zinc-900 rounded-3xl text-center">
+            <div class="bg-white p-2 inline-block rounded-xl mb-4">
+                <img src="pix.png" class="w-32 h-32 object-contain" alt="Pix QR">
+            </div>
+            <button id="pix" class="w-full bg-[#22c55e] py-4 rounded-xl font-bold mb-3">📋 Copiar Pix</button>
+            <a target="_blank" rel="noopener noreferrer" href="https://wa.me/5585991272125?text=E%20a%C3%AD,%20Teuzin!%20Quero%20fazer%20uma%20[Sugest%C3%A3o/Report%20de%20Erro]%20para%20o%20Orange%20Portable" class="block w-full border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold text-center">💬 Suporte</a>
+        </section>
+
+        <footer class="text-center mt-10 mb-20 text-gray-500 text-sm">
+            <p class="font-semibold">Made By: @085_Teuzinnn</p>
+            <p class="mt-2 opacity-70">©️ 2026 - All Rights Reserved</p>
+        </footer>
+
+        <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl flex items-center justify-center">🆙️</button>
+    </div>
+
+    <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
+        <div class="bg-[#111] border border-[#ff4500] w-full max-w-md p-8 rounded-3xl relative">
+            <button id="closeModal" class="absolute top-4 right-4 text-zinc-500 text-xl">✕</button>
+            <h2 id="mt" class="text-2xl font-bold text-[#ff4500] mb-4"></h2>
+            <p id="mds" class="text-zinc-400 text-sm leading-relaxed mb-6"></p>
+            <div class="flex justify-between pt-4 border-t border-zinc-800 text-xs">
+                <span class="flex flex-col gap-1">
+                    <b id="mrl" class="text-white"></b>
+                    <a id="mdl" href="#" target="_blank" class="text-[#ff4500] font-bold underline hidden">DOWNLOAD</a>
+                </span>
+                <span><b id="mcp" class="uppercase"></b></span>
+            </div>
+        </div>
+    </div>
+
+    <script src="themes.js"></script>
+    <script src="database.js"></script>
+    <script src="infobase.js"></script>
+
+    <script>
+        const gs = window.gamesData || [];
+        const ct = document.getElementById('ct');
+        const stats = document.getElementById('stats');
+        const pagination = document.getElementById('pagination');
+        let fv = new Set(JSON.parse(localStorage.getItem('fav')) || []);
+        let at = "Todos";
+        let currentPage = 1;
+        const perPage = 20;
+        let debounceTimer;
+
+        function checkConn() {
+            document.body.classList.toggle('is-offline', !navigator.onLine);
+        }
+        window.addEventListener('online', checkConn);
+        window.addEventListener('offline', checkConn);
+        checkConn();
+
+        function pz(s) {
+            const n = parseFloat(s);
+            return s.includes('GB') ? n * 1024 : n;
+        }
+
+        function debounceSearch() {
+            clearTimeout(debounceTimer);
+            debounceTimer = setTimeout(() => {
+                currentPage = 1;
+                render();
+            }, 300);
+        }
+
+        function getFiltered() {
+            const q = document.getElementById('s').value.toLowerCase();
+            const ord = document.getElementById('o').value;
+            let res = gs.filter(g => g.name.toLowerCase().includes(q) && (at === "Todos" || (at === "❤️ Favoritos" ? fv.has(g.name) : g.category === at)));
+            res.sort((a, b) => {
+                if (ord === 'az') return a.name.localeCompare(b.name);
+                if (ord === 'za') return b.name.localeCompare(a.name);
+                if (ord === 'sizeAsc') return pz(a.size) - pz(b.size);
+                if (ord === 'sizeDesc') return pz(b.size) - pz(a.size);
+            });
+            return res;
+        }
+
+        function getComp(n) {
+            let i = window.gamesInfo ? window.gamesInfo[n] : null;
+            if (!i && window.gamesInfo) {
+                const sim = Object.keys(window.gamesInfo).find(k => n.includes(k) || k.includes(n));
+                if (sim) i = window.gamesInfo[sim];
+            }
+            return i ? i.compat : "-";
+        }
+
+        function render() {
+            const data = getFiltered();
+            stats.innerText = `${data.length} jogos encontrados`;
+            ct.innerHTML = '';
+            pagination.innerHTML = '';
+            const start = (currentPage - 1) * perPage;
+            const paginated = data.slice(start, start + perPage);
+            const fragment = document.createDocumentFragment();
+            paginated.forEach(g => {
+                const comp = getComp(g.name);
+                const cCol = comp === "Ótimo" ? "#22c55e" : (comp === "Boa" ? "#facc15" : "#f40");
+                const d = document.createElement('div');
+                d.className = 'bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex justify-between items-center card-active transition-all';
+                d.innerHTML = `
+                    <div class="overflow-hidden">
+                        <h3 class="text-zinc-100 font-medium truncate pr-2">${g.name}</h3>
+                        <div class="flex gap-2 items-center mt-1">
+                            <span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded border border-zinc-800 font-bold uppercase">${g.size}</span>
+                            <span class="text-[10px] font-bold uppercase" style="color:${cCol}">${comp}</span>
+                        </div>
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <button class="text-2xl">${fv.has(g.name) ? '❤️' : '🤍'}</button>
+                        <a href="${g.link}" target="_blank" rel="noopener noreferrer" class="text-2xl">📥</a>
+                    </div>`;
+                d.querySelector('button').onclick = (e) => {
+                    e.stopPropagation();
+                    toggleFav(g.name);
+                };
+                d.onclick = (e) => {
+                    if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') showModal(g.name, g.link);
+                }
+                fragment.appendChild(d);
+            });
+            ct.appendChild(fragment);
+            renderPagination(data.length);
+        }
+
+        function renderPagination(total) {
+            const pages = Math.ceil(total / perPage);
+            if (pages <= 1) return;
+            for (let i = 1; i <= pages; i++) {
+                const b = document.createElement('button');
+                b.className = `px-3 py-1 rounded ${i === currentPage ? 'bg-[#ff4500] text-white' : 'bg-zinc-800 text-zinc-400'}`;
+                b.innerText = i;
+                b.onclick = () => {
+                    currentPage = i;
+                    render();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+                pagination.appendChild(b);
+            }
+        }
+
+        function toggleFav(name) {
+            if (fv.has(name)) {
+                fv.delete(name);
+                if (fv.size === 0 && at === "❤️ Favoritos") at = "Todos";
+            } else {
+                fv.add(name);
+            }
+            localStorage.setItem('fav', JSON.stringify([...fv]));
+            initCategories();
+            render();
+        }
+
+        function showModal(n, l) {
+            let i = window.gamesInfo ? window.gamesInfo[n] : null;
+            if (!i && window.gamesInfo) {
+                const sim = Object.keys(window.gamesInfo).find(k => n.includes(k) || k.includes(n));
+                if (sim) i = window.gamesInfo[sim];
+            }
+            i = i || {
+                description: "Informações não disponíveis.",
+                release: "-",
+                compat: "-"
+            };
+            document.getElementById('mt').innerText = n;
+            document.getElementById('mds').innerText = i.description;
+            document.getElementById('mrl').innerText = i.release;
+            const dlBtn = document.getElementById('mdl');
+            if (l) {
+                dlBtn.href = l;
+                dlBtn.classList.remove('hidden');
+            } else {
+                dlBtn.classList.add('hidden');
+            }
+            const cpEl = document.getElementById('mcp');
+            cpEl.innerText = i.compat;
+            cpEl.style.color = i.compat === "Ótimo" ? "#22c55e" : (i.compat === "Boa" ? "#facc15" : "#f40");
+            document.getElementById('md').style.display = "flex";
+        }
+
+        document.getElementById('closeModal').onclick = () => document.getElementById('md').style.display = "none";
+        document.getElementById('md').onclick = (e) => {
+            if (e.target === document.getElementById('md')) document.getElementById('md').style.display = "none"
+        };
+
+        document.getElementById('s').addEventListener('keyup', debounceSearch);
+        document.getElementById('o').addEventListener('change', () => {
+            currentPage = 1;
+            render();
+        });
+        document.getElementById('btn-rnd').onclick = () => {
+            if (gs.length) {
+                const r = gs[Math.floor(Math.random() * gs.length)];
+                showModal(r.name, r.link);
+            }
+        };
+        document.getElementById('pix').onclick = () => {
+            navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2");
+        };
+
+        window.onscroll = () => document.getElementById("up").style.display = window.scrollY > 300 ? "flex" : "none";
+        document.getElementById('up').onclick = () => window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+
+        function initCategories() {
+            const t = document.getElementById('ts');
+            t.innerHTML = '';
+            let l = ["Todos"];
+            if (fv.size > 0) l.push("❤️ Favoritos");
+            const cats = ["🗡️ Ação / Aventura", "🏎️ Corrida", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
+            cats.forEach(x => l.push(x));
+            l.forEach(x => {
+                const e = document.createElement('div');
+                e.className = `cat-item px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer border ${x===at?'cat-selected':'bg-zinc-900 text-zinc-500 border-zinc-800'}`;
+                e.innerText = x;
+                e.onclick = () => {
+                    at = x;
+                    currentPage = 1;
+                    initCategories();
+                    render();
+                }
+                t.appendChild(e);
+            });
+        }
+
+        if (window.TemasSazonais) window.TemasSazonais.verificar();
+        initCategories();
+        render();
+    </script>
+
+</body>
+</html>
