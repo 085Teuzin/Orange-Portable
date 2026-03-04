@@ -24,7 +24,7 @@
 </head>
 <body class="flex flex-col">
 
-    <div id="toast-container" class="w-[90%] max-w-sm bg-zinc-900 border border-zinc-800 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
+    <div id="toast-container" class="w-[90%] max-w-sm bg-black border border-zinc-800 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
         <div id="toast-icon" class="text-2xl"></div>
         <div id="toast-msg" class="text-sm font-bold text-[#ff4500]"></div>
     </div>
@@ -43,8 +43,8 @@
         </header>
 
         <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4">
-            <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] border border-zinc-800 p-4 rounded-xl mb-3 outline-none text-lg">
-            <select id="o" class="w-full bg-[#111] border border-zinc-800 p-3 rounded-xl outline-none text-sm">
+            <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-black border border-zinc-800 p-4 rounded-xl mb-3 outline-none text-lg">
+            <select id="o" class="w-full bg-black border border-zinc-800 p-3 rounded-xl outline-none text-sm">
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
                 <option value="sizeAsc">Menor ao Maior</option>
@@ -54,11 +54,11 @@
 
         <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-2"></nav>
         <div id="stats" class="text-center text-[10px] text-[#ff4500] font-bold mb-4 uppercase tracking-tighter"></div>
-        <button id="btn-rnd" class="w-full bg-[#111] border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform">🎲 Me surpreenda!</button>
+        <button id="btn-rnd" class="w-full bg-black border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform">🎲 Me surpreenda!</button>
         <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow"></main>
         <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
 
-        <section class="mt-10 p-6 bg-zinc-950 border border-zinc-900 rounded-3xl text-center">
+        <section class="mt-10 p-6 bg-black border border-zinc-900 rounded-3xl text-center">
             <div class="bg-white p-2 inline-block rounded-xl mb-4">
                 <img src="pix.png" class="w-32 h-32 object-contain" alt="Pix QR">
             </div>
@@ -70,11 +70,11 @@
             <p class="font-semibold">Made By: @085_Teuzinnn</p>
             <p class="mt-2 opacity-70">©️ 2026 - All Rights Reserved</p>
         </footer>
-        <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl flex items-center justify-center bg-zinc-900 border border-zinc-800">🆙️</button>
+        <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl flex items-center justify-center bg-black border border-zinc-800">🆙️</button>
     </div>
 
     <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
-        <div class="bg-[#111] border border-[#ff4500] w-full max-w-md p-8 rounded-3xl relative">
+        <div class="bg-black border border-[#ff4500] w-full max-w-md p-8 rounded-3xl relative">
             <button id="closeModal" class="absolute top-4 right-4 text-zinc-500 text-xl">✕</button>
             <h2 id="mt" class="text-2xl font-bold text-[#ff4500] mb-4"></h2>
             <p id="mds" class="text-zinc-400 text-sm leading-relaxed mb-6"></p>
@@ -170,7 +170,7 @@
                 const color = comp === "Ótimo" ? "#22c55e" : (comp === "Boa" ? "#facc15" : "#f40");
                 
                 const d = document.createElement('div');
-                d.className = 'bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer';
+                d.className = 'bg-black border border-zinc-800 p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer';
                 
                 const infoDiv = document.createElement('div');
                 infoDiv.className = 'overflow-hidden';
@@ -269,7 +269,7 @@
             l = [...l, ...cats];
             l.forEach(x => {
                 const e = document.createElement('div');
-                e.className = `cat-item px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer border ${x===at?'cat-selected':'bg-zinc-900 text-zinc-500 border-zinc-800'}`;
+                e.className = `cat-item px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer border ${x===at?'cat-selected':'bg-black text-zinc-500 border-zinc-800'}`;
                 e.innerText = x;
                 e.onclick = () => { at = x; currentPage = 1; initCategories(); render(); };
                 t.appendChild(e);
