@@ -69,7 +69,7 @@ const TemasSazonais = {
             #sub-title { color: ${cfg.cor}; opacity: 1; font-weight: bold; }
             .bg-\\[\\#ff4500\\], .theme-bg-orange, #offline-screen button, .cat-selected { background-color: ${cfg.cor} !important; color: ${cfg.contraste} !important; }
             .theme-text-contrast { color: ${cfg.contraste} !important; }
-            .border-\\[\\#ff4500\\], input:focus, select:focus, #btn-rnd, #btn-sup, .cat-selected { border-color: ${cfg.cor} !important; }
+            .border-\\[\\#ff4500\\], input:focus, select:focus, #btn-rnd, #btn-sup, .cat-selected, .card-dinamico { border-color: ${cfg.cor} !important; }
             #btn-rnd, #btn-sup { color: ${cfg.cor} !important; }
             .shadow-orange-900\\/20 { box-shadow: 0 10px 15px -3px ${cfg.cor}44 !important; }
             #toast-container { border-color: ${cfg.cor} !important; }
