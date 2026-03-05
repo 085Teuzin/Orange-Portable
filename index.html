@@ -88,11 +88,11 @@
         </div>
     </div>
 
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
-    <script src="themes.js"></script>
     <script src="database.js"></script>
     <script src="infobase.js"></script>
+    <script src="themes.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
     <script>
         const firebaseConfig = {
@@ -150,8 +150,7 @@
                 return;
             }
             const gameId = nome.replace(/[.#$[\]]/g, "_");
-            const ref = db.ref('likes/' + gameId);
-            ref.transaction((current) => (current || 0) + 1, (err, comm) => {
+            db.ref('likes/' + gameId).transaction((curr) => (curr || 0) + 1, (err, comm) => {
                 if (comm) {
                     myLikes.add(nome);
                     localStorage.setItem('my_likes', JSON.stringify([...myLikes]));
@@ -161,7 +160,7 @@
             });
         }
 
-        db.ref('likes').on('value', () => render());
+        db.ref('likes').on('value', () => { if(gs.length > 0) render(); });
 
         function getFiltered() {
             const q = el.s.value.toLowerCase();
@@ -274,7 +273,7 @@
         }
 
         initCategories();
-        render();
+        if(gs.length > 0) render();
     </script>
 </body>
 </html>
