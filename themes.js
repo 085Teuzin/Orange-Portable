@@ -62,6 +62,13 @@ const TemasSazonais = {
             ${extra}
         `;
         document.head.appendChild(style);
+
+        const sub = document.getElementById('sub-title');
+        if (cfg.sms && sub) {
+            sub.innerText = cfg.sms;
+            sub.style.opacity = "1";
+        }
+
         if (cfg.sms) {
             const tMsg = document.getElementById('toast-msg');
             const tIcon = document.getElementById('toast-icon');
