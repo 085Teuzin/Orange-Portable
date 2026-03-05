@@ -64,7 +64,7 @@ const TemasSazonais = {
         document.head.appendChild(style);
 
         const sub = document.getElementById('sub-title');
-        if (cfg.sms && sub) {
+        if (sub && cfg.sms) {
             sub.innerText = cfg.sms;
             sub.style.opacity = "1";
         }
