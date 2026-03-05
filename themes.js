@@ -32,7 +32,7 @@ const TemasSazonais = {
         } else if (mes === 10 && dia >= 1 && dia <= 14) {
             config = { cor: "#ec4899", contraste: "#ffffff", emojiTitulo: "🎈", emojiFav: "🍭", emojiDownload: "🧸", emojiSurpresa: "🍦", emojiSuporte: "🎡", emojiCalendario: "📅", emojiGame: "🪁", emojiOff: "🚫", emojiPix: "🍬", emojiUp: "🌈", emojiBusca: "🍭", particulas: ["🎈", "🌈", "🍭"], sms: "Ser criança é o melhor jogo de todos! 🧸" };
         } else if (mes === 10 && dia >= 15 && dia <= 31) {
-            config = { cor: "#ea580c", contraste: "#ffffff", emojiTitulo: "🎃", emojiFav: "👻", emojiDownload: "🍬", emojiSurpresa: "💀", emojiSuporte: "⚰️", emojiCalendario: "🗓️", emojiGame: "🕷️", emojiOff: "蝙蝠", emojiPix: "🕸️", emojiUp: "🧛", emojiBusca: "🎃", particulas: ["🎃", "👻", "🦇"], sms: "Doces ou Travessuras no Portable? 🎃" };
+            config = { cor: "#ea580c", contraste: "#ffffff", emojiTitulo: "🎃", emojiFav: "👻", emojiDownload: "🍬", emojiSurpresa: "💀", emojiSuporte: "⚰️", emojiCalendario: "🗓️", emojiGame: "🕷️", emojiOff: "🦇", emojiPix: "🕸️", emojiUp: "🧛", emojiBusca: "🎃", particulas: ["🎃", "👻", "🦇"], sms: "Doces ou Travessuras no Portable? 🎃" };
         } else if (mes === 11 && dia >= 15 && dia <= 22) {
             config = { cor: "#78350f", contraste: "#ffffff", emojiTitulo: "✊🏿", emojiFav: "🌍", emojiDownload: "🥁", emojiSurpresa: "🦁", emojiSuporte: "🤝", emojiCalendario: "📅", emojiGame: "🎮", emojiOff: "🚫", emojiPix: "💎", emojiUp: "🔥", emojiBusca: "🌍", particulas: ["✊🏿", "✨", "🌍"], sms: "Orgulho e Resistência: Consciência Negra ✊🏿" };
         } else if (mes === 12 && dia >= 15 && dia <= 25) {
@@ -47,14 +47,12 @@ const TemasSazonais = {
         document.documentElement.style.setProperty('--p', cfg.cor);
         document.documentElement.style.setProperty('--c', cfg.contraste);
         const style = document.createElement('style');
-        
         let extra = "";
         if (cfg.especial) {
             extra = `@keyframes neon { 0%, 100% { text-shadow: 0 0 10px ${cfg.cor}, 0 0 20px ${cfg.cor}; } 50% { text-shadow: 0 0 5px #fff, 0 0 15px ${cfg.cor}; } }
                      #main-title { animation: neon 1.5s infinite; color: #fff !important; }
                      .card-dinamico { box-shadow: 0 0 15px ${cfg.cor}33; }`;
         }
-
         style.innerHTML = `
             .text-\\[\\#ff4500\\], h1, h2#mt, #stats, #offline-screen h1, .cat-selected { color: ${cfg.cor} !important; }
             .bg-\\[\\#ff4500\\], #offline-screen button, .cat-selected { background-color: ${cfg.cor} !important; color: ${cfg.contraste} !important; }
@@ -64,7 +62,6 @@ const TemasSazonais = {
             ${extra}
         `;
         document.head.appendChild(style);
-
         if (cfg.sms) {
             const tMsg = document.getElementById('toast-msg');
             const tIcon = document.getElementById('toast-icon');
@@ -75,14 +72,12 @@ const TemasSazonais = {
                 setTimeout(() => document.getElementById('toast-container').classList.remove('show'), 4000);
             }
         }
-
         const h = document.getElementById('main-title');
         if (h) h.innerHTML = `Orange Portable <span>${cfg.emojiTitulo}</span>`;
         if (document.getElementById('btn-rnd')) document.getElementById('btn-rnd').innerText = `${cfg.emojiSurpresa} Me surpreenda!`;
         if (document.getElementById('pix')) document.getElementById('pix').innerHTML = `${cfg.emojiPix} Copiar Pix`;
         if (document.getElementById('up')) document.getElementById('up').innerText = cfg.emojiUp;
         if (document.getElementById('s')) document.getElementById('s').placeholder = `${cfg.emojiBusca} Buscar jogo...`;
-
         if (cfg.particulas.length > 0) this.neve(cfg.particulas);
     },
 
@@ -111,5 +106,4 @@ const TemasSazonais = {
         draw();
     }
 };
-
 TemasSazonais.verificar();
