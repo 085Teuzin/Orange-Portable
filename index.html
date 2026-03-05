@@ -23,21 +23,25 @@
     </style>
 </head>
 <body class="flex flex-col">
+
     <div id="toast-container" class="w-[90%] max-w-sm bg-zinc-900 border border-zinc-800 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
         <div id="toast-icon" class="text-2xl"></div>
         <div id="toast-msg" class="text-sm font-bold text-[#ff4500]"></div>
     </div>
+
     <div id="offline-screen" class="fixed inset-0 z-[100] bg-black flex-col items-center justify-center p-6 text-center">
         <span id="off-emoji" class="text-6xl mb-4">📡</span>
         <h1 class="text-2xl font-bold text-[#ff4500] mb-2">Sem Conexão</h1>
-        <p class="text-gray-400">O Orange Portable requer internet.</p>
+        <p class="text-gray-400">O Orange Portable requer internet para carregar a biblioteca.</p>
         <button onclick="window.location.reload()" class="mt-6 bg-[#ff4500] px-8 py-3 rounded-full font-bold">Tentar Novamente</button>
     </div>
+
     <div id="app-content" class="w-full min-h-screen flex flex-col p-4 md:p-8">
         <header class="text-center mb-6">
             <h1 id="main-title" class="text-4xl font-black text-[#ff4500] tracking-tighter italic">Orange Portable</h1>
             <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
         </header>
+
         <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4">
             <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] border border-zinc-800 p-4 rounded-xl mb-3 outline-none text-lg">
             <select id="o" class="w-full bg-[#111] border border-zinc-800 p-3 rounded-xl outline-none text-sm">
@@ -47,11 +51,13 @@
                 <option value="sizeDesc">Maior ao Menor</option>
             </select>
         </section>
+
         <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-2"></nav>
         <div id="stats" class="text-center text-[10px] text-[#ff4500] font-bold mb-4 uppercase tracking-tighter"></div>
         <button id="btn-rnd" class="w-full bg-[#111] border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform">🎲 Me surpreenda!</button>
         <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow"></main>
         <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
+
         <section class="mt-10 p-6 bg-zinc-950 border border-zinc-900 rounded-3xl text-center">
             <div class="bg-white p-2 inline-block rounded-xl mb-4">
                 <img src="pix.png" class="w-32 h-32 object-contain" alt="Pix QR">
@@ -59,12 +65,14 @@
             <button id="pix" class="w-full bg-[#22c55e] py-4 rounded-xl font-bold mb-3">📋 Copiar Pix</button>
             <a target="_blank" rel="noopener noreferrer" href="https://wa.me/5585991272125?text=Sugestão" class="block w-full border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold text-center">💬 Suporte</a>
         </section>
+
         <footer class="text-center mt-10 mb-20 text-gray-500 text-sm">
             <p class="font-semibold">Made By: @085_Teuzinnn</p>
             <p class="mt-2 opacity-70">©️ 2026 - All Rights Reserved</p>
         </footer>
         <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl flex items-center justify-center bg-zinc-900 border border-zinc-800">🆙️</button>
     </div>
+
     <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
         <div class="bg-[#111] border border-[#ff4500] w-full max-w-md p-8 rounded-3xl relative">
             <button id="closeModal" class="absolute top-4 right-4 text-zinc-500 text-xl">✕</button>
@@ -80,26 +88,11 @@
         </div>
     </div>
 
+    <script src="themes.js"></script>
     <script src="database.js"></script>
     <script src="infobase.js"></script>
-    <script src="themes.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBq9-vsFpAgEtXJ--KH6knNKEpXXVgkGrc",
-            authDomain: "conexao-geral-teuzin.firebaseapp.com",
-            databaseURL: "https://conexao-geral-teuzin-default-rtdb.firebaseio.com",
-            projectId: "conexao-geral-teuzin",
-            storageBucket: "conexao-geral-teuzin.firebasestorage.app",
-            messagingSenderId: "153059359862",
-            appId: "1:153059359862:web:c9e69bbb151748cd8d7357"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-
         const el = {
             ct: document.getElementById('ct'),
             stats: document.getElementById('stats'),
@@ -113,7 +106,6 @@
 
         const gs = window.gamesData || [];
         let fv = new Set(JSON.parse(localStorage.getItem('fav') || '[]'));
-        let myLikes = new Set(JSON.parse(localStorage.getItem('my_likes') || '[]'));
         let at = "Todos", currentPage = 1, debounceTimer;
         const perPage = 20;
 
@@ -136,24 +128,6 @@
             return s.toUpperCase().includes('GB') ? n * 1024 : n;
         }
 
-        function darLike(nome) {
-            if (myLikes.has(nome)) {
-                showToast("Já deste like!", "⚠️");
-                return;
-            }
-            const gameId = nome.replace(/[.#$[\]]/g, "_");
-            db.ref('likes/' + gameId).transaction((curr) => (curr || 0) + 1, (err, comm) => {
-                if (comm) {
-                    myLikes.add(nome);
-                    localStorage.setItem('my_likes', JSON.stringify([...myLikes]));
-                    showToast("Like registado!", "🔥");
-                    render();
-                }
-            });
-        }
-
-        db.ref('likes').on('value', () => { if(gs.length > 0) render(); });
-
         function getFiltered() {
             const q = el.s.value.toLowerCase();
             const ord = el.o.value;
@@ -167,41 +141,34 @@
 
         function render() {
             const data = getFiltered();
-            const themeCfg = window.currentThemeConfig || { emojiDownload: "📥" };
+            const themeCfg = window.currentThemeConfig || { emojiFav: "❤️", emojiDownload: "📥" };
             el.stats.innerText = `${data.length} JOGOS ENCONTRADOS`;
             el.ct.innerHTML = ''; el.pg.innerHTML = '';
             
-            db.ref('likes').once('value', (snap) => {
-                const allLikes = snap.val() || {};
-                data.slice((currentPage - 1) * perPage, currentPage * perPage).forEach(g => {
-                    const info = (window.gamesInfo && window.gamesInfo[g.name]) || { compat: "-" };
-                    const color = info.compat === "Ótimo" ? "#22c55e" : (info.compat === "Boa" ? "#facc15" : "#f40");
-                    const gameId = g.name.replace(/[.#$[\]]/g, "_");
-                    const numLikes = allLikes[gameId] || 0;
-                    
-                    const d = document.createElement('div');
-                    d.className = 'bg-zinc-900/50 border border-[#ff4500] p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer card-dinamico';
-                    d.innerHTML = `
-                        <div class="overflow-hidden flex-grow">
-                            <h3 class="text-zinc-100 font-medium truncate pr-2">${g.name}</h3>
-                            <div class="flex gap-2 items-center mt-1">
-                                <span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded border border-zinc-800 font-bold uppercase">${g.size}</span>
-                                <span class="text-[10px] font-bold uppercase" style="color:${color}">${info.compat}</span>
-                                <span class="text-[10px] text-zinc-500 font-bold ml-1">👍 ${numLikes}</span>
-                            </div>
+            data.slice((currentPage - 1) * perPage, currentPage * perPage).forEach(g => {
+                const info = (window.gamesInfo && window.gamesInfo[g.name]) || { compat: "-" };
+                const color = info.compat === "Ótimo" ? "#22c55e" : (info.compat === "Boa" ? "#facc15" : "#f40");
+                
+                const d = document.createElement('div');
+                d.className = 'bg-zinc-900/50 border border-[#ff4500] p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer card-dinamico';
+                d.innerHTML = `
+                    <div class="overflow-hidden">
+                        <h3 class="text-zinc-100 font-medium truncate pr-2">${g.name}</h3>
+                        <div class="flex gap-2 items-center mt-1">
+                            <span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded border border-zinc-800 font-bold uppercase">${g.size}</span>
+                            <span class="text-[10px] font-bold uppercase" style="color:${color}">${info.compat}</span>
                         </div>
-                        <div class="flex gap-3 items-center ml-2">
-                            <button class="text-xl like-btn ${myLikes.has(g.name)?'opacity-30':'hover:scale-110'}">👍</button>
-                            <button class="text-xl fav-btn">${fv.has(g.name)?'❤️':'🤍'}</button>
-                            <a href="${g.link}" target="_blank" rel="noopener noreferrer" class="text-xl dl-btn">${themeCfg.emojiDownload}</a>
-                        </div>
-                    `;
-                    d.querySelector('.like-btn').onclick = (e) => { e.stopPropagation(); darLike(g.name); };
-                    d.querySelector('.fav-btn').onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
-                    d.querySelector('.dl-btn').onclick = (e) => e.stopPropagation();
-                    d.onclick = () => showModal(g.name, g.link);
-                    el.ct.appendChild(d);
-                });
+                    </div>
+                    <div class="flex gap-4 items-center">
+                        <button class="text-2xl fav-btn">${fv.has(g.name) ? '❤️' : '🤍'}</button>
+                        <a href="${g.link}" target="_blank" rel="noopener noreferrer" class="text-2xl dl-btn">${themeCfg.emojiDownload}</a>
+                    </div>
+                `;
+                
+                d.querySelector('.fav-btn').onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
+                d.querySelector('.dl-btn').onclick = (e) => e.stopPropagation();
+                d.onclick = () => showModal(g.name, g.link);
+                el.ct.appendChild(d);
             });
             renderPagination(data.length);
         }
@@ -265,7 +232,7 @@
         }
 
         initCategories();
-        if(gs.length > 0) render();
+        render();
     </script>
 </body>
 </html>
