@@ -23,25 +23,21 @@
     </style>
 </head>
 <body class="flex flex-col">
-
     <div id="toast-container" class="w-[90%] max-w-sm bg-zinc-900 border border-zinc-800 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
         <div id="toast-icon" class="text-2xl"></div>
         <div id="toast-msg" class="text-sm font-bold text-[#ff4500]"></div>
     </div>
-
     <div id="offline-screen" class="fixed inset-0 z-[100] bg-black flex-col items-center justify-center p-6 text-center">
         <span id="off-emoji" class="text-6xl mb-4">📡</span>
         <h1 class="text-2xl font-bold text-[#ff4500] mb-2">Sem Conexão</h1>
-        <p class="text-gray-400">O Orange Portable requer internet para carregar a biblioteca.</p>
+        <p class="text-gray-400">O Orange Portable requer internet.</p>
         <button onclick="window.location.reload()" class="mt-6 bg-[#ff4500] px-8 py-3 rounded-full font-bold">Tentar Novamente</button>
     </div>
-
     <div id="app-content" class="w-full min-h-screen flex flex-col p-4 md:p-8">
         <header class="text-center mb-6">
             <h1 id="main-title" class="text-4xl font-black text-[#ff4500] tracking-tighter italic">Orange Portable</h1>
             <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
         </header>
-
         <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4">
             <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] border border-zinc-800 p-4 rounded-xl mb-3 outline-none text-lg">
             <select id="o" class="w-full bg-[#111] border border-zinc-800 p-3 rounded-xl outline-none text-sm">
@@ -51,13 +47,11 @@
                 <option value="sizeDesc">Maior ao Menor</option>
             </select>
         </section>
-
         <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-2"></nav>
         <div id="stats" class="text-center text-[10px] text-[#ff4500] font-bold mb-4 uppercase tracking-tighter"></div>
         <button id="btn-rnd" class="w-full bg-[#111] border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform">🎲 Me surpreenda!</button>
         <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow"></main>
         <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
-
         <section class="mt-10 p-6 bg-zinc-950 border border-zinc-900 rounded-3xl text-center">
             <div class="bg-white p-2 inline-block rounded-xl mb-4">
                 <img src="pix.png" class="w-32 h-32 object-contain" alt="Pix QR">
@@ -65,14 +59,12 @@
             <button id="pix" class="w-full bg-[#22c55e] py-4 rounded-xl font-bold mb-3">📋 Copiar Pix</button>
             <a target="_blank" rel="noopener noreferrer" href="https://wa.me/5585991272125?text=Sugestão" class="block w-full border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold text-center">💬 Suporte</a>
         </section>
-
         <footer class="text-center mt-10 mb-20 text-gray-500 text-sm">
             <p class="font-semibold">Made By: @085_Teuzinnn</p>
             <p class="mt-2 opacity-70">©️ 2026 - All Rights Reserved</p>
         </footer>
         <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl flex items-center justify-center bg-zinc-900 border border-zinc-800">🆙️</button>
     </div>
-
     <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
         <div class="bg-[#111] border border-[#ff4500] w-full max-w-md p-8 rounded-3xl relative">
             <button id="closeModal" class="absolute top-4 right-4 text-zinc-500 text-xl">✕</button>
@@ -146,7 +138,7 @@
 
         function darLike(nome) {
             if (myLikes.has(nome)) {
-                showToast("Você já deu like!", "⚠️");
+                showToast("Já deste like!", "⚠️");
                 return;
             }
             const gameId = nome.replace(/[.#$[\]]/g, "_");
@@ -154,7 +146,7 @@
                 if (comm) {
                     myLikes.add(nome);
                     localStorage.setItem('my_likes', JSON.stringify([...myLikes]));
-                    showToast("Like registrado!", "🔥");
+                    showToast("Like registado!", "🔥");
                     render();
                 }
             });
