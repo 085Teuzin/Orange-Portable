@@ -88,11 +88,26 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <script src="themes.js"></script>
     <script src="database.js"></script>
     <script src="infobase.js"></script>
 
     <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyBq9-vsFpAgEtXJ--KH6knNKEpXXVgkGrc",
+            authDomain: "conexao-geral-teuzin.firebaseapp.com",
+            databaseURL: "https://conexao-geral-teuzin-default-rtdb.firebaseio.com",
+            projectId: "conexao-geral-teuzin",
+            storageBucket: "conexao-geral-teuzin.firebasestorage.app",
+            messagingSenderId: "153059359862",
+            appId: "1:153059359862:web:c9e69bbb151748cd8d7357"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
         const el = {
             ct: document.getElementById('ct'),
             stats: document.getElementById('stats'),
@@ -106,6 +121,7 @@
 
         const gs = window.gamesData || [];
         let fv = new Set(JSON.parse(localStorage.getItem('fav') || '[]'));
+        let myLikes = new Set(JSON.parse(localStorage.getItem('my_likes') || '[]'));
         let at = "Todos", currentPage = 1, debounceTimer;
         const perPage = 20;
 
@@ -128,6 +144,25 @@
             return s.toUpperCase().includes('GB') ? n * 1024 : n;
         }
 
+        function darLike(nome) {
+            if (myLikes.has(nome)) {
+                showToast("Você já deu like!", "⚠️");
+                return;
+            }
+            const gameId = nome.replace(/[.#$[\]]/g, "_");
+            const ref = db.ref('likes/' + gameId);
+            ref.transaction((current) => (current || 0) + 1, (err, comm) => {
+                if (comm) {
+                    myLikes.add(nome);
+                    localStorage.setItem('my_likes', JSON.stringify([...myLikes]));
+                    showToast("Like registrado!", "🔥");
+                    render();
+                }
+            });
+        }
+
+        db.ref('likes').on('value', () => render());
+
         function getFiltered() {
             const q = el.s.value.toLowerCase();
             const ord = el.o.value;
@@ -141,34 +176,41 @@
 
         function render() {
             const data = getFiltered();
-            const themeCfg = window.currentThemeConfig || { emojiFav: "❤️", emojiDownload: "📥" };
+            const themeCfg = window.currentThemeConfig || { emojiDownload: "📥" };
             el.stats.innerText = `${data.length} JOGOS ENCONTRADOS`;
             el.ct.innerHTML = ''; el.pg.innerHTML = '';
             
-            data.slice((currentPage - 1) * perPage, currentPage * perPage).forEach(g => {
-                const info = (window.gamesInfo && window.gamesInfo[g.name]) || { compat: "-" };
-                const color = info.compat === "Ótimo" ? "#22c55e" : (info.compat === "Boa" ? "#facc15" : "#f40");
-                
-                const d = document.createElement('div');
-                d.className = 'bg-zinc-900/50 border border-[#ff4500] p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer card-dinamico';
-                d.innerHTML = `
-                    <div class="overflow-hidden">
-                        <h3 class="text-zinc-100 font-medium truncate pr-2">${g.name}</h3>
-                        <div class="flex gap-2 items-center mt-1">
-                            <span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded border border-zinc-800 font-bold uppercase">${g.size}</span>
-                            <span class="text-[10px] font-bold uppercase" style="color:${color}">${info.compat}</span>
+            db.ref('likes').once('value', (snap) => {
+                const allLikes = snap.val() || {};
+                data.slice((currentPage - 1) * perPage, currentPage * perPage).forEach(g => {
+                    const info = (window.gamesInfo && window.gamesInfo[g.name]) || { compat: "-" };
+                    const color = info.compat === "Ótimo" ? "#22c55e" : (info.compat === "Boa" ? "#facc15" : "#f40");
+                    const gameId = g.name.replace(/[.#$[\]]/g, "_");
+                    const numLikes = allLikes[gameId] || 0;
+                    
+                    const d = document.createElement('div');
+                    d.className = 'bg-zinc-900/50 border border-[#ff4500] p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer card-dinamico';
+                    d.innerHTML = `
+                        <div class="overflow-hidden flex-grow">
+                            <h3 class="text-zinc-100 font-medium truncate pr-2">${g.name}</h3>
+                            <div class="flex gap-2 items-center mt-1">
+                                <span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded border border-zinc-800 font-bold uppercase">${g.size}</span>
+                                <span class="text-[10px] font-bold uppercase" style="color:${color}">${info.compat}</span>
+                                <span class="text-[10px] text-zinc-500 font-bold ml-1">👍 ${numLikes}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex gap-4 items-center">
-                        <button class="text-2xl fav-btn">${fv.has(g.name) ? '❤️' : '🤍'}</button>
-                        <a href="${g.link}" target="_blank" rel="noopener noreferrer" class="text-2xl dl-btn">${themeCfg.emojiDownload}</a>
-                    </div>
-                `;
-                
-                d.querySelector('.fav-btn').onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
-                d.querySelector('.dl-btn').onclick = (e) => e.stopPropagation();
-                d.onclick = () => showModal(g.name, g.link);
-                el.ct.appendChild(d);
+                        <div class="flex gap-3 items-center ml-2">
+                            <button class="text-xl like-btn ${myLikes.has(g.name)?'opacity-30':'hover:scale-110'}">👍</button>
+                            <button class="text-xl fav-btn">${fv.has(g.name)?'❤️':'🤍'}</button>
+                            <a href="${g.link}" target="_blank" rel="noopener noreferrer" class="text-xl dl-btn">${themeCfg.emojiDownload}</a>
+                        </div>
+                    `;
+                    d.querySelector('.like-btn').onclick = (e) => { e.stopPropagation(); darLike(g.name); };
+                    d.querySelector('.fav-btn').onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
+                    d.querySelector('.dl-btn').onclick = (e) => e.stopPropagation();
+                    d.onclick = () => showModal(g.name, g.link);
+                    el.ct.appendChild(d);
+                });
             });
             renderPagination(data.length);
         }
