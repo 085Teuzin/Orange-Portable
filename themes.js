@@ -40,40 +40,61 @@ const TemasSazonais = {
         }
 
         window.currentThemeConfig = config;
-        if (config.cor) this.aplicar(config);
+        this.aplicar(config);
     },
 
     aplicar: function(cfg) {
-        document.documentElement.style.setProperty('--p', cfg.cor);
-        document.documentElement.style.setProperty('--c', cfg.contraste);
-        const style = document.createElement('style');
-        let extra = "";
-        if (cfg.especial) {
-            extra = `@keyframes neon { 0%, 100% { text-shadow: 0 0 10px ${cfg.cor}, 0 0 20px ${cfg.cor}; } 50% { text-shadow: 0 0 5px #fff, 0 0 15px ${cfg.cor}; } }
-                     #main-title { animation: neon 1.5s infinite; color: #fff !important; }
-                     .card-dinamico { box-shadow: 0 0 15px ${cfg.cor}33; }`;
-        }
-        style.innerHTML = `
-            .text-\\[\\#ff4500\\], h1, h2#mt, #stats, #offline-screen h1, .cat-selected { color: ${cfg.cor} !important; }
-            .bg-\\[\\#ff4500\\], #offline-screen button, .cat-selected { background-color: ${cfg.cor} !important; color: ${cfg.contraste} !important; }
-            .border-\\[\\#ff4500\\], #btn-rnd, .cat-selected, .card-dinamico { border-color: ${cfg.cor} !important; }
-            #btn-rnd { color: ${cfg.cor} !important; }
-            #toast-container { border-color: ${cfg.cor} !important; }
-            ${extra}
-        `;
-        document.head.appendChild(style);
-        if (cfg.sms) {
-            const tMsg = document.getElementById('toast-msg');
-            const tIcon = document.getElementById('toast-icon');
-            if (tMsg) {
-                tIcon.innerText = cfg.emojiTitulo;
-                tMsg.innerText = cfg.sms;
-                document.getElementById('toast-container').classList.add('show');
-                setTimeout(() => document.getElementById('toast-container').classList.remove('show'), 4000);
+        const subTitle = document.getElementById('sub-title');
+        
+        if (cfg.cor) {
+            document.documentElement.style.setProperty('--p', cfg.cor);
+            document.documentElement.style.setProperty('--c', cfg.contraste);
+            
+            const style = document.createElement('style');
+            let extra = "";
+            
+            if (cfg.especial) {
+                extra = `@keyframes neon { 0%, 100% { text-shadow: 0 0 10px ${cfg.cor}, 0 0 20px ${cfg.cor}; } 50% { text-shadow: 0 0 5px #fff, 0 0 15px ${cfg.cor}; } }
+                         #main-title { animation: neon 1.5s infinite; color: #fff !important; }
+                         .card-dinamico { box-shadow: 0 0 15px ${cfg.cor}33; }`;
+            }
+
+            style.innerHTML = `
+                .text-\\[\\#ff4500\\], h1, h2#mt, #stats, #offline-screen h1, .cat-selected { color: ${cfg.cor} !important; }
+                .bg-\\[\\#ff4500\\], #offline-screen button, .cat-selected { background-color: ${cfg.cor} !important; color: ${cfg.contraste} !important; }
+                .border-\\[\\#ff4500\\], #btn-rnd, .cat-selected, .card-dinamico { border-color: ${cfg.cor} !important; }
+                #btn-rnd { color: ${cfg.cor} !important; }
+                #toast-container { border-color: ${cfg.cor} !important; }
+                ${extra}
+            `;
+            document.head.appendChild(style);
+
+            if (cfg.sms) {
+                if (subTitle) {
+                    subTitle.innerText = cfg.sms;
+                    subTitle.style.color = cfg.cor;
+                    subTitle.style.opacity = "1";
+                }
+
+                const tMsg = document.getElementById('toast-msg');
+                const tIcon = document.getElementById('toast-icon');
+                if (tMsg) {
+                    tIcon.innerText = cfg.emojiTitulo;
+                    tMsg.innerText = cfg.sms;
+                    document.getElementById('toast-container').classList.add('show');
+                    setTimeout(() => document.getElementById('toast-container').classList.remove('show'), 4000);
+                }
+            }
+        } else {
+            if (subTitle) {
+                subTitle.innerText = "Games CSO for PPSSPP";
+                subTitle.style.color = "";
+                subTitle.style.opacity = "";
             }
         }
+
         const h = document.getElementById('main-title');
-        if (h) h.innerHTML = `Orange Portable <span>${cfg.emojiTitulo}</span>`;
+        if (h) h.innerHTML = `Orange Portable <span>${cfg.emojiTitulo || ""}</span>`;
         if (document.getElementById('btn-rnd')) document.getElementById('btn-rnd').innerText = `${cfg.emojiSurpresa} Me surpreenda!`;
         if (document.getElementById('pix')) document.getElementById('pix').innerHTML = `${cfg.emojiPix} Copiar Pix`;
         if (document.getElementById('up')) document.getElementById('up').innerText = cfg.emojiUp;
