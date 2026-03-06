@@ -9,11 +9,6 @@ const gamesInfo = {
         "release": "21/09/2009",
         "compat": "Ótimo"
     },
-    "300 - March to Glory": {
-        "description": "Lute como o Rei Leônidas e lidere seus 300 espartanos contra o exército persa nesta batalha épica e sangrenta.",
-        "release": "27/02/2007",
-        "compat": "Boa"
-    },
     "Aliens vs. Predator Requiem": {
         "description": "Escolha seu lado na guerra definitiva entre as raças mais perigosas do universo em combates intensos na Terra.",
         "release": "13/11/2007",
@@ -49,11 +44,6 @@ const gamesInfo = {
         "release": "07/11/2006",
         "compat": "Boa"
     },
-    "Ben 10 - Alien Force": {
-        "description": "Transforme-se nos novos alienígenas de Ben 10 para enfrentar os Soberanos e salvar o mundo neste jogo de ação.",
-        "release": "28/10/2008",
-        "compat": "Boa"
-    },
     "Ben 10 Protector of Earth": {
         "description": "Assuma o controle de Ben e suas transformações alienígenas para recuperar as peças perdidas do Omnitrix e salvar o planeta.",
         "release": "30/10/2007",
@@ -62,6 +52,11 @@ const gamesInfo = {
     "Bomberman": {
         "description": "O clássico jogo de explodir labirintos. Coloque bombas estrategicamente para derrotar inimigos e limpar o caminho.",
         "release": "12/09/2006",
+        "compat": "Ótimo"
+    },
+    "Burnout Dominator": {
+        "description": "Domine as ruas com um foco renovado em pilotagem perigosa e o retorno do sistema de 'Burnouts' em alta velocidade.",
+        "release": "06/03/2007",
         "compat": "Ótimo"
     },
     "Burnout Legends": {
@@ -279,6 +274,11 @@ const gamesInfo = {
         "release": "23/10/2006",
         "compat": "Ótimo"
     },
+    "Metal Slug XX": {
+        "description": "Ação clássica run-and-gun com novos caminhos, chefes gigantescos e o retorno triunfal da equipe Peregrine Falcons.",
+        "release": "23/02/2010",
+        "compat": "Ótimo"
+    },
     "Miami Vice The Game": {
         "description": "Infiltrar-se no submundo de Miami para desmantelar cartéis de drogas neste jogo de tiro tático em terceira pessoa.",
         "release": "18/07/2006",
@@ -352,6 +352,16 @@ const gamesInfo = {
     "Pac-Man World Rally": {
         "description": "O mascote mais famoso dos games entra na pista em uma corrida de karts colorida e cheia de poderes clássicos.",
         "release": "22/08/2006",
+        "compat": "Ótimo"
+    },
+    "Patapon": {
+        "description": "O início da jornada rítmica! Lidere sua tribo de guerreiros usando tambores sagrados para marchar, atacar e defender.",
+        "release": "26/02/2008",
+        "compat": "Ótimo"
+    },
+    "Patapon 2": {
+        "description": "A sequência direta do sucesso rítmico, trazendo novos tipos de Patapons, o herói customizável e um sistema de evolução muito mais profundo.",
+        "release": "25/11/2008",
         "compat": "Ótimo"
     },
     "Patapon 3": {
