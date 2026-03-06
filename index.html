@@ -5,54 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Orange Portable - Made By: @085_Teuzinnn</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#ff4500">
     <style>
         :root { --p: #ff4500; --c: #ffffff; }
-        * { 
-            touch-action: manipulation; 
-            -webkit-user-select: none; 
-            user-select: none; 
-            -webkit-tap-highlight-color: rgba(0,0,0,0) !important; 
-            outline: none !important;
-            border: none;
-        }
-        input, textarea { -webkit-user-select: text; user-select: text; border: none; }
-        body { background-color: #000; color: #fff; overflow-x: hidden; min-height: 100dvh; }
+        * { touch-action: manipulation; -webkit-user-select: none; user-select: none; }
+        input, textarea { -webkit-user-select: text; user-select: text; }
+        body { background-color: #000; color: #fff; -webkit-tap-highlight-color: transparent; overflow-x: hidden; min-height: 100dvh; }
         .hide-scroll::-webkit-scrollbar { display: none; }
-        .card-active:active { transform: scale(0.98); }
+        .card-active:active { transform: scale(0.98); border-color: var(--p); }
         #offline-screen { display: none; }
         body.is-offline #app-content { display: none; }
         body.is-offline #offline-screen { display: flex; }
         .cat-item { transition: all .2s; }
-        .cat-selected { background-color: var(--p) !important; color: var(--c) !important; }
-        #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); z-index: 1000; transition: transform .5s cubic-bezier(.175, .885, .32, 1.275); border: 1px solid var(--p) !important; }
+        .cat-selected { background-color: var(--p) !important; color: var(--c) !important; border-color: var(--p) !important; }
+        #toast-container { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); z-index: 1000; transition: transform .5s cubic-bezier(.175, .885, .32, 1.275); }
         #toast-container.show { transform: translateX(-50%) translateY(0); }
-        .card-dinamico, #s, #o, #btn-rnd { border: 1px solid var(--p) !important; }
+        .card-dinamico { border: 1px solid var(--p) !important; }
     </style>
 </head>
 <body class="flex flex-col">
 
-    <div id="toast-container" class="w-[90%] max-w-sm bg-zinc-900 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
+    <div id="toast-container" class="w-[90%] max-w-sm bg-zinc-900 border border-zinc-800 p-4 rounded-2xl shadow-2xl flex items-center gap-3">
         <div id="toast-icon" class="text-2xl"></div>
         <div id="toast-msg" class="text-sm font-bold text-[#ff4500]"></div>
     </div>
 
     <div id="offline-screen" class="fixed inset-0 z-[100] bg-black flex-col items-center justify-center p-6 text-center">
-        <span id="off-emoji" class="text-6xl mb-4">📡</span>
+        <span class="text-6xl mb-4">📡</span>
         <h1 class="text-2xl font-bold text-[#ff4500] mb-2">Sem Conexão</h1>
-        <p class="text-gray-400">O Orange Portable requer internet para carregar a biblioteca.</p>
+        <p class="text-gray-400">O Orange Portable requer internet para carregar a biblioteca. Verifique sua rede e tente novamente.</p>
         <button onclick="window.location.reload()" class="mt-6 bg-[#ff4500] px-8 py-3 rounded-full font-bold">Tentar Novamente</button>
     </div>
 
     <div id="app-content" class="w-full min-h-screen flex flex-col p-4 md:p-8">
-        <header class="text-center mb-6 p-4">
+        <header class="text-center mb-6">
             <h1 id="main-title" class="text-4xl font-black text-[#ff4500] tracking-tighter italic">Orange Portable</h1>
             <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
         </header>
 
-        <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4 p-2 mb-4">
-            <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] p-4 rounded-xl mb-3 outline-none text-lg">
-            <select id="o" class="w-full bg-[#111] p-3 rounded-xl outline-none text-sm">
+        <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4">
+            <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] border border-zinc-800 p-4 rounded-xl mb-3 outline-none text-lg">
+            <select id="o" class="w-full bg-[#111] border border-zinc-800 p-3 rounded-xl outline-none text-sm">
                 <option value="az">A-Z</option>
                 <option value="za">Z-A</option>
                 <option value="sizeAsc">Menor ao Maior</option>
@@ -60,38 +53,38 @@
             </select>
         </section>
 
-        <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-2 p-2"></nav>
-        <div id="stats" class="text-center text-[10px] text-[#ff4500] font-bold mb-4 uppercase tracking-tighter p-2"></div>
-        <button id="btn-rnd" class="w-full bg-[#111] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform">🎲 Me surpreenda!</button>
-        <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow p-2"></main>
-        <div id="pagination" class="flex justify-center gap-2 mt-6 p-2"></div>
+        <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-2"></nav>
+        <div id="stats" class="text-center text-[10px] text-[#ff4500] font-bold mb-4 uppercase tracking-tighter"></div>
+        <button id="btn-rnd" class="w-full bg-[#111] border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold mb-6 active:scale-95 transition-transform">🎲 Me surpreenda!</button>
+        <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow"></main>
+        <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
 
-        <section class="mt-10 p-6 bg-zinc-950 rounded-3xl text-center">
+        <section class="mt-10 p-6 bg-zinc-950 border border-zinc-900 rounded-3xl text-center">
             <div class="bg-white p-2 inline-block rounded-xl mb-4">
                 <img src="pix.png" class="w-32 h-32 object-contain" alt="Pix QR">
             </div>
-            <button id="pix" class="w-full bg-[#22c55e] py-4 rounded-xl font-bold mb-3 text-white">📋 Copiar Pix</button>
-            <a target="_blank" rel="noopener noreferrer" href="https://wa.me/5585991272125?text=Sugestão" class="block w-full text-[#ff4500] py-4 rounded-xl font-bold text-center">💬 Suporte</a>
+            <button id="pix" class="w-full bg-[#22c55e] py-4 rounded-xl font-bold mb-3">📋 Copiar Pix</button>
+            <a target="_blank" rel="noopener noreferrer" href="https://wa.me/5585991272125?text=Sugestão" class="block w-full border border-[#ff4500] text-[#ff4500] py-4 rounded-xl font-bold text-center">💬 Suporte</a>
         </section>
 
-        <footer class="text-center mt-10 mb-20 text-gray-500 text-sm p-4">
+        <footer class="text-center mt-10 mb-20 text-gray-500 text-sm">
             <p class="font-semibold">Made By: @085_Teuzinnn</p>
             <p class="mt-2 opacity-70">©️ 2026 - All Rights Reserved</p>
         </footer>
-        <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl flex items-center justify-center bg-zinc-900">🆙️</button>
+        <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl flex items-center justify-center bg-zinc-900 border border-zinc-800">🆙️</button>
     </div>
 
     <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
-        <div class="bg-[#111] w-full max-w-md p-8 rounded-3xl relative">
-            <button id="closeModal" class="absolute top-4 right-4 text-zinc-500 text-xl p-1 rounded-md">✕</button>
+        <div class="bg-[#111] border border-[#ff4500] w-full max-w-md p-8 rounded-3xl relative">
+            <button id="closeModal" class="absolute top-4 right-4 text-zinc-500 text-xl">✕</button>
             <h2 id="mt" class="text-2xl font-bold text-[#ff4500] mb-4"></h2>
-            <p id="mds" class="text-zinc-400 text-sm leading-relaxed mb-6 p-3 rounded-lg bg-zinc-900"></p>
+            <p id="mds" class="text-zinc-400 text-sm leading-relaxed mb-6"></p>
             <div class="flex justify-between pt-4 border-t border-zinc-800 text-xs">
                 <span class="flex flex-col gap-1">
                     <b id="mrl" class="text-white"></b>
-                    <a id="mdl" href="#" target="_blank" class="text-[#ff4500] font-bold underline hidden text-lg p-1 rounded">DOWNLOAD</a>
+                    <a id="mdl" href="#" target="_blank" class="text-[#ff4500] font-bold underline hidden">DOWNLOAD</a>
                 </span>
-                <span><b id="mcp" class="uppercase p-1 rounded"></b></span>
+                <span><b id="mcp" class="uppercase"></b></span>
             </div>
         </div>
     </div>
@@ -99,25 +92,35 @@
     <script src="themes.js"></script>
     <script src="database.js"></script>
     <script src="infobase.js"></script>
+
     <script>
-        const el = {
-            ct: document.getElementById('ct'),
-            stats: document.getElementById('stats'),
-            pg: document.getElementById('pagination'),
-            s: document.getElementById('s'),
-            o: document.getElementById('o'),
-            md: document.getElementById('md'),
-            up: document.getElementById('up'),
-            ts: document.getElementById('ts')
-        };
         const gs = window.gamesData || [];
-        let fv = new Set(JSON.parse(localStorage.getItem('fav') || '[]'));
-        let at = "Todos", currentPage = 1, debounceTimer;
+        const ct = document.getElementById('ct');
+        const stats = document.getElementById('stats');
+        const pagination = document.getElementById('pagination');
+        let fv = new Set();
+        try {
+            const stored = JSON.parse(localStorage.getItem('fav'));
+            if (Array.isArray(stored)) fv = new Set(stored);
+        } catch (e) {
+            localStorage.removeItem('fav');
+        }
+        let at = "Todos";
+        let currentPage = 1;
         const perPage = 20;
-        function checkConn() { document.body.classList.toggle('is-offline', !navigator.onLine); }
+        let debounceTimer;
+        function checkConn() {
+            document.body.classList.toggle('is-offline', !navigator.onLine);
+        }
         window.addEventListener('online', checkConn);
         window.addEventListener('offline', checkConn);
         checkConn();
+        function pz(s) {
+            if (!s || typeof s !== "string") return 0;
+            const n = parseFloat(s.replace(",", "."));
+            if (isNaN(n)) return 0;
+            return s.toUpperCase().includes('GB') ? n * 1024 : n;
+        }
         function showToast(msg, icon = "✅") {
             const t = document.getElementById('toast-container');
             document.getElementById('toast-icon').innerText = icon;
@@ -125,49 +128,69 @@
             t.classList.add('show');
             setTimeout(() => t.classList.remove('show'), 3000);
         }
-        function pz(s) {
-            if (!s) return 0;
-            const n = parseFloat(s.replace(",", "."));
-            return s.toUpperCase().includes('GB') ? n * 1024 : n;
+        function getComp(n) {
+            const info = window.gamesInfo ? window.gamesInfo[n] : null;
+            return info ? info.compat : "-";
         }
         function getFiltered() {
-            const q = el.s.value.toLowerCase();
-            const ord = el.o.value;
-            let res = gs.filter(g => (at === "Todos" || (at === "❤️ Favoritos" ? fv.has(g.name) : g.category === at)) && g.name.toLowerCase().includes(q));
-            return res.sort((a, b) => {
+            const q = document.getElementById('s').value.toLowerCase();
+            const ord = document.getElementById('o').value;
+            let res = gs.filter(g => {
+                const matchName = g.name.toLowerCase().includes(q);
+                const matchCat = at === "Todos" || (at === "❤️ Favoritos" ? fv.has(g.name) : g.category === at);
+                return matchName && matchCat;
+            });
+            res.sort((a, b) => {
                 if (ord === 'az') return a.name.localeCompare(b.name);
                 if (ord === 'za') return b.name.localeCompare(a.name);
-                return ord === 'sizeAsc' ? pz(a.size) - pz(b.size) : pz(b.size) - pz(a.size);
+                if (ord === 'sizeAsc') return pz(a.size) - pz(b.size);
+                if (ord === 'sizeDesc') return pz(b.size) - pz(a.size);
+                return 0;
             });
+            return res;
         }
         function render() {
             const data = getFiltered();
-            const themeCfg = window.currentThemeConfig || { emojiFav: "❤️", emojiDownload: "📥" };
-            el.stats.innerText = `${data.length} JOGOS ENCONTRADOS`;
-            el.ct.innerHTML = ''; el.pg.innerHTML = '';
-            data.slice((currentPage - 1) * perPage, currentPage * perPage).forEach(g => {
-                const info = (window.gamesInfo && window.gamesInfo[g.name]) || { compat: "-" };
-                const color = info.compat === "Ótimo" ? "#22c55e" : (info.compat === "Boa" ? "#facc15" : "#f40");
+            stats.innerText = `${data.length} JOGOS ENCONTRADOS`;
+            ct.innerHTML = '';
+            pagination.innerHTML = '';
+            const start = (currentPage - 1) * perPage;
+            const paginated = data.slice(start, start + perPage);
+            const frag = document.createDocumentFragment();
+            paginated.forEach(g => {
+                const comp = getComp(g.name);
+                const color = comp === "Ótimo" ? "#22c55e" : (comp === "Boa" ? "#facc15" : "#f40");
                 const d = document.createElement('div');
-                d.className = 'bg-zinc-900/50 p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer card-dinamico';
-                d.innerHTML = `
-                    <div class="overflow-hidden">
-                        <h3 class="text-zinc-100 font-medium truncate pr-2">${g.name}</h3>
-                        <div class="flex gap-2 items-center mt-1">
-                            <span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded font-bold uppercase">${g.size}</span>
-                            <span class="text-[10px] font-bold uppercase px-1 rounded" style="color:${color}">${info.compat}</span>
-                        </div>
-                    </div>
-                    <div class="flex gap-4 items-center">
-                        <button class="text-2xl fav-btn p-1">${fv.has(g.name) ? '❤️' : '🤍'}</button>
-                        <a href="${g.link}" target="_blank" rel="noopener noreferrer" class="text-2xl dl-btn p-1">${themeCfg.emojiDownload}</a>
-                    </div>
-                `;
-                d.querySelector('.fav-btn').onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
-                d.querySelector('.dl-btn').onclick = (e) => e.stopPropagation();
+                d.className = 'bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex justify-between items-center card-active transition-all cursor-pointer card-dinamico';
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'overflow-hidden';
+                const title = document.createElement('h3');
+                title.className = 'text-zinc-100 font-medium truncate pr-2';
+                title.textContent = g.name;
+                const meta = document.createElement('div');
+                meta.className = 'flex gap-2 items-center mt-1';
+                meta.innerHTML = `<span class="text-[10px] bg-black text-[#ff4500] px-2 py-1 rounded border border-zinc-800 font-bold uppercase">${g.size}</span>
+                                  <span class="text-[10px] font-bold uppercase" style="color:${color}">${comp}</span>`;
+                infoDiv.append(title, meta);
+                const actions = document.createElement('div');
+                actions.className = 'flex gap-4 items-center';
+                const btnFav = document.createElement('button');
+                btnFav.className = 'text-2xl';
+                btnFav.textContent = fv.has(g.name) ? '❤️' : '🤍';
+                btnFav.onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
+                const btnDl = document.createElement('a');
+                btnDl.href = g.link;
+                btnDl.target = '_blank';
+                btnDl.rel = 'noopener noreferrer';
+                btnDl.className = 'text-2xl';
+                btnDl.textContent = '📥';
+                btnDl.onclick = (e) => e.stopPropagation();
+                actions.append(btnFav, btnDl);
+                d.append(infoDiv, actions);
                 d.onclick = () => showModal(g.name, g.link);
-                el.ct.appendChild(d);
+                frag.appendChild(d);
             });
+            ct.appendChild(frag);
             renderPagination(data.length);
         }
         function renderPagination(total) {
@@ -178,49 +201,57 @@
                 b.className = `px-3 py-1 rounded font-bold ${i === currentPage ? 'bg-[#ff4500] text-white' : 'bg-zinc-800 text-zinc-400'}`;
                 b.innerText = i;
                 b.onclick = () => { currentPage = i; render(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-                el.pg.appendChild(b);
+                pagination.appendChild(b);
             }
         }
         function toggleFav(name) {
             fv.has(name) ? fv.delete(name) : fv.add(name);
+            if (fv.size === 0 && at === "❤️ Favoritos") at = "Todos";
             localStorage.setItem('fav', JSON.stringify([...fv]));
-            initCategories(); render();
+            initCategories();
+            render();
         }
         function showModal(n, l) {
             const i = (window.gamesInfo && window.gamesInfo[n]) || { description: "Informações não disponíveis.", release: "-", compat: "-" };
             document.getElementById('mt').innerText = n;
             document.getElementById('mds').innerText = i.description;
             document.getElementById('mrl').innerText = i.release;
-            const dl = document.getElementById('mdl');
-            dl.href = l || "#"; dl.classList.toggle('hidden', !l);
-            const cp = document.getElementById('mcp');
-            cp.innerText = i.compat;
-            cp.style.color = i.compat === "Ótimo" ? "#22c55e" : (i.compat === "Boa" ? "#facc15" : "#f40");
-            el.md.style.display = "flex";
+            const dlBtn = document.getElementById('mdl');
+            if (l) { dlBtn.href = l; dlBtn.classList.remove('hidden'); } else { dlBtn.classList.add('hidden'); }
+            const cpEl = document.getElementById('mcp');
+            cpEl.innerText = i.compat;
+            cpEl.style.color = i.compat === "Ótimo" ? "#22c55e" : (i.compat === "Boa" ? "#facc15" : "#f40");
+            document.getElementById('md').style.display = "flex";
         }
-        document.getElementById('closeModal').onclick = () => el.md.style.display = "none";
-        el.md.onclick = (e) => { if (e.target === el.md) el.md.style.display = "none" };
-        el.s.onkeyup = () => { clearTimeout(debounceTimer); debounceTimer = setTimeout(() => { currentPage = 1; render(); }, 300); };
-        el.o.onchange = () => { currentPage = 1; render(); };
+        document.getElementById('closeModal').onclick = () => document.getElementById('md').style.display = "none";
+        document.getElementById('md').onclick = (e) => { if (e.target === document.getElementById('md')) document.getElementById('md').style.display = "none" };
+        document.getElementById('s').addEventListener('keyup', () => { clearTimeout(debounceTimer); debounceTimer = setTimeout(() => { currentPage = 1; render(); }, 300); });
+        document.getElementById('o').addEventListener('change', () => { currentPage = 1; render(); });
         document.getElementById('btn-rnd').onclick = () => { if (gs.length) { const r = gs[Math.floor(Math.random() * gs.length)]; showModal(r.name, r.link); } };
         document.getElementById('pix').onclick = () => {
-            navigator.clipboard.writeText("00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2")
+            const key = "00020126580014br.gov.bcb.pix01361cb3b52c-7693-4e44-a5c3-abd2d1fb90b45204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69906F1AAC2B2372646262630448A2";
+            navigator.clipboard.writeText(key)
                 .then(() => showToast("Pix copiado!"))
                 .catch(() => showToast("Erro ao copiar", "❌"));
         };
-        window.onscroll = () => el.up.style.display = window.scrollY > 300 ? "flex" : "none";
-        el.up.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+        window.onscroll = () => document.getElementById("up").style.display = window.scrollY > 300 ? "flex" : "none";
+        document.getElementById('up').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
         function initCategories() {
-            el.ts.innerHTML = '';
-            let l = ["Todos", ...(fv.size > 0 ? ["❤️ Favoritos"] : []), "🗡️ Ação / Aventura", "🏎️ Corrida", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
+            const t = document.getElementById('ts');
+            t.innerHTML = '';
+            let l = ["Todos"];
+            if (fv.size > 0) l.push("❤️ Favoritos");
+            const cats = ["🗡️ Ação / Aventura", "🏎️ Corrida", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🏃 Plataforma / Aventura", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "👻 Survival Horror", "🔫 Tiro (TPS/FPS)"];
+            l = [...l, ...cats];
             l.forEach(x => {
                 const e = document.createElement('div');
-                e.className = `cat-item px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer ${x===at?'cat-selected':'bg-zinc-900 text-zinc-500'}`;
+                e.className = `cat-item px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer border ${x===at?'cat-selected':'bg-zinc-900 text-zinc-500 border-zinc-800'}`;
                 e.innerText = x;
                 e.onclick = () => { at = x; currentPage = 1; initCategories(); render(); };
-                el.ts.appendChild(e);
+                t.appendChild(e);
             });
         }
+        if (window.TemasSazonais) window.TemasSazonais.verificar();
         initCategories();
         render();
     </script>
