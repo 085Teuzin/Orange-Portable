@@ -7,7 +7,7 @@ O **Orange Portable** é um Web App moderno e otimizado para entusiastas de jogo
 ## 🚀 Links de Acesso
 
 * 🌐 **Versão WEB:** [Navegador](https://085teuzin.github.io/Orange-Portable/)
-* 📱 **Versão APK:** [Android](https://archive.org/download/orange-psp/Orange%20PSP.apk)
+* 📱 **Versão APK:** [Android](https://www.mediafire.com/file/a95y2dda2m0k9vx/Orange_PSP.apk/file)
 
 ---
 
