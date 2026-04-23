@@ -162,12 +162,12 @@
 
             document.getElementById("openSOS").onclick = () => {
                 const sosOptions = [
-                    { label: "⚠️ Link Offline", render: (g) => `⚠️ Link Offline: Teuzin, o link do "${g}" caiu!`, needsGame: true },
-                    { label: "🆕 Pedir Jogo", render: () => "🆕 Pedir Jogo: Teuzin, queria pedir um jogo que não achei na lista!", needsGame: false },
-                    { label: "🪲 Reportar Bug", render: (g) => `🪲 Reportar Bug: Teuzin, encontrei um erro no jogo "${g}" (ou no app)!`, needsGame: true },
-                    { label: "🔃 Atualização", render: (g) => `🔃 Atualização: Teuzin, vi que o jogo "${g}" atualizou, consegue subir a nova versão?`, needsGame: true },
-                    { label: "🤝 Parceria", render: () => "🤝 Parceria: Teuzin, bora fechar uma parceria pro Orange Portable?", needsGame: false },
-                    { label: "🛠️ Instalação", render: () => "🛠️ Instalação: Teuzin, não tô conseguindo configurar um jogo aqui, me dá uma luz!", needsGame: false }
+                    { label: "⚠️ Link Offline", render: (g) => `*⚠️ Link Offline:* Teuzin, o link do "${g}" caiu!`, needsGame: true },
+                    { label: "🆕 Pedir Jogo", render: () => "*🆕 Pedir Jogo:* Teuzin, queria pedir um jogo que não achei na lista!", needsGame: false },
+                    { label: "🪲 Reportar Bug", render: (g) => `*🪲 Reportar Bug:* Teuzin, encontrei um erro no jogo "${g}" (ou no app)!`, needsGame: true },
+                    { label: "🔃 Atualização", render: (g) => `*🔃 Atualização:* Teuzin, vi que o jogo "${g}" atualizou, consegue subir a nova versão?`, needsGame: true },
+                    { label: "🤝 Parceria", render: () => "*🤝 Parceria:* Teuzin, bora fechar uma parceria pro Orange Portable?", needsGame: false },
+                    { label: "🛠️ Instalação", render: () => "*🛠️ Instalação:* Teuzin, não tô conseguindo configurar um jogo aqui, me dá uma luz!", needsGame: false }
                 ];
                 openGeneric("🍊 Orange SOS:", sosOptions.map(opt => ({
                     label: opt.label,
