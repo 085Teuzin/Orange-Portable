@@ -6,7 +6,7 @@ const gamesData = [
     { name: "Armored Core 3 Portable", size: "299.72 MB", link: "https://seulink.net/HXvamWKXgn", category: "🗡️ Ação / Aventura" },
     { name: "Assassin's Creed - Bloodlines", size: "541.49 MB", link: "https://seulink.net/yhSBc47zt", category: "🗡️ Ação / Aventura" },
     { name: "Avatar - The Last Airbender", size: "126.70 MB", link: "https://4br.me/E9sms", category: "🗡️ Ação / Aventura" },
-    { name: "Battlezone", size: "165.88 MB", link: "https://seulink.net/hdvzq1hi04qzuri", category: "🔫 Tiro (TPS/FPS)" },
+    { name: "Battlezone", size: "165.88 MB", link: "https://seulink.net/sFHOWXgl4H", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Ben 10 - Protector of Earth", size: "593.00 MB", link: "https://seulink.net/v33WNDu", category: "🗡️ Ação / Aventura" },
     { name: "Bomberman", size: "55.83 MB", link: "https://seulink.digital/vzbiadg2e", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Brave Story - New Traveler", size: "132.06 MB", link: "https://seulink.net/hiImDh", category: "🧙‍♂️ RPG / Ação" },
