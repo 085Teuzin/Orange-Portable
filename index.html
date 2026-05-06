@@ -84,6 +84,8 @@
         <script src="database.js"></script>
         <script src="infobase.js"></script>
         <script>
+            const instaUrl = "https://www.instagram.com/085_teuzinnn?igsh=ZGJqaHBoMHliZGNw";
+            const pixKey = "00020126360014br.gov.bcb.pix0114+55859912721255204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69FB573E7D2AC673791518630415AB";
             const ppssppStaticData = { name: "PPSSPP", size: "20-80 MB", link: "https://www.ppsspp.org/download/" };
             const ppssppStaticInfo = { description: "O melhor emulador de PSP para Android e PC.", release: "01/11/2012", compat: "Perfeito", playtime: "Infinito", lang: "🌐" };
             const gs = (window.gamesData || []).filter(g => g && g.name);
@@ -162,45 +164,27 @@
 
             document.getElementById("openSOS").onclick = () => {
                 const sosOptions = [
-                    { label: "⚠️ Link Offline", render: (g) => `*⚠️ Link Offline:* Teuzin, o link do "${g}" caiu!`, needsGame: true },
-                    { label: "🆕 Pedir Jogo", render: () => "*🆕 Pedir Jogo:* Teuzin, queria pedir um jogo que não achei na lista!", needsGame: false },
-                    { label: "🪲 Reportar Bug", render: (g) => `*🪲 Reportar Bug:* Teuzin, encontrei um erro no jogo "${g}" (ou no app)!`, needsGame: true },
-                    { label: "🔃 Atualização", render: (g) => `*🔃 Atualização:* Teuzin, vi que o jogo "${g}" atualizou, consegue subir a nova versão?`, needsGame: true },
-                    { label: "🤝 Parceria", render: () => "*🤝 Parceria:* Teuzin, bora fechar uma parceria pro Orange Portable?", needsGame: false },
-                    { label: "🛠️ Instalação", render: () => "*🛠️ Instalação:* Teuzin, não tô conseguindo configurar um jogo aqui, me dá uma luz!", needsGame: false }
+                    { label: "⚠️ Link Offline", action: () => window.open(instaUrl, "_blank") },
+                    { label: "🆕 Pedir Jogo", action: () => window.open(instaUrl, "_blank") },
+                    { label: "🪲 Reportar Bug", action: () => window.open(instaUrl, "_blank") },
+                    { label: "🔃 Atualização", action: () => window.open(instaUrl, "_blank") },
+                    { label: "🤝 Parceria", action: () => window.open(instaUrl, "_blank") },
+                    { label: "🛠️ Instalação", action: () => window.open(instaUrl, "_blank") }
                 ];
-                openGeneric("🍊 Orange SOS:", sosOptions.map(opt => ({
-                    label: opt.label,
-                    action: () => {
-                        if (opt.needsGame) {
-                            const gamesList = gs.map(g => ({
-                                label: g.name,
-                                action: () => {
-                                    window.open(`https://wa.me/5585991272125?text=${encodeURIComponent(opt.render(g.name))}`, "_blank");
-                                    closeAllModals();
-                                }
-                            }));
-                            setTimeout(() => openGeneric("Selecione o jogo:", gamesList, true), 200);
-                        } else {
-                            window.open(`https://wa.me/5585991272125?text=${encodeURIComponent(opt.render())}`, "_blank");
-                            closeAllModals();
-                        }
-                    }
-                })));
+                openGeneric("🍊 Orange SOS:", sosOptions);
             };
 
             document.getElementById("pix").onclick = function() {
                 const btn = this;
                 const originalText = "🍊 Orange Pix";
-                const num = "85991272125";
                 if (window.AndroidJS?.copiarPix) { 
-                    window.AndroidJS.copiarPix(num); 
+                    window.AndroidJS.copiarPix(pixKey); 
                 } else if (navigator.clipboard) { 
-                    navigator.clipboard.writeText(num).catch(() => {});
+                    navigator.clipboard.writeText(pixKey).catch(() => {});
                 }
                 btn.innerText = "📋 Copiado!";
                 btn.style.backgroundColor = "#16a34a";
-                window.open("picpay://", "_blank");
+                window.location.href = "picpay://";
                 setTimeout(() => { btn.innerText = originalText; btn.style.backgroundColor = "#22c55e"; }, 1500);
             };
 
@@ -348,7 +332,6 @@
                 const loader = document.getElementById("loading-screen");
                 const content = document.getElementById("app-content");
                 const loadBox = document.getElementById("load-box");
-                const loadMsg = document.getElementById("load-msg");
                 const loadingTimeout = setTimeout(() => {
                     if (loader && loader.style.display !== "none") {
                         if(loadBox) loadBox.style.display = "none";
@@ -356,7 +339,7 @@
                             <h1 class="text-2xl font-black text-red-500 tracking-tighter italic">Erro de Conexão</h1>
                             <p class="text-zinc-400 text-sm mt-4 px-8">Os dados demoraram muito para carregar. Verifique sua internet.</p>
                             <button onclick="window.location.reload()" class="mt-6 bg-[#ffA500] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs">Tentar Novamente</button>
-                            <a href="https://wa.me/5585991272125?text=Teuzin, o app não está carregando os dados!" target="_blank" class="mt-4 text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#ffA500] transition-colors">Suporte</a>
+                            <a href="${instaUrl}" target="_blank" class="mt-4 text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#ffA500] transition-colors">Suporte</a>
                         `;
                     }
                 }, 5000);
