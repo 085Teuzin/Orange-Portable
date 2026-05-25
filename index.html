@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Orange Portable - Made By: @085_Teuzinnn</title>
+        <link rel="manifest" href="manifest.json">
+        <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/orange.png">
         <script src="https://cdn.tailwindcss.com"></script>
         <meta name="theme-color" content="#000000">
         <style>
@@ -212,7 +214,7 @@
                 if(currentPage > pages) currentPage = 1;
                 res.sort((a,b)=>{
                     if(ord==="az" || ord==="ptbr") return a.name.localeCompare(b.name);
-                    if(ord==="za") return b.name.localeCompare(a.name);
+                    if(ord==="za") return b.name.localeCompare(b.name);
                     return ord==="sizeAsc" ? pz(a.size)-pz(b.size) : pz(b.size)-pz(a.size);
                 });
                 return res;
@@ -349,6 +351,12 @@
                     if(content) content.classList.remove("opacity-0");
                 }
             });
+
+            if ("serviceWorker" in navigator) {
+                window.addEventListener("load", () => {
+                    navigator.serviceWorker.register("./sw.js").catch(() => {});
+                });
+            }
         </script>
     </body>
 </html>
