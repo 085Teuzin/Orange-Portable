@@ -38,7 +38,6 @@ O projeto foi desenvolvido com foco em performance e leveza, utilizando:
 Se encontrar algum problema ou quiser apoiar o projeto:
 
 - **Relatar Erros:** Use o botão **Orange SOS** no menu do app.
-- **Contacto Direto:** [WhatsApp Suporte](https://wa.me/5585991272125)
 - **Apoie o Projeto:** Contribuições via **Orange Pix** ajudam a manter os links ativos e o servidor online.
 
 ---
