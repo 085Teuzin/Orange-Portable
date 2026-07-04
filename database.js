@@ -1,0 +1,103 @@
+const gamesData = [
+    { name: "007 - From Russia with Love", size: "500.17 MB", link: "https://seulink.net/BZXkMH", category: "🗡️ Ação / Aventura" },
+    { name: "101-in-1 Megamix", size: "359.96 MB", link: "https://seulink.net/PLcb0", category: "🎮 Plataforma / Puzzle / Família" }, // ATUALIZADO (print 486835.png)
+    { name: "Aliens vs. Predator - Requiem", size: "255.37 MB", link: "https://seulink.net/T3Gl5v08l", category: "🔫 Tiro (TPS/FPS)" }, // (print 486763.png)
+    { name: "Ape Escape Academy", size: "116.02 MB", link: "https://seulink.net/jyf6ORhh5", category: "🎮 Plataforma / Puzzle / Família" }, // (print 486763.png)
+    { name: "Armored Core 3 Portable", size: "292.31 MB", link: "https://seulink.net/HXvamWKXgn", category: "🗡️ Ação / Aventura" },
+    { name: "Assassin's Creed - Bloodlines", size: "330.78 MB", link: "https://seulink.net/yhSBc47zt", category: "🗡️ Ação / Aventura" }, // (print 486763.png)
+    { name: "Avatar - The Last Airbender", size: "123.66 MB", link: "https://4br.me/E9sms", category: "🗡️ Ação / Aventura" }, // ATUALIZADO (print 486835.png)
+    { name: "Battlezone", size: "154.37 MB", link: "https://seulink.net/sFHOWXgl4H", category: "🔫 Tiro (TPS/FPS)" }, // (print 486763.png)
+    { name: "Ben 10 - Protector of Earth", size: "545.55 MB", link: "https://seulink.net/v33WNDu", category: "🗡️ Ação / Aventura" }, // (print 486763.png)
+    { name: "Bomberman", size: "55.19 MB", link: "https://seulink.digital/vzbiadg2e", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "Brave Story - New Traveler", size: "130.87 MB", link: "https://seulink.net/hiImDh", category: "🧙‍♂️ RPG / Ação" },
+    { name: "Burnout Dominator", size: "373.10 MB", link: "https://seulink.net/w4UL", category: "🏎️ Corrida" }, // (print 486763.png)
+    { name: "Burnout Legends", size: "167.32 MB", link: "https://seulink.net/iA0ZvF", category: "🏎️ Corrida" }, // (print 486763.png)
+    { name: "Cabela's African Safari", size: "419.97 MB", link: "https://seulink.net/3c3FWz", category: "🔫 Tiro (TPS/FPS)" }, // ATUALIZADO (print 486835.png)
+    { name: "Cabela's Legendary Adventures", size: "364.52 MB", link: "https://seulink.net/T4OlYDAKss", category: "🔫 Tiro (TPS/FPS)" }, // ATUALIZADO (print 486835.png)
+    { name: "Cabela's North American Adventures", size: "256.13 MB", link: "https://4br.me/YCE8E5krGR", category: "🔫 Tiro (TPS/FPS)" }, // (print 486763.png)
+    { name: "Call of Duty - Roads to Victory", size: "439.35 MB", link: "https://seulink.net/YZdJ6pz3", category: "🔫 Tiro (TPS/FPS)" }, // (print 486763.png)
+    { name: "Chili Con Carnage", size: "539.91 MB", link: "https://4br.me/FoEe5V", category: "🔫 Tiro (TPS/FPS)" }, // ATUALIZADO (print 486835.png)
+    { name: "Coded Arms", size: "88.56 MB", link: "https://seulink.net/ou65nhYp", category: "🔫 Tiro (TPS/FPS)" },
+    { name: "Crash of the Titans", size: "542.37 MB", link: "https://seulink.net/2k07ve", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "Dead or Alive Paradise", size: "538.01 MB", link: "https://seulink.net/cjgUFx", category: "🌾 Simulação / Vida" }, // ATUALIZADO (print 486835.png)
+    { name: "Dead to Rights - Reckoning", size: "91.77 MB", link: "https://seulink.net/r6pj", category: "🔫 Tiro (TPS/FPS)" }, // (print 486763.png)
+    { name: "Death Jr.", size: "211.10 MB", link: "https://seulink.digital/Feg5dDB", category: "🗡️ Ação / Aventura" },
+    { name: "Def Jam - Fight for NY - The Takeover", size: "373.01 MB", link: "https://seulink.net/YDXkzjxOm", category: "🥊 Luta" }, // (print 486763.png)
+    { name: "Dragon Ball Z - Shin Budokai", size: "194.54 MB", link: "https://4br.me/wMAn33C", category: "🥊 Luta" }, // (print 486765.png)
+    { name: "Dragon Ball Z - Shin Budokai - Another Road", size: "314.54 MB", link: "https://seulink.digital/CqKWufVz", category: "🥊 Luta" },
+    { name: "Dragoneer's Aria", size: "232.14 MB", link: "https://4br.me/Xe3KByaiT", category: "🧙‍♂️ RPG / Ação" }, // ATUALIZADO (print 486835.png)
+    { name: "DreamWorks Shrek Smash N' Crash Racing", size: "238.69 MB", link: "https://seulink.net/IJe51", category: "🏎️ Corrida" },
+    { name: "DreamWorks Shrek the Third", size: "341.52 MB", link: "https://seulink.net/UnTE", category: "🗡️ Ação / Aventura" }, // (print 486765.png)
+    { name: "Dynasty Warriors", size: "107.80 MB", link: "https://seulink.net/4M1D5fRUr", category: "🗡️ Ação / Aventura" }, // (print 486765.png)
+    { name: "Eragon", size: "136.26 MB", link: "https://seulink.net/qt9mko8", category: "🗡️ Ação / Aventura" }, // (print 486765.png)
+    { name: "Exit", size: "60.68 MB", link: "https://seulink.net/IPMB", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "FIFA Street 2", size: "206.33 MB", link: "https://seulink.net/elku", category: "🏆 Esportes" }, // (print 486765.png)
+    { name: "FlatOut - Head On", size: "356.96 MB", link: "https://seulink.digital/a58UX1", category: "🏎️ Corrida" },
+    { name: "Ford Racing Off Road", size: "324.12 MB", link: "https://seulink.net/7apu3c1Gu", category: "🏎️ Corrida" }, // (print 486765.png)
+    { name: "Gladiator Begins", size: "237.12 MB", link: "https://seulink.net/ix851vM1zT", category: "🥊 Luta" }, // (print 486765.png)
+    { name: "God of War - Ghost of Sparta", size: "868.25 MB", link: "https://seulink.digital/axdE", category: "🗡️ Ação / Aventura" },
+    { name: "Grand Theft Auto - Liberty City Stories", size: "267.12 MB", link: "https://seulink.net/6cXbgzBds7", category: "🌍 Mundo Aberto / Sandbox" }, // (print 486765.png)
+    { name: "Grand Theft Auto - Vice City Stories", size: "457.90 MB", link: "https://seulink.net/fOjsSiAG", category: "🌍 Mundo Aberto / Sandbox" }, // (print 486765.png)
+    { name: "Gripshift", size: "66.77 MB", link: "https://seulink.digital/5tcR8tx", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "GUN Showdown", size: "572.22 MB", link: "https://seulink.net/le4qV", category: "🌍 Mundo Aberto / Sandbox" }, // ATUALIZADO (print 486835.png)
+    { name: "Half-Minute Hero", size: "93.63 MB", link: "https://seulink.net/duZd88WM", category: "🧙‍♂️ RPG / Ação" },
+    { name: "Hammerin' Hero", size: "99.11 MB", link: "https://4br.me/D8JEt9veM", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "Hannspree Ten Kate Honda SBK Superbike World Championship", size: "124.01 MB", link: "https://seulink.net/uBiz5yOHW", category: "🏎️ Corrida" }, // (print 486765.png)
+    { name: "Harvest Moon - Boy & Girl", size: "104.74 MB", link: "https://seulink.net/uUoNJ1teI", category: "🌾 Simulação / Vida" },
+    { name: "Harvest Moon - Hero of Leaf Valley", size: "110.39 MB", link: "https://seulink.net/h1DMKzv", category: "🌾 Simulação / Vida" },
+    { name: "Hot Wheels Ultimate Racing", size: "98.32 MB", link: "https://seulink.net/clOTbT", category: "🏎️ Corrida" }, // (print 486767.png)
+    { name: "Infected", size: "527.52 MB", link: "https://seulink.net/djKokt7", category: "🔫 Tiro (TPS/FPS)" }, // (print 486767.png)
+    { name: "Kao Challengers", size: "343.46 MB", link: "https://seulink.net/PYJBsT7", category: "🗡️ Ação / Aventura" }, // (print 486767.png)
+    { name: "Kenka Bancho - Badass Rumble", size: "360.40 MB", link: "https://seulink.net/J1SM5P", category: "🥊 Luta" },
+    { name: "Killzone - Liberation", size: "353.55 MB", link: "https://seulink.net/CVQf", category: "🔫 Tiro (TPS/FPS)" }, // (print 486767.png)
+    { name: "LEGO Batman - The Videogame", size: "311.66 MB", link: "https://seulink.net/aHFNeol", category: "🗡️ Ação / Aventura" }, // (print 486767.png)
+    { name: "LEGO Indiana Jones - The Original Adventures", size: "392.49 MB", link: "https://seulink.net/zzn1zTwlXD", category: "🗡️ Ação / Aventura" }, // ATUALIZADO (print 486835.png)
+    { name: "Marvel Nemesis - Rise of the Imperfects", size: "104.76 MB", link: "https://seulink.net/7lezrJZ", category: "🥊 Luta" }, // (print 486767.png)
+    { name: "Medal of Honor Heroes", size: "392.54 MB", link: "https://seulink.net/gxqKW", category: "🔫 Tiro (TPS/FPS)" },
+    { name: "Mega Man - Powered Up", size: "251.74 MB", link: "https://seulink.net/S6TPKr1bJX", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "Metal Slug XX", size: "155.84 MB", link: "https://seulink.net/KKq2aTsvX", category: "🔫 Tiro (TPS/FPS)" }, // (print 486767.png)
+    { name: "Miami Vice - The Game", size: "208.30 MB", link: "https://seulink.net/SAYUuydVap", category: "🔫 Tiro (TPS/FPS)" }, // (print 486767.png)
+    { name: "Midnight Club - L.A. Remix", size: "401.64 MB", link: "https://seulink.net/9kstT", category: "🏎️ Corrida" },
+    { name: "Monster Hunter Freedom", size: "616.23 MB", link: "https://seulink.net/lXnHosGFHg", category: "🧙‍♂️ RPG / Ação" },
+    { name: "Monster Jam - Path of Destruction", size: "199.52 MB", link: "https://seulink.net/RziMbKqeE", category: "🏎️ Corrida" }, // ATUALIZADO (print 486835.png)
+    { name: "Mortal Kombat - Unchained", size: "266.42 MB", link: "https://4br.me/3FJWEN", category: "🥊 Luta" }, // (print 486767.png)
+    { name: "MTX Mototrax", size: "256.28 MB", link: "https://seulink.net/Y5M5S", category: "🏎️ Corrida" }, // (print 486767.png)
+    { name: "MX vs. ATV On the Edge", size: "407.58 MB", link: "https://seulink.net/xKYJZe", category: "🏎️ Corrida" },
+    { name: "Naruto - Ultimate Ninja Heroes", size: "197.37 MB", link: "https://seulink.net/E8bO5mVhWv", category: "🥊 Luta" }, // (print 486767.png)
+    { name: "Naruto Shippuden - Ultimate Ninja Heroes 3", size: "395.36 MB", link: "https://seulink.net/KZ4wLFRhU", category: "🥊 Luta" }, // ATUALIZADO (print 486835.png)
+    { name: "NBA Street Showdown", size: "263.82 MB", link: "https://seulink.net/2eHvSWY20", category: "🏆 Esportes" }, // ATUALIZADO (print 486837.png)
+    { name: "Need for Speed - Most Wanted 5-1-0", size: "167.20 MB", link: "https://seulink.net/SpjHYs", category: "🏎️ Corrida" }, // (print 486771.png)
+    { name: "Need for Speed - ProStreet", size: "286.17 MB", link: "https://seulink.net/WpqvxO", category: "🏎️ Corrida" },
+    { name: "Need for Speed - Underground Rivals", size: "205.55 MB", link: "https://seulink.net/GlpfgaL", category: "🏎️ Corrida" }, // (print 486771.png)
+    { name: "Pac-Man World Rally", size: "209.52 MB", link: "https://seulink.net/m6kyb04Qx", category: "🏎️ Corrida" }, // ATUALIZADO (print 486837.png)
+    { name: "Patapon", size: "161.16 MB", link: "https://seulink.net/VlRFpdGyVA", category: "🧙‍♂️ RPG / Ação" }, // (print 486771.png)
+    { name: "Patapon 3", size: "356.72 MB", link: "https://4br.me/rwJUdw8s", category: "🧙‍♂️ RPG / Ação" }, // ATUALIZADO (print 486837.png)
+    { name: "Peter Jackson's King Kong - The Official Game of the Movie", size: "378.52 MB", link: "https://seulink.net/b2fCuu", category: "🗡️ Ação / Aventura" }, // (print 486771.png)
+    { name: "Power Stone Collection", size: "264.07 MB", link: "https://seulink.net/a79R", category: "🥊 Luta" },
+    { name: "Prince of Persia - The Forgotten Sands", size: "474.37 MB", link: "https://seulink.net/wnCS95", category: "🗡️ Ação / Aventura" }, // ATUALIZADO (print 486837.png)
+    { name: "Shepherd's Crossing", size: "154.91 MB", link: "https://4br.me/xURE", category: "🌾 Simulação / Vida" }, // ATUALIZADO (print 486837.png)
+    { name: "SOCOM - U.S. Navy SEALs Fireteam Bravo", size: "351.79 MB", link: "https://4br.me/iSiHx", category: "🔫 Tiro (TPS/FPS)" }, // (print 486771.png)
+    { name: "Sonic Rivals", size: "108.14 MB", link: "https://4br.me/IXjvrEhJmQ", category: "🎮 Plataforma / Puzzle / Família" }, // (print 486771.png)
+    { name: "Soulcalibur - Broken Destiny", size: "376.18 MB", link: "https://seulink.net/d7QKBW", category: "🥊 Luta" }, // (print 486771.png)
+    { name: "Spider-Man - Friend or Foe", size: "489.87 MB", link: "https://seulink.net/odHGZdoT", category: "🗡️ Ação / Aventura" },
+    { name: "Spider-Man - Web of Shadows", size: "215.81 MB", link: "https://seulink.net/FjZpP", category: "🗡️ Ação / Aventura" }, // (print 486771.png)
+    { name: "Street Fighter Alpha 3 Max", size: "94.31 MB", link: "https://seulink.net/VeyLqOCz7", category: "🥊 Luta" },
+    { name: "Surf's Up", size: "481.58 MB", link: "https://seulink.net/54oY3VN9u", category: "🏎️ Corrida" }, // ATUALIZADO (print 486837.png)
+    { name: "The Con", size: "381.75 MB", link: "https://seulink.net/SzXf", category: "🥊 Luta" },
+    { name: "Tokobot", size: "181.79 MB", link: "https://seulink.digital/Zmgt532", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "Toy Story 3 - The Video Game", size: "162.63 MB", link: "https://seulink.net/jHZ2cE", category: "🎮 Plataforma / Puzzle / Família" }, // (print 486765.png)
+    { name: "Twisted Metal - Head-On", size: "293.52 MB", link: "https://seulink.net/SMTWsx4", category: "🏎️ Corrida" }, // (print 486771.png)
+    { name: "Ultimate Ghosts 'n Goblins", size: "272.11 MB", link: "https://seulink.net/y98wWc", category: "🎮 Plataforma / Puzzle / Família" }, // (print 486837.png)
+    { name: "Undead Knights", size: "333.02 MB", link: "https://4br.me/nMqcsE", category: "🗡️ Ação / Aventura" }, // (print 486771.png)
+    { name: "Untold Legends - Brotherhood of the Blade", size: "115.19 MB", link: "https://seulink.net/SqFEZZHa", category: "🧙‍♂️ RPG / Ação" },
+    { name: "Untold Legends - The Warrior's Code", size: "643.83 MB", link: "https://seulink.net/RMz03x", category: "🧙‍♂️ RPG / Ação" }, // (print 486837.png)
+    { name: "Valhalla Knights", size: "277.04 MB", link: "https://seulink.net/XPGhIan8", category: "🧙‍♂️ RPG / Ação" },
+    { name: "Virtua Tennis - World Tour", size: "142.20 MB", link: "https://seulink.net/geABuAiEjZ", category: "🏆 Esportes" },
+    { name: "Virtua Tennis 3", size: "298.60 MB", link: "https://seulink.net/lhwT", category: "🏆 Esportes" }, // (print 486771.png)
+    { name: "WipEout Pulse", size: "171.87 MB", link: "https://seulink.net/OMBa39sqRZ", category: "🏎️ Corrida" },
+    { name: "WipEout Pure", size: "125.49 MB", link: "https://seulink.net/LGxsyZKVMi", category: "🏎️ Corrida" }, // ATUALIZADO (print 486837.png)
+    { name: "Worms - Open Warfare", size: "198.04 MB", link: "https://seulink.net/OZlPnL8", category: "🎮 Plataforma / Puzzle / Família" }, // (print 486771.png)
+    { name: "X-Men Origins - Wolverine", size: "349.20 MB", link: "https://seulink.net/Q7FQrWqH3", category: "🗡️ Ação / Aventura" } // ATUALIZADO (print 486837.png)
+];
+
+window.gamesData = gamesData;
