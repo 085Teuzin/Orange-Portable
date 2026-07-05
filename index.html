@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Orange Portable - Made By: @085_Teuzinnn</title>
         <link rel="manifest" href="manifest.json">
-        <link rel="apple-touch-icon" href="https://img.icons8.com/color/192/orange.png">
+        <link class="apple-touch-icon" href="https://img.icons8.com/color/192/orange.png">
         <script src="https://cdn.tailwindcss.com"></script>
         <meta name="theme-color" content="#000000">
         <style>
@@ -31,7 +31,7 @@
             <header class="mb-6 relative">
                 <h1 id="main-title" class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
                 <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
-                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v1.8</span>
+                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v1.9</span>
             </header>
             <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4 text-left flex gap-2">
                 <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="flex-grow bg-[#111] border border-zinc-800 p-4 rounded-xl outline-none text-lg focus:border-[#ffA500]">
@@ -274,11 +274,18 @@
                 
                 if(mdTagsContainer) {
                     const currentSize = sizeString || (n === ppssppStaticData.name ? ppssppStaticData.size : "0MB");
-                    mdTagsContainer.innerHTML = `
-                        <span class="text-[9px] bg-black text-[#ffA500] px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${currentSize}</span>
-                        <span class="text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider">cso</span>
-                        <span class="text-[11px] ml-1">${info.lang || "🇺🇸"}</span>
-                    `;
+                    if (n === ppssppStaticData.name || n === currentModalGame && !gs.some(g => g.name === n)) {
+                        mdTagsContainer.innerHTML = `
+                            <span class="text-[9px] bg-black text-[#ffA500] px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${currentSize}</span>
+                            <span class="text-[11px] ml-1">${info.lang || "🇺🇸"}</span>
+                        `;
+                    } else {
+                        mdTagsContainer.innerHTML = `
+                            <span class="text-[9px] bg-black text-[#ffA500] px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${currentSize}</span>
+                            <span class="text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider">cso</span>
+                            <span class="text-[11px] ml-1">${info.lang || "🇺🇸"}</span>
+                        `;
+                    }
                 }
 
                 if(mdFav) {
