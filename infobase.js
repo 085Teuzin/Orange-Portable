@@ -251,6 +251,13 @@ const gamesInfo = {
         "playtime": "10h",
         "lang": "🇺🇸"
     },
+    "God of War - Chains of Olympus": {
+        "description": "Uma obra-prima de ação que antecede o primeiro jogo. Enfrente deuses e criaturas da mitologia grega com uma jogabilidade visceral e gráficos de ponta.",
+        "release": "04/03/2008",
+        "compat": "Boa",
+        "playtime": "5h",
+        "lang": "🇧🇷"
+    },    
     "God of War - Ghost of Sparta": {
         "description": "Uma obra-prima de ação que explora o passado de Kratos. Enfrente deuses e criaturas da mitologia grega com uma jogabilidade visceral e gráficos de ponta.",
         "release": "02/11/2010",
