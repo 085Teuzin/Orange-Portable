@@ -1,4 +1,4 @@
-const CACHE_NAME = "orange-portable-v1.9.1";
+const CACHE_NAME = "orange-portable-v1.9";
 const ASSETS = [
   "./",
   "./index.html",
