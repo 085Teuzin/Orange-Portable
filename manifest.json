@@ -1,12 +1,12 @@
 {
   "name": "Orange P",
   "short_name": "Orange P",
-  "description": "Games CSO for PPSSPP",
+  "description": "Games CSO for PPSSPP.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
-  "orientation": "portrait-primary",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "https://img.icons8.com/color/192/orange.png",
