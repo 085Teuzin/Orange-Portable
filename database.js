@@ -35,7 +35,7 @@ const gamesData = [
     { name: "FlatOut - Head On", size: "356.96 MB", link: "https://seulink.digital/a58UX1", category: "🏎️ Corrida" },
     { name: "Ford Racing Off Road", size: "324.12 MB", link: "https://seulink.net/7apu3c1Gu", category: "🏎️ Corrida" },
     { name: "Gladiator Begins", size: "237.12 MB", link: "https://seulink.net/ix851vM1zT", category: "🥊 Luta" },
-    { name: "God of War - Chains of Olympus", size: "668.88 MB", link: "https://seulink.net/6suDEij", category: "🗡️ Ação / Aventura" },
+    { name: "God of War - Chains of Olympus", size: "841.56 MB", link: "https://seulink.net/KqXBVe0", category: "🗡️ Ação / Aventura" },
     { name: "God of War - Ghost of Sparta", size: "868.25 MB", link: "https://seulink.digital/axdE", category: "🗡️ Ação / Aventura" },
     { name: "Grand Theft Auto - Liberty City Stories", size: "267.12 MB", link: "https://seulink.net/6cXbgzBds7", category: "🌍 Mundo Aberto / Sandbox" },
     { name: "Grand Theft Auto - Vice City Stories", size: "457.90 MB", link: "https://seulink.net/fOjsSiAG", category: "🌍 Mundo Aberto / Sandbox" },
