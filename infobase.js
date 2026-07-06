@@ -256,7 +256,7 @@ const gamesInfo = {
         "release": "04/03/2008",
         "compat": "Boa",
         "playtime": "5h",
-        "lang": "🇧🇷"
+        "lang": "🇺🇸"
     },    
     "God of War - Ghost of Sparta": {
         "description": "Uma obra-prima de ação que explora o passado de Kratos. Enfrente deuses e criaturas da mitologia grega com uma jogabilidade visceral e gráficos de ponta.",
