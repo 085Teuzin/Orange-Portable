@@ -1,14 +1,16 @@
-const CACHE_NAME = "orange-portable-v1.9";
+const CACHE_NAME = 'orange-portable-v1';
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./database.js",
-  "./infobase.js",
-  "https://cdn.tailwindcss.com"
+  './',
+  './index.html',
+  './database.js',
+  './infobase.js',
+  './manifest.json',
+  'https://cdn.tailwindcss.com',
+  'https://img.icons8.com/color/192/orange.png'
 ];
 
-self.addEventListener("install", (e) => {
-  e.waitUntil(
+self.addEventListener('install', (event) => {
+  event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS);
     })
@@ -16,8 +18,8 @@ self.addEventListener("install", (e) => {
   self.skipWaiting();
 });
 
-self.addEventListener("activate", (e) => {
-  e.waitUntil(
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
     caches.keys().then((keys) => {
       return Promise.all(
         keys.map((key) => {
@@ -31,24 +33,10 @@ self.addEventListener("activate", (e) => {
   self.clients.claim();
 });
 
-self.addEventListener("fetch", (e) => {
-  e.respondWith(
-    caches.match(e.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
-      return fetch(e.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== "basic") {
-          return networkResponse;
-        }
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(e.request, responseToCache);
-        });
-        return networkResponse;
-      }).catch(() => {
-        return caches.match("./index.html");
-      });
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      return cachedResponse || fetch(event.request);
     })
   );
 });
