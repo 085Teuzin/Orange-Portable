@@ -4,10 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Orange Portable - Made By: @085_Teuzinnn</title>
-        <link rel="manifest" href="manifest.json">
-        <link class="apple-touch-icon" href="https://img.icons8.com/color/192/orange.png">
         <script src="https://cdn.tailwindcss.com"></script>
-        <meta name="theme-color" content="#000000">
         <style>
             :root { --p:#ffA500; --c:#ffffff; }
             .hide-scroll { -ms-overflow-style:none; scrollbar-width:none; }
@@ -57,9 +54,8 @@
             <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl">🆙️</button>
         </div>
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
-            <div class="bg-[#111] border border-[#ffA500] w-full max-w-md p-8 rounded-3xl relative">
-                <button id="closeMd" class="absolute top-4 right-4 text-zinc-500 text-xl p-2">✕</button>
-                <h2 id="mt" class="text-2xl font-bold text-[#ffA500] mb-2 pr-6"></h2>
+            <div id="mdCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md p-8 rounded-3xl relative">
+                <h2 id="mt" class="text-2xl font-bold text-[#ffA500] mb-2"></h2>
                 <div id="mdTagsContainer" class="flex gap-2 items-center mb-4"></div>
                 <div class="flex gap-3 mb-4"><span id="mdTime" class="text-[10px] bg-zinc-800 px-2 py-1 rounded font-bold"></span><span id="mrl" class="text-zinc-400 text-[10px] font-bold pt-1"></span></div>
                 <p id="mds" class="text-zinc-400 text-sm leading-relaxed mb-6"></p>
@@ -73,7 +69,7 @@
             </div>
         </div>
         <div id="modalGeneric" class="fixed inset-0 z-[70] bg-black/95 hidden items-center justify-center p-4">
-            <div class="bg-[#111] border border-zinc-800 w-full max-w-md max-h-[80vh] flex flex-col rounded-3xl relative overflow-hidden">
+            <div id="genericCard" class="bg-[#111] border border-zinc-800 w-full max-w-md max-h-[80vh] flex flex-col rounded-3xl relative overflow-hidden">
                 <div class="p-6 border-b border-zinc-800 flex justify-between items-center bg-[#111]">
                     <h2 id="genericTitle" class="text-xl font-bold text-[#ffA500]"></h2>
                     <button id="closeGeneric" class="text-zinc-500 text-xl">✕</button>
@@ -112,8 +108,21 @@
                 currentModalGame = "";
             }
 
-            document.getElementById("closeMd").onclick = closeAllModals;
             document.getElementById("closeGeneric").onclick = closeAllModals;
+
+            document.getElementById("md").onclick = function(e) {
+                const card = document.getElementById("mdCard");
+                if (card && !card.contains(e.target)) {
+                    closeAllModals();
+                }
+            };
+
+            document.getElementById("modalGeneric").onclick = function(e) {
+                const card = document.getElementById("genericCard");
+                if (card && !card.contains(e.target)) {
+                    closeAllModals();
+                }
+            };
 
             function openGeneric(title, items, showSearch = false) {
                 const gt = document.getElementById("genericTitle");
@@ -363,12 +372,6 @@
                     if(content) content.classList.remove("opacity-0");
                 }
             });
-
-            if ("serviceWorker" in navigator) {
-                window.addEventListener("load", () => {
-                    navigator.serviceWorker.register("./sw.js").catch(() => {});
-                });
-            }
         </script>
     </body>
 </html>
