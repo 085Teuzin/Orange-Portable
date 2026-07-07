@@ -216,7 +216,7 @@
                 if(currentPage > pages) currentPage = 1;
                 res.sort((a,b)=>{
                     if(ord==="az" || ord==="ptbr") return a.name.localeCompare(b.name);
-                    if(ord==="za") return b.name.localeCompare(b.name);
+                    if(ord==="za") return b.name.localeCompare(a.name);
                     return ord==="sizeAsc" ? pz(a.size)-pz(b.size) : pz(b.size)-pz(a.size);
                 });
                 return res;
@@ -283,7 +283,7 @@
                 
                 if(mdTagsContainer) {
                     const currentSize = sizeString || (n === ppssppStaticData.name ? ppssppStaticData.size : "0MB");
-                    if (n === ppssppStaticData.name || n === currentModalGame && !gs.some(g => g.name === n)) {
+                    if (n === ppssppStaticData.name || (n === currentModalGame && !gs.some(g => g.name === n))) {
                         mdTagsContainer.innerHTML = `
                             <span class="text-[9px] bg-black text-[#ffA500] px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${currentSize}</span>
                             <span class="text-[11px] ml-1">${info.lang || "🇺🇸"}</span>
