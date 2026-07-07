@@ -14,7 +14,7 @@ const gamesInfo = {
         "lang": "🇺🇸"
     },
     "Aliens vs. Predator - Requiem": {
-        "description": "Assuma o papel de um Predador de elite enviado à Terra para limpar os vestígios de uma infestação Alien. Um jogo de ação focado no uso de tecnologias de caça e combate visceral.",
+        "description": "Assuma o papel de um Predador de elite enviado à Terra para limpar os vestígios de uma infestation Alien. Um jogo de ação focado no uso de tecnologias de caça e combate visceral.",
         "release": "13/11/2007",
         "compat": "Médio",
         "playtime": "6h",
@@ -49,7 +49,7 @@ const gamesInfo = {
         "lang": "🇺🇸"
     },
     "Battlezone": {
-        "description": "Um combate de tanques futurista com visão em primeira pessoa. O jogo mistura ação rápida com elementos estratégicos em campos de batalha modernos e intensos.",
+        "description": "Um combate de tanques futurista com visão em primeira pessoa. O jogo mistura ação rápida com elements estratégicos em campos de batalha modernos e intensos.",
         "release": "07/11/2006",
         "compat": "Boa",
         "playtime": "5h",
@@ -139,7 +139,7 @@ const gamesInfo = {
         "playtime": "6h",
         "lang": "🇺🇸"
     },
-    "Dead or Alive Paradise": {
+    "Dead or Alive - Paradise": {
         "description": "Um simulador de férias com as personagens da franquia de luta. Inclui minijogos de praia como vôlei, cassino e atividades relaxantes em uma ilha paradisíaca.",
         "release": "30/03/2010",
         "compat": "Boa",
@@ -167,11 +167,11 @@ const gamesInfo = {
         "playtime": "8h",
         "lang": "🇺🇸"
     },
-    "Dragon Ball Z - Shin Budokai": {
-        "description": "Lute com Goku e os Guerreiros Z em combates 2D rápidos e fluidos. O jogo traz o sistema de luta clássico da série Budokai com gráficos em cel-shading de alta qualidade.",
-        "release": "07/03/2006",
+    "Disney Pixar Toy Story 3": {
+        "description": "Baseado no filme da Pixar, o jogo mistura fases de plataforma fiéis à história com um modo livre para criar suas próprias aventuras no Velho Oeste.",
+        "release": "15/06/2010",
         "compat": "Ótimo",
-        "playtime": "4h",
+        "playtime": "6h",
         "lang": "🇺🇸"
     },
     "Dragon Ball Z - Shin Budokai - Another Road": {
@@ -179,6 +179,13 @@ const gamesInfo = {
         "release": "20/03/2007",
         "compat": "Ótimo",
         "playtime": "6h",
+        "lang": "🇺🇸"
+    },
+    "Dragon Ball Z - Shin Budokai": {
+        "description": "Lute com Goku e os Guerreiros Z em combates 2D rápidos e fluidos. O jogo traz o sistema de luta clássico da série Budokai com gráficos em cel-shading de alta qualidade.",
+        "release": "07/03/2006",
+        "compat": "Ótimo",
+        "playtime": "4h",
         "lang": "🇺🇸"
     },
     "Dragoneer's Aria": {
@@ -257,7 +264,7 @@ const gamesInfo = {
         "compat": "Boa",
         "playtime": "5h",
         "lang": "🇺🇸"
-    },    
+    },
     "God of War - Ghost of Sparta": {
         "description": "Uma obra-prima de ação que explora o passado de Kratos. Enfrente deuses e criaturas da mitologia grega com uma jogabilidade visceral e gráficos de ponta.",
         "release": "02/11/2010",
@@ -279,13 +286,6 @@ const gamesInfo = {
         "playtime": "15h",
         "lang": "🇧🇷"
     },
-    "Gripshift": {
-        "description": "Uma mistura única de corrida de plataforma e puzzle. Você dirige veículos acrobáticos por pistas flutuantes cheias de obstáculos e colecionáveis.",
-        "release": "13/09/2005",
-        "compat": "Ótimo",
-        "playtime": "8h",
-        "lang": "🇺🇸"
-    },
     "GUN Showdown": {
         "description": "Um jogo de mundo aberto ambientado no Velho Oeste. Oferece tiroteios a cavalo, duelos de precisão e uma história de vingança digna dos melhores filmes de faroeste.",
         "release": "10/10/2006",
@@ -300,14 +300,14 @@ const gamesInfo = {
         "playtime": "6h",
         "lang": "🇺🇸"
     },
-    "Hammerin' Hero": {
+    "Hammerin Hero": {
         "description": "Um jogo de plataforma 2D vibrante onde você controla Gen, um carpinteiro que usa seu martelo para combater uma corporação maligna e ajudar os cidadãos.",
         "release": "07/04/2009",
         "compat": "Ótimo",
         "playtime": "4h",
         "lang": "🇺🇸"
     },
-    "Hannspree Ten Kate Honda SBK Superbike World Championship": {
+    "Hannspree Ten Kate Honda SBK": {
         "description": "Simulador oficial de Superbike focado em realismo e precisão técnica. Pilote motos de alta cilindrada em circuitos licenciados ao redor do mundo.",
         "release": "28/10/2008",
         "compat": "Boa",
@@ -356,7 +356,7 @@ const gamesInfo = {
         "playtime": "8h",
         "lang": "🇺🇸"
     },
-    "Killzone - Liberation": {
+    "Killzone Liberation": {
         "description": "Diferente dos jogos principais, este título usa uma visão isométrica tática. Controle Templar em missões de infiltração e combate estratégico contra os Helghast.",
         "release": "31/10/2006",
         "compat": "Ótimo",
@@ -419,7 +419,7 @@ const gamesInfo = {
         "playtime": "15h",
         "lang": "🇺🇸"
     },
-    "Monster Hunter Freedom": {
+    "Monster Hunter - Freedom": {
         "description": "Cace monstros gigantescos em um mundo selvagem. O foco está na preparação, coleta de recursos e criação de equipamentos épicos para enfrentar feras lendárias.",
         "release": "23/05/2006",
         "compat": "Boa",
@@ -454,13 +454,6 @@ const gamesInfo = {
         "playtime": "10h",
         "lang": "🇺🇸"
     },
-    "NBA Street Showdown": {
-        "description": "O basquete de rua da NBA com foco em estilo. Faça enterradas impossíveis e combos de dribles para humilhar os adversários nas quadras urbanas.",
-        "release": "03/05/2005",
-        "compat": "Ótimo",
-        "playtime": "6h",
-        "lang": "🇺🇸"
-    },
     "Naruto - Ultimate Ninja Heroes": {
         "description": "O primeiro grande jogo de luta de Naruto para o PSP. Focado em combates de equipes 3v3, permite criar times personalizados e usar jutsus poderosos.",
         "release": "28/08/2007",
@@ -468,11 +461,18 @@ const gamesInfo = {
         "playtime": "5h",
         "lang": "🇺🇸"
     },
-    "Naruto Shippuden - Ultimate Ninja Heroes 3": {
+    "Naruto Shippuden Ultimate Ninja Heroes 3": {
         "description": "Lute com mais de 50 personagens da fase Shippuden. O jogo permite combates rápidos e possui um modo história que segue fielmente o arco do anime.",
         "release": "11/05/2010",
         "compat": "Boa",
         "playtime": "8h",
+        "lang": "🇺🇸"
+    },
+    "NBA Street Showdown": {
+        "description": "O basquete de rua da NBA com foco em estilo. Faça enterradas impossíveis e combos de dribles para humilhar os adversários nas quadras urbanas.",
+        "release": "03/05/2005",
+        "compat": "Ótimo",
+        "playtime": "6h",
         "lang": "🇺🇸"
     },
     "Need for Speed - Most Wanted 5-1-0": {
@@ -517,7 +517,7 @@ const gamesInfo = {
         "playtime": "25h",
         "lang": "🇺🇸"
     },
-    "Peter Jackson's King Kong - The Official Game of the Movie": {
+    "Peter Jackson's King Kong": {
         "description": "Sinta o desespero de sobreviver na Ilha da Caveira como Jack ou a força bruta de controlar o próprio King Kong contra dinossauros famintos.",
         "release": "15/12/2005",
         "compat": "Boa",
@@ -608,13 +608,6 @@ const gamesInfo = {
         "playtime": "7h",
         "lang": "🇺🇸"
     },
-    "Toy Story 3 - The Video Game": {
-        "description": "Baseado no filme da Pixar, o jogo mistura fases de plataforma fiéis à história com um modo livre para criar suas próprias aventuras no Velho Oeste.",
-        "release": "15/06/2010",
-        "compat": "Ótimo",
-        "playtime": "6h",
-        "lang": "🇺🇸"
-    },
     "Twisted Metal - Head-On": {
         "description": "Combate veicular puro e insano. Escolha um carro armado até os dentes e destrua todos os competidores em arenas fechadas ao redor do mundo.",
         "release": "24/03/2005",
@@ -643,8 +636,8 @@ const gamesInfo = {
         "playtime": "15h",
         "lang": "🇺🇸"
     },
-    "Untold Legends - The Warrior's Code": {
-        "description": "A sequência do sucesso RPG de ação, trazendo novas classes, gráficos melhorados e uma história mais envolvente no perigoso mundo de Unataca.",
+    "Untold Legends - The Warriors Code": {
+        "description": "A sequência do sucesso RPG de ação, trazendo novas classes, gráficos melhorados e uma história mais envolvendo no perigoso mundo de Unataca.",
         "release": "28/03/2006",
         "compat": "Boa",
         "playtime": "12h",
@@ -671,14 +664,14 @@ const gamesInfo = {
         "playtime": "8h",
         "lang": "🇺🇸"
     },
-    "WipEout Pulse": {
+    "WipeOut Pulse": {
         "description": "Corrida futurista antigravidade em altíssima velocidade. Com trilha sonora eletrônica e armas tecnológicas, é um teste de reflexos puro em pistas magnéticas.",
         "release": "12/02/2008",
         "compat": "Ótimo",
         "playtime": "12h",
         "lang": "🇺🇸"
     },
-    "WipEout Pure": {
+    "Wipeout Pure": {
         "description": "O jogo que definiu o estilo futurista no console. Oferece um visual limpo, naves velozes e combate frenético em pistas de tirar o fôlego.",
         "release": "24/03/2005",
         "compat": "Ótimo",
