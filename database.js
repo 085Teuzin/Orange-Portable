@@ -58,6 +58,7 @@ const gamesData = [
     { name: "Mega Man - Powered Up", size: "251.74 MB", link: "https://seulink.net/S6TPKr1bJX", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Metal Slug XX", size: "155.84 MB", link: "https://seulink.net/KKq2aTsvX", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Miami Vice - The Game", size: "208.30 MB", link: "https://seulink.net/SAYUuydVap", category: "🔫 Tiro (TPS/FPS)" },
+    { name: "Michael Jackson - The Experience", size: "236.36 MB", link: "https://seulink.net/OVipva", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Midnight Club - L.A. Remix", size: "401.64 MB", link: "https://seulink.net/9kstT", category: "🏎️ Corrida" },
     { name: "Monster Hunter - Freedom", size: "616.23 MB", link: "https://seulink.net/lXnHosGFHg", category: "🧙‍♂️ RPG / Ação" },
     { name: "Monster Jam - Path of Destruction", size: "199.52 MB", link: "https://seulink.net/RziMbKqeE", category: "🏎️ Corrida" },
