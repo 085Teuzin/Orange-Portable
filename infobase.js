@@ -412,6 +412,13 @@ const gamesInfo = {
         "playtime": "6h",
         "lang": "🇺🇸"
     },
+    "Michael Jackson - The Experience": {
+        "description": "Sinta o ritmo e reviva as coreografias icônicas do Rei do Pop. Um jogo musical envolvente onde você deve seguir os comandos na tela no tempo certo ao som de grandes sucessos como Billie Jean e Beat It.",
+        "release": "23/11/2010",
+        "compat": "Ótimo",
+        "playtime": "5h",
+        "lang": "🇺🇸"
+    },
     "Midnight Club - L.A. Remix": {
         "description": "Corrida de rua em mundo aberto pelas avenidas de LA e Tóquio. Customize carros e motos e participe de rachas noturnos com muita velocidade.",
         "release": "20/10/2008",
