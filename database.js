@@ -22,7 +22,7 @@ const gamesData = [
     { name: "Dead or Alive - Paradise", size: "538.01 MB", link: "https://seulink.net/cjgUFx", category: "🌾 Simulação / Vida" },
     { name: "Dead to Rights - Reckoning", size: "91.77 MB", link: "https://seulink.net/r6pj", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Death Jr.", size: "211.10 MB", link: "https://seulink.digital/Feg5dDB", category: "🗡️ Ação / Aventura" },
-    { name: "Def Jam - Fight for NY - The Takeover", size: "338.19 MB", link: "https://seulink.net/YDXkzjxOm", category: "🥊 Luta" },
+    { name: "Def Jam - Fight for NY - The Takeover", size: "353.64 MB", link: "https://seulink.net/YDXkzjxOm", category: "🥊 Luta" },
     { name: "Disney Pixar Toy Story 3", size: "162.63 MB", link: "https://seulink.net/jHZ2cE", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Dragon Ball Z - Shin Budokai - Another Road", size: "314.54 MB", link: "https://seulink.digital/CqKWufVz", category: "🥊 Luta" },
     { name: "Dragon Ball Z - Shin Budokai", size: "194.54 MB", link: "https://4br.me/wMAn33C", category: "🥊 Luta" },
