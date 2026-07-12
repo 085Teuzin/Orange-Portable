@@ -31,10 +31,13 @@
                 </button>
                 <h1 id="main-title" class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
                 <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
-                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v1.9</span>
+                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v2.0</span>
             </header>
             <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4 text-left flex gap-2">
-                <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="flex-grow bg-[#111] border border-zinc-800 p-4 rounded-xl outline-none text-lg focus:border-[#ffA500]">
+                <div class="relative flex-grow flex items-center">
+                    <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] border border-zinc-800 p-4 pr-12 rounded-xl outline-none text-lg focus:border-[#ffA500]">
+                    <button id="clearSearch" class="absolute right-4 text-zinc-500 hover:text-white text-xl hidden">✕</button>
+                </div>
                 <button id="openSort" class="bg-[#111] border border-zinc-800 px-4 rounded-xl text-xl btn-transition">
                     <span id="currentSortIcon">🔠</span>
                 </button>
@@ -106,8 +109,14 @@
                     </div>
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
                         <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Extremos de Armazenamento</p>
-                        <p>📈 Maior: <span id="stat-max-game" class="text-white font-medium block truncate mt-0.5">...</span></p>
-                        <p class="mt-2">📉 Menor: <span id="stat-min-game" class="text-white font-medium block truncate mt-0.5">...</span></p>
+                        <div class="flex flex-col gap-1">
+                            <p class="text-zinc-400 text-xs">📈 Maior:</p>
+                            <span id="stat-max-game" class="text-white font-medium text-xs bg-black/40 p-2 border border-zinc-800 rounded-xl break-words">...</span>
+                        </div>
+                        <div class="flex flex-col gap-1 mt-2">
+                            <p class="text-zinc-400 text-xs">📉 Menor:</p>
+                            <span id="stat-min-game" class="text-white font-medium text-xs bg-black/40 p-2 border border-zinc-800 rounded-xl break-words">...</span>
+                        </div>
                     </div>
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl">
                         <p class="text-zinc-500 text-xs uppercase font-bold mb-3">Jogos por Categoria</p>
@@ -309,14 +318,15 @@
                     }
                     return g.category === at;
                 });
-                const pages = Math.ceil(res.length / perPage) || 1;
+                const mapped = res.map(g => ({ game: g, computedSize: pz(g.size) }));
+                const pages = Math.ceil(mapped.length / perPage) || 1;
                 if(currentPage > pages) currentPage = 1;
-                res.sort((a,b)=>{
-                    if(ord==="az") return a.name.localeCompare(b.name);
-                    if(ord==="za") return b.name.localeCompare(a.name);
-                    return ord==="sizeAsc" ? pz(a.size)-pz(b.size) : pz(b.size)-pz(a.size);
+                mapped.sort((a,b)=>{
+                    if(ord==="az") return a.game.name.localeCompare(b.game.name);
+                    if(ord==="za") return b.game.name.localeCompare(a.game.name);
+                    return ord==="sizeAsc" ? a.computedSize - b.computedSize : b.computedSize - a.computedSize;
                 });
-                return res;
+                return mapped.map(item => item.game);
             }
 
             function render() {
@@ -406,10 +416,27 @@
                 document.body.classList.add("modal-open");
             }
 
-            document.getElementById("s").oninput = () => { 
+            const searchInput = document.getElementById("s");
+            const clearSearchBtn = document.getElementById("clearSearch");
+
+            searchInput.oninput = () => { 
+                if (searchInput.value.length > 0) {
+                    clearSearchBtn.style.display = "block";
+                } else {
+                    clearSearchBtn.style.display = "none";
+                }
                 clearTimeout(debounceTimer); 
                 debounceTimer = setTimeout(() => { currentPage = 1; render(); }, 300); 
             };
+
+            clearSearchBtn.onclick = () => {
+                searchInput.value = "";
+                clearSearchBtn.style.display = "none";
+                currentPage = 1;
+                render();
+                searchInput.focus();
+            };
+
             document.getElementById("btn-rnd").onclick = () => { 
                 const f = getFiltered(); 
                 if(f.length) { 
