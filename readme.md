@@ -1,4 +1,4 @@
-# 🍊 Orange Portable (v1.9)
+# 🍊 Orange Portable (v2.0)
 
 O **Orange Portable** é um Web App moderno, veloz e otimizado para entusiastas de jogos portáteis. Ele funciona como um catálogo inteligente e simplificado para o emulador PPSSPP, permitindo que os usuários explorem, filtrem e acessem uma vasta biblioteca de títulos comprimidos em formato CSO de forma rápida e intuitiva.
 
