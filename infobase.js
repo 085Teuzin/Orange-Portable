@@ -62,6 +62,13 @@ const gamesInfo = {
         "playtime": "6h",
         "lang": "🇺🇸"
     },
+    "BlazBlue - Calamity Trigger": {
+        "description": "Um jogo de luta 2D aclamado por seus visuais em alta definição expressivos e jogabilidade rápida. Conta com um elenco único de personagens, cada um com mecânicas de combate exclusivas chamadas Drive Attacks, além de um modo história profundo.",
+        "release": "25/02/2010",
+        "compat": "Ótimo",
+        "playtime": "8h",
+        "lang": "🇺🇸"
+    },
     "Bomberman": {
         "description": "O clássico jogo de labirinto e estratégia onde o objetivo é cercar seus inimigos com bombas. Simples, viciante e focado em explosões precisas.",
         "release": "12/09/2006",
@@ -88,13 +95,6 @@ const gamesInfo = {
         "release": "13/09/2005",
         "compat": "Ótimo",
         "playtime": "12h",
-        "lang": "🇺🇸"
-    },
-    "Cabela's African Safari": {
-        "description": "Um simulador de caça que leva o jogador às vastas paisagens da África para rastrear e caçar os animais mais perigosos do continente, como leões e leopardos.",
-        "release": "17/10/2006",
-        "compat": "Boa",
-        "playtime": "6h",
         "lang": "🇺🇸"
     },
     "Cabela's Legendary Adventures": {
