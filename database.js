@@ -4,15 +4,15 @@ const gamesData = [
     { name: "Aliens vs. Predator - Requiem", size: "255.37 MB", link: "https://seulink.net/T3Gl5v08l", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Ape Escape Academy", size: "116.02 MB", link: "https://seulink.net/jyf6ORhh5", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Armored Core 3 Portable", size: "292.31 MB", link: "https://seulink.net/HXvamWKXgn", category: "🗡️ Ação / Aventura" },
-    { name: "Assassin's Creed - Bloodlines", size: "330.78 MB", link: "https://seulink.net/yhSBc47zt", category: "🗡️ Ação / Aventura" },
+    { name: "Assassin's Creed - Bloodlines", size: "330.78 MB", link: "https://seulink.net/yhSBc47zt", category: "🌍 Mundo Aberto / Sandbox" }, // Ajustado para Mundo Aberto
     { name: "Avatar - The Last Airbender", size: "123.66 MB", link: "https://4br.me/E9sms", category: "🗡️ Ação / Aventura" },
     { name: "Battlezone", size: "154.37 MB", link: "https://seulink.net/sFHOWXgl4H", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Ben 10 - Protector of Earth", size: "545.55 MB", link: "https://seulink.net/v33WNDu", category: "🗡️ Ação / Aventura" },
+    { name: "BlazBlue - Calamity Trigger", size: "875.64 MB", link: "https://seulink.digital/ThrYcjb4k", category: "🥊 Luta" },
     { name: "Bomberman", size: "55.19 MB", link: "https://seulink.digital/vzbiadg2e", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Brave Story - New Traveler", size: "130.87 MB", link: "https://seulink.net/hiImDh", category: "🧙‍♂️ RPG / Ação" },
     { name: "Burnout Dominator", size: "373.10 MB", link: "https://seulink.net/w4UL", category: "🏎️ Corrida" },
     { name: "Burnout Legends", size: "167.32 MB", link: "https://seulink.net/iA0ZvF", category: "🏎️ Corrida" },
-    { name: "Cabela's African Safari", size: "419.97 MB", link: "https://seulink.net/3c3FWz", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Cabela's Legendary Adventures", size: "364.52 MB", link: "https://seulink.net/T4OlYDAKss", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Cabela's North American Adventures", size: "256.13 MB", link: "https://4br.me/YCE8E5krGR", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Call of Duty - Roads to Victory", size: "439.35 MB", link: "https://seulink.net/YZdJ6pz3", category: "🔫 Tiro (TPS/FPS)" },
@@ -35,7 +35,7 @@ const gamesData = [
     { name: "FIFA Street 2", size: "206.33 MB", link: "https://seulink.net/elku", category: "🏆 Esportes" },
     { name: "FlatOut - Head On", size: "356.96 MB", link: "https://seulink.digital/a58UX1", category: "🏎️ Corrida" },
     { name: "Ford Racing Off Road", size: "324.12 MB", link: "https://seulink.net/7apu3c1Gu", category: "🏎️ Corrida" },
-    { name: "Gladiator Begins", size: "237.12 MB", link: "https://seulink.net/ix851vM1zT", category: "🥊 Luta" },
+    { name: "Gladiator Begins", size: "237.12 MB", link: "https://seulink.net/ix851vM1zT", category: "🌾 Simulação / Vida" }, // Ajustado para Simulação/Vida de Gladiador
     { name: "God of War - Chains of Olympus", size: "841.56 MB", link: "https://seulink.net/KqXBVe0", category: "🗡️ Ação / Aventura" },
     { name: "God of War - Ghost of Sparta", size: "869.71 MB", link: "https://seulink.digital/axdE", category: "🗡️ Ação / Aventura" },
     { name: "Grand Theft Auto - Liberty City Stories", size: "267.12 MB", link: "https://seulink.net/6cXbgzBds7", category: "🌍 Mundo Aberto / Sandbox" },
@@ -49,7 +49,7 @@ const gamesData = [
     { name: "Hot Wheels Ultimate Racing", size: "98.32 MB", link: "https://seulink.net/clOTbT", category: "🏎️ Corrida" },
     { name: "Infected", size: "527.52 MB", link: "https://seulink.net/djKokt7", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Kao Challengers", size: "341.56 MB", link: "https://seulink.net/PYJBsT7", category: "🗡️ Ação / Aventura" },
-    { name: "Kenka Bancho - Badass Rumble", size: "360.40 MB", link: "https://seulink.net/J1SM5P", category: "🥊 Luta" },
+    { name: "Kenka Bancho - Badass Rumble", size: "360.40 MB", link: "https://seulink.net/J1SM5P", category: "🌍 Mundo Aberto / Sandbox" }, // Ajustado para Mundo Aberto
     { name: "Killzone Liberation", size: "353.55 MB", link: "https://seulink.net/CVQf", category: "🔫 Tiro (TPS/FPS)" },
     { name: "LEGO Batman - The Videogame", size: "311.66 MB", link: "https://seulink.net/aHFNeol", category: "🗡️ Ação / Aventura" },
     { name: "LEGO Indiana Jones - The Original Adventures", size: "392.49 MB", link: "https://seulink.net/zzn1zTwlXD", category: "🗡️ Ação / Aventura" },
@@ -59,12 +59,12 @@ const gamesData = [
     { name: "Metal Slug XX", size: "155.84 MB", link: "https://seulink.net/KKq2aTsvX", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Miami Vice - The Game", size: "208.30 MB", link: "https://seulink.net/SAYUuydVap", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Michael Jackson - The Experience", size: "236.36 MB", link: "https://seulink.net/OVipva", category: "🎮 Plataforma / Puzzle / Família" },
-    { name: "Midnight Club - L.A. Remix", size: "401.64 MB", link: "https://seulink.net/9kstT", category: "🏎️ Corrida" },
+    { name: "Midnight Club - L.A. Remix", size: "401.64 MB", link: "https://seulink.net/9kstT", category: "🌍 Mundo Aberto / Sandbox" }, // Ajustado para Mundo Aberto urbano
     { name: "Monster Hunter - Freedom", size: "616.23 MB", link: "https://seulink.net/lXnHosGFHg", category: "🧙‍♂️ RPG / Ação" },
-    { name: "Monster Jam - Path of Destruction", size: "199.52 MB", link: "https://seulink.net/RziMbKqeE", category: "🏎️ Corrida" },
+    { name: "Monster Jam - Path of Destruction", size: "199.52 MB", link: "https://seulink.net/RziMbKqeE", category: "🏆 Esportes" }, // Ajustado para Esportes Motorizados
     { name: "Mortal Kombat - Unchained", size: "266.42 MB", link: "https://4br.me/3FJWEN", category: "🥊 Luta" },
-    { name: "MTX Mototrax", size: "256.28 MB", link: "https://seulink.net/Y5M5S", category: "🏎️ Corrida" },
-    { name: "MX vs. ATV On the Edge", size: "407.58 MB", link: "https://seulink.net/xKYJZe", category: "🏎️ Corrida" },
+    { name: "MTX Mototrax", size: "256.28 MB", link: "https://seulink.net/Y5M5S", category: "🏆 Esportes" }, // Ajustado para Esportes Radicais
+    { name: "MX vs. ATV On the Edge", size: "407.58 MB", link: "https://seulink.net/xKYJZe", category: "🏆 Esportes" }, // Ajustado para Esportes Radicais
     { name: "Naruto - Ultimate Ninja Heroes", size: "197.37 MB", link: "https://seulink.net/E8bO5mVhWv", category: "🥊 Luta" },
     { name: "Naruto Shippuden Ultimate Ninja Heroes 3", size: "395.36 MB", link: "https://seulink.net/KZ4wLFRhU", category: "🥊 Luta" },
     { name: "NBA Street Showdown", size: "263.82 MB", link: "https://seulink.net/2eHvSWY20", category: "🏆 Esportes" },
@@ -75,17 +75,17 @@ const gamesData = [
     { name: "Patapon", size: "161.16 MB", link: "https://seulink.net/VlRFpdGyVA", category: "🧙‍♂️ RPG / Ação" },
     { name: "Patapon 3", size: "356.72 MB", link: "https://4br.me/rwJUdw8s", category: "🧙‍♂️ RPG / Ação" },
     { name: "Peter Jackson's King Kong", size: "378.52 MB", link: "https://seulink.net/b2fCuu", category: "🗡️ Ação / Aventura" },
-    { name: "Power Stone Collection", size: "264.07 MB", link: "https://seulink.net/a79R", category: "🥊 Luta" },
+    { name: "Power Stone Collection", size: "264.07 MB", link: "https://4br.me/E9sms", category: "🥊 Luta" },
     { name: "Prince of Persia - The Forgotten Sands", size: "474.37 MB", link: "https://seulink.net/wnCS95", category: "🗡️ Ação / Aventura" },
     { name: "Shepherd's Crossing", size: "154.91 MB", link: "https://4br.me/xURE", category: "🌾 Simulação / Vida" },
     { name: "SOCOM - U.S. Navy SEALs Fireteam Bravo", size: "351.79 MB", link: "https://4br.me/iSiHx", category: "🔫 Tiro (TPS/FPS)" },
     { name: "Sonic Rivals", size: "108.14 MB", link: "https://4br.me/IXjvrEhJmQ", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Soulcalibur - Broken Destiny", size: "376.18 MB", link: "https://seulink.net/d7QKBW", category: "🥊 Luta" },
     { name: "Spider-Man - Friend or Foe", size: "489.87 MB", link: "https://seulink.net/odHGZdoT", category: "🗡️ Ação / Aventura" },
-    { name: "Spider-Man - Web of Shadows", size: "215.81 MB", link: "https://seulink.net/FjZpP", category: "🗡️ Ação / Aventura" },
+    { name: "Spider-Man - Web of Shadows", size: "215.81 MB", link: "https://seulink.net/FjZpP", category: "🌍 Mundo Aberto / Sandbox" }, // Ajustado para Mundo Aberto
     { name: "Street Fighter Alpha 3 Max", size: "94.31 MB", link: "https://seulink.net/VeyLqOCz7", category: "🥊 Luta" },
-    { name: "Surf's Up", size: "481.58 MB", link: "https://seulink.net/54oY3VN9u", category: "🏎️ Corrida" },
-    { name: "The Con", size: "381.75 MB", link: "https://seulink.net/SzXf", category: "🥊 Luta" },
+    { name: "Surf's Up", size: "481.58 MB", link: "https://seulink.net/54oY3VN9u", category: "🏆 Esportes" }, // Ajustado para Esporte (Surf)
+    { name: "The Con", size: "381.75 MB", link: "https://seulink.net/SzXf", category: "🌾 Simulação / Vida" }, // Ajustado para Simulação de Apostas/Submundo
     { name: "Tokobot", size: "181.79 MB", link: "https://seulink.digital/Zmgt532", category: "🎮 Plataforma / Puzzle / Família" },
     { name: "Twisted Metal - Head-On", size: "293.52 MB", link: "https://seulink.net/SMTWsx4", category: "🏎️ Corrida" },
     { name: "Ultimate Ghosts 'n Goblins", size: "272.11 MB", link: "https://seulink.net/y98wWc", category: "🎮 Plataforma / Puzzle / Família" },
@@ -97,7 +97,7 @@ const gamesData = [
     { name: "Virtua Tennis 3", size: "298.60 MB", link: "https://seulink.net/lhwT", category: "🏆 Esportes" },
     { name: "WipeOut Pulse", size: "171.87 MB", link: "https://seulink.net/OMBa39sqRZ", category: "🏎️ Corrida" },
     { name: "Wipeout Pure", size: "125.49 MB", link: "https://seulink.net/LGxsyZKVMi", category: "🏎️ Corrida" },
-    { name: "Worms - Open Warfare", size: "198.04 MB", link: "https://seulink.net/OZlPnL8", category: "🎮 Plataforma / Puzzle / Família" },
+    { name: "Worms - Open Warfare", size: "198.04 MB", link: "https://seulink.net/OZlPnL8", category: "🌾 Simulação / Vida" }, // Ajustado para Simulação de Estratégia/Guerra tática
     { name: "X-Men Origins - Wolverine", size: "349.20 MB", link: "https://seulink.net/Q7FQrWqH3", category: "🗡️ Ação / Aventura" }
 ];
 
