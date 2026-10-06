@@ -16,6 +16,7 @@
             #loading-screen { position: fixed; inset: 0; background: black; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
             .loader { width: 48px; height: 48px; border: 5px solid #111; border-bottom-color: #ffA500; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; margin: 20px 0; }
             @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            .emoji-fix { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif; display: inline-block; }
         </style>
     </head>
     <body class="bg-black text-white flex flex-col min-h-screen">
@@ -28,6 +29,9 @@
             <header class="mb-6 relative flex flex-col items-center">
                 <button id="openStats" class="absolute left-0 top-1 bg-[#111] border border-zinc-800 w-10 h-10 rounded-xl text-lg flex items-center justify-center btn-transition hover:border-[#ffA500] active:scale-95">
                     📊
+                </button>
+                <button id="audioToggle" class="absolute right-0 top-1 bg-[#111] border border-zinc-800 w-10 h-10 rounded-xl text-lg flex items-center justify-center btn-transition hover:border-[#ffA500] active:scale-95">
+                    🔊
                 </button>
                 <h1 id="main-title" class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
                 <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
@@ -59,6 +63,7 @@
             </footer>
             <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl">🆙️</button>
         </div>
+
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
             <div id="mdCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] p-8 rounded-3xl relative overflow-y-auto">
                 <h2 id="mt" class="text-2xl font-bold text-[#ffA500] mb-2"></h2>
@@ -68,12 +73,23 @@
                 <div class="flex items-center justify-between pt-4 border-t border-zinc-800">
                     <span id="mcp" class="text-[10px] font-black border px-2 py-0.5 rounded tracking-tighter"></span>
                     <div class="flex gap-4 items-center">
-                        <button id="mdFav" class="text-2xl active:scale-90 transition-transform"></button>
+                        <button id="mdFav" class="text-2xl active:scale-90 transition-transform emoji-fix"></button>
                         <a id="mdl" href="#" target="_blank" class="text-3xl">📥</a>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div id="modalPix" class="fixed inset-0 z-[70] bg-black/95 hidden items-center justify-center p-4">
+            <div id="pixCard" class="bg-[#111] border border-[#22c55e] w-full max-w-md p-6 rounded-3xl flex flex-col items-center text-center relative">
+                <h2 class="text-2xl font-bold text-[#22c55e] mb-4">🍊 Orange Pix</h2>
+                <img src="pix.png" alt="QR Code Pix" class="w-64 h-64 object-contain rounded-2xl border border-zinc-800 mb-6 bg-white p-2">
+                <button id="btnCopyPix" class="w-full bg-[#22c55e] hover:bg-green-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 text-sm uppercase tracking-wider">
+                    🤍 Copiar Pix!
+                </button>
+            </div>
+        </div>
+
         <div id="modalGeneric" class="fixed inset-0 z-[70] bg-black/95 hidden items-center justify-center p-4">
             <div id="genericCard" class="bg-[#111] border border-zinc-800 w-full max-w-md max-h-[75vh] flex flex-col rounded-3xl relative overflow-hidden">
                 <div class="p-6 border-b border-zinc-800 flex justify-between items-center bg-[#111]">
@@ -85,6 +101,7 @@
                 <div id="genericContent" class="overflow-y-auto scroll-smooth p-4 space-y-2"></div>
             </div>
         </div>
+
         <div id="modalStats" class="fixed inset-0 z-[70] bg-black/95 hidden items-center justify-center p-4">
             <div id="statsCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] flex flex-col rounded-3xl relative overflow-hidden">
                 <div class="p-6 border-b border-zinc-800 flex justify-between items-center bg-[#111]">
@@ -125,6 +142,7 @@
                 </div>
             </div>
         </div>
+
         <script src="database.js"></script>
         <script src="infobase.js"></script>
         <script>
@@ -136,6 +154,59 @@
             let fv = new Set();
             try { const s = JSON.parse(localStorage.getItem("fav")); if(Array.isArray(s)) fv = new Set(s); } catch(e){}
             let at="Todos", currentPage=1, perPage=20, ord="az", debounceTimer, currentModalGame = "", loadedSuccessfully = false;
+            let isTranslatedOnly = false;
+            
+            let isMuted = localStorage.getItem("appMuted") === "true";
+
+            const bgAudio = new Audio('music.m4a');
+            bgAudio.loop = true;
+            bgAudio.volume = 0.05;
+
+            const audioToggleBtn = document.getElementById("audioToggle");
+            if (audioToggleBtn) {
+                audioToggleBtn.innerText = isMuted ? "🔇" : "🔊";
+            }
+
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            function playTapSound() {
+                if (isMuted) return;
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(200, audioCtx.currentTime + 0.05);
+                gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            }
+
+            function tryPlayAudio() {
+                if (!isMuted && bgAudio.paused) {
+                    bgAudio.play().catch(() => {});
+                }
+            }
+            window.addEventListener('click', tryPlayAudio, { once: true });
+            window.addEventListener('touchstart', tryPlayAudio, { once: true });
+
+            audioToggleBtn.onclick = (e) => {
+                e.stopPropagation();
+                isMuted = !isMuted;
+                localStorage.setItem("appMuted", isMuted ? "true" : "false");
+                playTapSound();
+                if (isMuted) {
+                    bgAudio.pause();
+                    audioToggleBtn.innerText = "🔇";
+                } else {
+                    bgAudio.play().catch(() => {});
+                    audioToggleBtn.innerText = "🔊";
+                }
+            };
 
             function pz(s) { 
                 if(!s || typeof s !== "string") return 0; 
@@ -148,9 +219,11 @@
                 const md = document.getElementById("md");
                 const mg = document.getElementById("modalGeneric");
                 const ms = document.getElementById("modalStats");
+                const mp = document.getElementById("modalPix");
                 if(md) md.style.display="none"; 
                 if(mg) mg.style.display="none"; 
                 if(ms) ms.style.display="none"; 
+                if(mp) mp.style.display="none";
                 document.body.classList.remove("modal-open");
                 currentModalGame = "";
             }
@@ -158,6 +231,7 @@
             document.getElementById("md").onclick = function(e) {
                 const card = document.getElementById("mdCard");
                 if (card && !card.contains(e.target)) {
+                    playTapSound();
                     closeAllModals();
                 }
             };
@@ -165,6 +239,7 @@
             document.getElementById("modalGeneric").onclick = function(e) {
                 const card = document.getElementById("genericCard");
                 if (card && !card.contains(e.target)) {
+                    playTapSound();
                     closeAllModals();
                 }
             };
@@ -172,6 +247,15 @@
             document.getElementById("modalStats").onclick = function(e) {
                 const card = document.getElementById("statsCard");
                 if (card && !card.contains(e.target)) {
+                    playTapSound();
+                    closeAllModals();
+                }
+            };
+
+            document.getElementById("modalPix").onclick = function(e) {
+                const card = document.getElementById("pixCard");
+                if (card && !card.contains(e.target)) {
+                    playTapSound();
                     closeAllModals();
                 }
             };
@@ -183,6 +267,7 @@
             });
 
             function openGeneric(title, items, showSearch = false) {
+                playTapSound();
                 const gt = document.getElementById("genericTitle");
                 const gc = document.getElementById("genericContent");
                 const gsCont = document.getElementById("genericSearchContainer");
@@ -194,9 +279,9 @@
                     gc.innerHTML = "";
                     filtered.forEach(item => {
                         const b = document.createElement("button");
-                        b.className = "w-full text-left p-4 rounded-2xl bg-zinc-900 border border-zinc-800 text-sm font-medium option-card transition-colors";
+                        b.className = `w-full text-left p-4 rounded-2xl border text-sm font-medium option-card transition-colors ${item.selected ? "bg-[#ffA500] text-black font-bold border-[#ffA500]" : "bg-zinc-900 border-zinc-800 text-white"}`;
                         b.innerText = item.label;
-                        b.onclick = () => { item.action(); };
+                        b.onclick = () => { playTapSound(); item.action(); };
                         gc.appendChild(b);
                     });
                 };
@@ -213,43 +298,91 @@
             }
 
             document.getElementById("openSort").onclick = () => {
-                const options = [
+                playTapSound();
+                
+                const topSortOptions = [
                     { label: "🔠 A-Z", icon: "🔠", action: "az" },
-                    { label: "🔡 Z-A", icon: "🔡", action: "za" },
+                    { label: "🔡 Z-A", icon: "🔡", action: "za" }
+                ];
+
+                const filterOption = [
+                    {
+                        label: "🇧🇷 Traduzidos",
+                        selected: isTranslatedOnly,
+                        action: () => {
+                            isTranslatedOnly = !isTranslatedOnly;
+                            currentPage = 1;
+                            initCategories();
+                            render();
+                            closeAllModals();
+                        }
+                    }
+                ];
+
+                const bottomSortOptions = [
                     { label: "📉 Menor Tamanho", icon: "📉", action: "sizeAsc" },
                     { label: "📈 Maior Tamanho", icon: "📈", action: "sizeDesc" }
                 ];
-                openGeneric("Organizar por:", options.map(opt => ({
-                    label: opt.label,
-                    action: () => {
-                        ord = opt.action;
-                        document.getElementById("currentSortIcon").innerText = opt.icon;
-                        currentPage = 1;
-                        render();
-                        closeAllModals();
-                    }
-                })));
+
+                const combinedItems = [
+                    ...topSortOptions.map(opt => ({
+                        label: opt.label,
+                        action: () => {
+                            ord = opt.action;
+                            document.getElementById("currentSortIcon").innerText = opt.icon;
+                            currentPage = 1;
+                            render();
+                            closeAllModals();
+                        }
+                    })),
+                    ...filterOption,
+                    ...bottomSortOptions.map(opt => ({
+                        label: opt.label,
+                        action: () => {
+                            ord = opt.action;
+                            document.getElementById("currentSortIcon").innerText = opt.icon;
+                            currentPage = 1;
+                            render();
+                            closeAllModals();
+                        }
+                    }))
+                ];
+
+                openGeneric("Filtros e Organização", combinedItems);
             };
 
             document.getElementById("openSOS").onclick = () => {
+                playTapSound();
                 window.open(instaUrl, "_blank");
             };
 
             document.getElementById("pix").onclick = function() {
+                playTapSound();
+                document.getElementById("modalPix").style.display = "flex";
+                document.body.classList.add("modal-open");
+            };
+
+            document.getElementById("btnCopyPix").onclick = function() {
+                playTapSound();
                 const btn = this;
-                const originalText = "🍊 Orange Pix";
+                const originalText = "🤍 Copiar Pix!";
                 if (window.AndroidJS?.copiarPix) { 
                     window.AndroidJS.copiarPix(pixKey); 
                 } else if (navigator.clipboard) { 
                     navigator.clipboard.writeText(pixKey).catch(() => {});
                 }
-                btn.innerText = "📋 Copiado!";
-                btn.style.backgroundColor = "#16a34a";
-                window.location.href = "picpay://";
-                setTimeout(() => { btn.innerText = originalText; btn.style.backgroundColor = "#22c55e"; }, 1500);
+                btn.innerText = "❤️ Pix Copiado!";
+                btn.classList.remove("bg-[#22c55e]");
+                btn.classList.add("bg-green-700");
+                setTimeout(() => { 
+                    btn.innerText = originalText; 
+                    btn.classList.remove("bg-green-700");
+                    btn.classList.add("bg-[#22c55e]");
+                }, 1500);
             };
 
             document.getElementById("openStats").onclick = function() {
+                playTapSound();
                 if(!gs.length) return;
                 let totalMB = 0;
                 let maxGame = { name: "", size: 0, str: "" };
@@ -295,6 +428,7 @@
             };
 
             function toggleFav(n) { 
+                playTapSound();
                 if(fv.has(n)) fv.delete(n); else fv.add(n); 
                 localStorage.setItem("fav", JSON.stringify([...fv])); 
                 if(currentModalGame === n) { 
@@ -310,12 +444,14 @@
                 let res = gs.filter(g => {
                     const matchesQuery = g.name && g.name.toLowerCase().includes(q);
                     if (!matchesQuery) return false;
+
+                    if (isTranslatedOnly) {
+                        const info = window.gamesInfo && window.gamesInfo[g.name];
+                        if (!info || !info.lang || !info.lang.includes("🇧🇷")) return false;
+                    }
+
                     if (at === "Todos") return true;
                     if (at === "❤️ Favoritos") return fv.has(g.name);
-                    if (at === "🇧🇷 Traduzidos") {
-                        const info = window.gamesInfo && window.gamesInfo[g.name];
-                        return info && info.lang && info.lang.includes("🇧🇷");
-                    }
                     return g.category === at;
                 });
                 const mapped = res.map(g => ({ game: g, computedSize: pz(g.size) }));
@@ -333,7 +469,7 @@
                 const container = document.getElementById("ppsspp-card-container");
                 if(container) container.innerHTML = at === "Todos" ? `<button id="dl-ppsspp" class="w-full py-4 bg-[#111] border border-[#22c55e] text-[#22c55e] rounded-xl font-bold italic tracking-widest flex items-center justify-center gap-2">🎮 BAIXAR PPSSPP</button>` : "";
                 const dlBtn = document.getElementById("dl-ppsspp");
-                if(dlBtn) dlBtn.onclick = () => showModal(ppssppStaticData.name, ppssppStaticData.link, ppssppStaticData.size);
+                if(dlBtn) dlBtn.onclick = () => { playTapSound(); showModal(ppssppStaticData.name, ppssppStaticData.link, ppssppStaticData.size); };
                 const data = getFiltered();
                 const start = (currentPage - 1) * perPage;
                 const pageData = data.slice(start, start + perPage);
@@ -345,10 +481,11 @@
                     const card = document.createElement("div");
                     card.className = "bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex justify-between items-center cursor-pointer hover:border-[#ffA500] transition-all";
                     const safeName = g.name ? g.name.replace(/[<>]/g, "") : "Unknown Game";
-                    card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-[#ffA500] px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[11px]\">${info.lang || "🇺🇸"}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform\">${fv.has(g.name)?'❤️':'🤍'}</button><a href=\"${g.link || '#'}\" target=\"_blank\" class=\"dl-icon text-xl\">📥</a></div>`;
+                    const favIcon = fv.has(g.name) ? "❤️" : "🤍";
+                    card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-[#ffA500] px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[11px]\">${info.lang || "🇺🇸"}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform emoji-fix\">${favIcon}</button><a href=\"${g.link || '#'}\" target=\"_blank\" class=\"dl-icon text-xl\">📥</a></div>`;
                     card.querySelector(".fav-btn").onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
-                    card.querySelector(".dl-icon").onclick = (e) => { e.stopPropagation(); };
-                    card.onclick = () => showModal(g.name, g.link, g.size);
+                    card.querySelector(".dl-icon").onclick = (e) => { e.stopPropagation(); playTapSound(); };
+                    card.onclick = () => { playTapSound(); showModal(g.name, g.link, g.size); };
                     ct.appendChild(card);
                 });
                 renderPagination(data.length);
@@ -363,8 +500,8 @@
                 for(let i = 1; i <= pages; i++){
                     const b = document.createElement("button"); 
                     b.innerText = i;
-                    b.className = `px-3 py-1 rounded font-bold ${i === currentPage ? "bg-[#ffA500] text-white" : "bg-zinc-800 text-zinc-400"}`;
-                    b.onclick = () => { currentPage = i; render(); window.scrollTo({top: 0, behavior: "smooth"}); };
+                    b.className = `px-3 py-1 rounded font-bold ${i === currentPage ? "bg-[#ffA500] text-white" : "bg-zinc-800 text-[#ffA500]"}`;
+                    b.onclick = () => { playTapSound(); currentPage = i; render(); window.scrollTo({top: 0, behavior: "smooth"}); };
                     p.appendChild(b);
                 }
             }
@@ -385,7 +522,7 @@
                 if(mds) mds.innerText = info.description || "...";
                 if(mrl) mrl.innerText = "📅 " + (info.release || "-"); 
                 if(mdTime) mdTime.innerText = "⏳ " + (info.playtime || "-");
-                if(mdl) { mdl.href = l || "#"; mdl.className = "text-3xl"; }
+                if(mdl) { mdl.href = l || "#"; mdl.className = "text-3xl"; mdl.onclick = () => playTapSound(); }
                 if(mdTagsContainer) {
                     const currentSize = sizeString || (n === ppssppStaticData.name ? ppssppStaticData.size : "0MB");
                     if (n === ppssppStaticData.name || (n === currentModalGame && !gs.some(g => g.name === n))) {
@@ -403,7 +540,7 @@
                 }
                 if(mdFav) {
                     mdFav.style.display = n === ppssppStaticData.name ? "none" : "block"; 
-                    mdFav.className = "text-2xl active:scale-90 transition-transform";
+                    mdFav.className = "text-2xl active:scale-90 transition-transform emoji-fix";
                     mdFav.innerText = fv.has(n) ? "❤️" : "🤍"; 
                     mdFav.onclick = () => toggleFav(n);
                 }
@@ -430,6 +567,7 @@
             };
 
             clearSearchBtn.onclick = () => {
+                playTapSound();
                 searchInput.value = "";
                 clearSearchBtn.style.display = "none";
                 currentPage = 1;
@@ -438,36 +576,50 @@
             };
 
             document.getElementById("btn-rnd").onclick = () => { 
+                playTapSound();
                 const f = getFiltered(); 
                 if(f.length) { 
                     const r = f[Math.floor(Math.random() * f.length)]; 
                     showModal(r.name, r.link, r.size); 
                 } 
             };
+
             window.addEventListener("scroll", () => {
                 const up = document.getElementById("up");
                 if(up) up.style.display = window.scrollY > 300 ? "flex" : "none";
             });
-            document.getElementById("up").onclick = () => window.scrollTo({top: 0, behavior: "smooth"});
+
+            document.getElementById("up").onclick = () => {
+                playTapSound();
+                window.scrollTo({top: 0, behavior: "smooth"});
+            };
 
             function initCategories() {
                 const t = document.getElementById("ts"); 
                 if(!t) return;
                 const cats = ["🗡️ Ação / Aventura", "🏎️ Corrida", "🏆 Esportes", "🥊 Luta", "🌍 Mundo Aberto / Sandbox", "🎮 Plataforma / Puzzle / Família", "🧙‍♂️ RPG / Ação", "🌾 Simulação / Vida", "🔫 Tiro (TPS/FPS)"];
+                
+                const filteredGs = isTranslatedOnly 
+                    ? gs.filter(g => window.gamesInfo?.[g.name]?.lang?.includes("🇧🇷"))
+                    : gs;
+
                 const counts = {}; 
-                gs.forEach(g => { if(g.category) counts[g.category] = (counts[g.category] || 0) + 1; });
-                let list = [{n: "Todos", c: gs.length}]; 
-                if(fv.size > 0) list.push({n: "❤️ Favoritos", c: fv.size});
-                const ptBrCount = gs.filter(g => window.gamesInfo?.[g.name]?.lang?.includes("🇧🇷")).length;
-                if(ptBrCount > 0) list.push({n: "🇧🇷 Traduzidos", c: ptBrCount});
+                filteredGs.forEach(g => { if(g.category) counts[g.category] = (counts[g.category] || 0) + 1; });
+                
+                let list = [{n: "Todos", c: filteredGs.length}]; 
+                
+                const favCount = [...fv].filter(name => !isTranslatedOnly || window.gamesInfo?.[name]?.lang?.includes("🇧🇷")).length;
+                if(favCount > 0) list.push({n: "❤️ Favoritos", c: favCount});
+
                 cats.forEach(c => { if(counts[c]) list.push({n: c, c: counts[c]}); });
+
                 t.innerHTML = "";
                 list.forEach(item => {
                     const e = document.createElement("div"); 
                     const isSelected = item.n === at;
                     e.className = `px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer border transition-all ${isSelected ? "cat-selected" : "bg-zinc-900 text-zinc-500 border-zinc-800"}`;
                     e.innerHTML = `${item.n} <span class="ml-1 italic font-bold">(${item.c})</span>`;
-                    e.onclick = () => { at = item.n; currentPage = 1; initCategories(); render(); };
+                    e.onclick = () => { playTapSound(); at = item.n; currentPage = 1; initCategories(); render(); };
                     t.appendChild(e);
                 });
             }
