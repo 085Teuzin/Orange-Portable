@@ -35,7 +35,7 @@
                 </button>
                 <h1 id="main-title" class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
                 <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
-                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v2.0</span>
+                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v2.5</span>
             </header>
             <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4 text-left flex gap-2">
                 <div class="relative flex-grow flex items-center">
@@ -61,7 +61,7 @@
                 <p class="font-semibold italic">Made By: @085_Teuzinnn</p>
                 <p class="mt-2 opacity-70">© 2026 - All Rights Reserved</p>
             </footer>
-            <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl">🆙️</button>
+            <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl">☝️</button>
         </div>
 
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
@@ -148,7 +148,7 @@
             const instaUrl = "https://www.instagram.com/085_teuzinnn?igsh=ZGJqaHBoMHliZGNw";
             const pixKey = "00020126360014br.gov.bcb.pix0114+55859912721255204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69FB573E7D2AC673791518630415AB";
             const ppssppStaticData = { name: "PPSSPP", size: "20-80 MB", link: "https://www.ppsspp.org/download/" };
-            const ppssppStaticInfo = { description: "O melhor emulador de PSP para Android e PC.", release: "01/11/2012", compat: "Perfeito", playtime: "Infinito", lang: "🇧🇷" };
+            const ppssppStaticInfo = { description: "O melhor emulador de PSP para TODAS plataformas.", release: "01/11/2012", compat: "Perfeito", playtime: "♾️", lang: "🌎" };
             const gs = (window.gamesData || []).filter(g => g && g.name);
             let fv = new Set();
             try { const s = JSON.parse(localStorage.getItem("fav")); if(Array.isArray(s)) fv = new Set(s); } catch(e){}
@@ -666,8 +666,8 @@
                         if(loadBox) loadBox.style.display = "none";
                         loader.innerHTML = `
                             <h1 class="text-2xl font-black text-red-500 tracking-tighter italic">Erro de Conexão</h1>
-                            <p class="text-zinc-400 text-sm mt-4 px-8">Os dados demoraram muito para carregar. Verifique sua internet.</p>
-                            <button onclick="window.location.reload()" class="mt-6 bg-[#ffA500] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs">Tentar Novamente</button>
+                            <p class="text-zinc-400 text-sm mt-4 px-8">Os dados demoraram muito para carregar.</p>
+                            <button onclick="window.location.reload()" class="mt-6 bg-[#ffA500] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs">Recarregar</button>
                             <a href="${instaUrl}" target="_blank" class="mt-4 text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#ffA500] transition-colors">Suporte</a>
                         `;
                     }
