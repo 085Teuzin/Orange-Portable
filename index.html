@@ -65,11 +65,11 @@
         </div>
 
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
-            <div id="mdCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] p-8 rounded-3xl relative overflow-y-auto">
-                <h2 id="mt" class="text-2xl font-bold text-[#ffA500] mb-3"></h2>
-                <div id="mdTagsContainer" class="flex flex-wrap gap-2 items-center mb-6"></div>
-                <p id="mds" class="text-zinc-400 text-sm leading-relaxed mb-6"></p>
-                <div class="flex items-center justify-between pt-4 border-t border-zinc-800">
+            <div id="mdCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] p-6 rounded-3xl relative overflow-y-auto flex flex-col">
+                <h2 id="mt" class="text-xl font-bold text-[#ffA500] mb-2"></h2>
+                <div id="mdTagsContainer" class="flex flex-wrap gap-1.5 items-center mb-3"></div>
+                <p id="mds" class="text-zinc-400 text-xs leading-relaxed mb-4"></p>
+                <div class="flex items-center justify-between pt-3 border-t border-zinc-800 mt-auto">
                     <span id="mcp" class="text-[10px] font-black border px-2 py-0.5 rounded tracking-tighter"></span>
                     <div class="flex gap-4 items-center">
                         <button id="mdFav" class="text-2xl active:scale-90 transition-transform emoji-fix"></button>
@@ -148,7 +148,7 @@
             const instaUrl = "https://www.instagram.com/085_teuzinnn?igsh=ZGJqaHBoMHliZGNw";
             const pixKey = "00020126360014br.gov.bcb.pix0114+55859912721255204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69FB573E7D2AC673791518630415AB";
             const ppssppStaticData = { name: "PPSSPP", size: "20-80 MB", link: "https://www.ppsspp.org/download/" };
-            const ppssppStaticInfo = { description: "O melhor emulador de PSP para Android e PC.", release: "01/11/2012", compat: "Perfeito", playtime: "Infinito", lang: "🌐" };
+            const ppssppStaticInfo = { description: "O melhor emulador de PSP para Android e PC.", release: "01/11/2012", compat: "Perfeito", playtime: "Infinito", lang: "🇧🇷" };
             const gs = (window.gamesData || []).filter(g => g && g.name);
             let fv = new Set();
             try { const s = JSON.parse(localStorage.getItem("fav")); if(Array.isArray(s)) fv = new Set(s); } catch(e){}
@@ -212,6 +212,27 @@
                 const n = parseFloat(s.replace(",", ".")); 
                 if (isNaN(n)) return 0;
                 return s.toUpperCase().includes("GB") ? n * 1024 : n; 
+            }
+
+            function formatDate(dateStr) {
+                if (!dateStr || dateStr === "-") return "-";
+                const clean = dateStr.trim();
+                const parts = clean.split(/[\/\-\.]/);
+                if (parts.length === 3) {
+                    let y = parts[2];
+                    if (y.length === 4) {
+                        y = y.slice(2);
+                    }
+                    return `${parts[0]}/${parts[1]}/${y}`;
+                }
+                return clean;
+            }
+
+            function extractFlag(langStr) {
+                if (!langStr) return "🇺🇸";
+                const match = langStr.match(/([\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF])/);
+                if (match) return match[1];
+                return langStr.replace(/[🌐🌍🌎🌏]/g, "").trim() || "🇺🇸";
             }
 
             function closeAllModals() { 
@@ -481,7 +502,8 @@
                     card.className = "bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex justify-between items-center cursor-pointer hover:border-[#ffA500] transition-all";
                     const safeName = g.name ? g.name.replace(/[<>]/g, "") : "Unknown Game";
                     const favIcon = fv.has(g.name) ? "❤️" : "🤍";
-                    card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-[#ffA500] px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[11px]\">${info.lang || "🇺🇸"}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform emoji-fix\">${favIcon}</button><a href=\"${g.link || '#'}\" target=\"_blank\" class=\"dl-icon text-xl\">📥</a></div>`;
+                    const cleanFlag = extractFlag(info.lang);
+                    card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${cleanFlag}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform emoji-fix\">${favIcon}</button><a href=\"${g.link || '#'}\" target=\"_blank\" class=\"dl-icon text-xl\">📥</a></div>`;
                     card.querySelector(".fav-btn").onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
                     card.querySelector(".dl-icon").onclick = (e) => { e.stopPropagation(); playTapSound(); };
                     card.onclick = () => { playTapSound(); showModal(g.name, g.link, g.size); };
@@ -520,26 +542,22 @@
                 if(mdl) { mdl.href = l || "#"; mdl.className = "text-3xl"; mdl.onclick = () => playTapSound(); }
                 if(mdTagsContainer) {
                     const currentSize = sizeString || (n === ppssppStaticData.name ? ppssppStaticData.size : "0MB");
-                    const gameLang = info.lang || "🇺🇸";
-                    const gameRelease = info.release || "-";
-                    const gamePlaytime = info.playtime || "-";
+                    const formattedRel = formatDate(info.release);
+                    const cleanFlag = extractFlag(info.lang);
+                    const playtimeVal = info.playtime || "-";
                     
-                    if (n === ppssppStaticData.name || (n === currentModalGame && !gs.some(g => g.name === n))) {
-                        mdTagsContainer.innerHTML = `
-                            <span class="text-[9px] bg-black text-[#ffA500] px-2 py-1 rounded-md border border-zinc-800 font-bold">${currentSize}</span>
-                            <span class="text-[10px] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded-md font-bold text-zinc-300">🌍 ${gameLang}</span>
-                            <span class="text-[10px] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded-md font-bold text-zinc-300">📅 ${gameRelease}</span>
-                            <span class="text-[10px] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded-md font-bold text-zinc-300">⏳ ${gamePlaytime}</span>
-                        `;
-                    } else {
-                        mdTagsContainer.innerHTML = `
-                            <span class="text-[9px] bg-black text-[#ffA500] px-2 py-1 rounded-md border border-zinc-800 font-bold">${currentSize}</span>
-                            <span class="text-[9px] bg-purple-900/30 text-purple-300 px-2 py-1 rounded-md border border-purple-800/50 font-bold uppercase tracking-wider">cso</span>
-                            <span class="text-[10px] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded-md font-bold text-zinc-300">🌍 ${gameLang}</span>
-                            <span class="text-[10px] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded-md font-bold text-zinc-300">📅 ${gameRelease}</span>
-                            <span class="text-[10px] bg-zinc-900 border border-zinc-800 px-2 py-1 rounded-md font-bold text-zinc-300">⏳ ${gamePlaytime}</span>
-                        `;
+                    let tagsHtml = `
+                        <span class="text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${currentSize}</span>
+                    `;
+                    if (n !== ppssppStaticData.name && gs.some(g => g.name === n)) {
+                        tagsHtml += `<span class="text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider">cso</span>`;
                     }
+                    tagsHtml += `
+                        <span class="text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">⏳ ${playtimeVal}</span>
+                        <span class="text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">📅 ${formattedRel}</span>
+                        <span class="text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${cleanFlag}</span>
+                    `;
+                    mdTagsContainer.innerHTML = tagsHtml;
                 }
                 if(mdFav) {
                     mdFav.style.display = n === ppssppStaticData.name ? "none" : "block"; 
