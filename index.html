@@ -624,6 +624,16 @@
                 });
             }
 
+            const tsElement = document.getElementById("ts");
+            if (tsElement) {
+                tsElement.addEventListener("wheel", (e) => {
+                    if (e.deltaY !== 0) {
+                        e.preventDefault();
+                        tsElement.scrollLeft += e.deltaY;
+                    }
+                }, { passive: false });
+            }
+
             window.addEventListener("load", () => {
                 initCategories(); 
                 render();
