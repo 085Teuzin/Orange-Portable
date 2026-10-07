@@ -23,47 +23,61 @@
         <div id="loading-screen">
             <h1 class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
             <span id="load-box" class="loader"></span>
-            <p id="load-msg" class="text-zinc-500 tracking-widest text-sm">Carregando...</p>
+            <p id="load-msg" class="text-zinc-500 tracking-widest text-sm">Carregando catálogo...</p>
         </div>
+
         <div id="app-content" class="w-full flex flex-col p-4 md:p-8 text-center opacity-0 transition-opacity duration-500">
             <header class="mb-6 relative flex flex-col items-center">
-                <button id="openStats" class="absolute left-0 top-1 bg-[#111] border border-zinc-800 w-10 h-10 rounded-xl text-lg flex items-center justify-center btn-transition hover:border-[#ffA500] active:scale-95">
+                <button id="openStats" aria-label="Estatísticas" class="absolute left-0 top-1 bg-[#111] border border-zinc-800 w-10 h-10 rounded-xl text-lg flex items-center justify-center btn-transition hover:border-[#ffA500] active:scale-95">
                     📊
                 </button>
-                <button id="audioToggle" class="absolute right-0 top-1 bg-[#111] border border-zinc-800 w-10 h-10 rounded-xl text-lg flex items-center justify-center btn-transition hover:border-[#ffA500] active:scale-95">
+                <button id="audioToggle" aria-label="Mute / Unmute" class="absolute right-0 top-1 bg-[#111] border border-zinc-800 w-10 h-10 rounded-xl text-lg flex items-center justify-center btn-transition hover:border-[#ffA500] active:scale-95">
                     🔊
                 </button>
                 <h1 id="main-title" class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
-                <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
+                <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Jogos CSO otimizados para PPSSPP</h2>
                 <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v2.5</span>
             </header>
+
             <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4 text-left flex gap-2">
                 <div class="relative flex-grow flex items-center">
                     <input type="text" id="s" placeholder="🔍 Buscar jogo..." class="w-full bg-[#111] border border-zinc-800 p-4 pr-12 rounded-xl outline-none text-lg focus:border-[#ffA500]">
-                    <button id="clearSearch" class="absolute right-4 text-zinc-500 hover:text-white text-xl hidden">✕</button>
+                    <button id="clearSearch" aria-label="Limpar busca" class="absolute right-4 text-zinc-500 hover:text-white text-xl hidden">✕</button>
                 </div>
-                <button id="openSort" class="bg-[#111] border border-zinc-800 px-4 rounded-xl text-xl btn-transition">
+                <button id="openSort" aria-label="Filtros e ordenação" class="bg-[#111] border border-zinc-800 px-4 rounded-xl text-xl btn-transition hover:border-[#ffA500]">
                     <span id="currentSortIcon">🔠</span>
                 </button>
             </section>
+
             <nav id="ts" class="flex gap-2 overflow-x-auto hide-scroll pb-4 mb-4"></nav>
             <button id="btn-rnd" class="w-full bg-[#111] border border-[#ffA500] text-[#ffA500] py-4 rounded-xl font-bold mb-3 active:scale-95 active:bg-[#ffA500] active:text-black transition-all italic tracking-widest">🎲 ME SURPREENDA!</button>
             <div id="ppsspp-card-container" class="mb-6"></div>
+            
             <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow text-left"></main>
+            <div id="empty-state" class="hidden my-12 text-center text-zinc-500">
+                <p class="text-4xl mb-2">🍊</p>
+                <p class="font-bold text-lg text-zinc-400">Nenhum jogo encontrado</p>
+                <p class="text-xs mt-1">Tente ajustar a busca ou os filtros aplicados.</p>
+            </div>
+
             <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
+
             <section class="mt-12 p-6 bg-zinc-950 border border-zinc-900 rounded-3xl">
                 <div class="grid grid-cols-2 gap-3">
-                    <button id="pix" class="bg-[#22c55e] py-4 rounded-2xl font-bold text-white text-[10px] sm:text-xs btn-transition">🍊 Orange Pix</button>
-                    <button id="openSOS" class="bg-[#22c55e] py-4 rounded-2xl font-bold text-white text-[10px] sm:text-xs">🍊 Orange SOS</button>
+                    <button id="pix" class="bg-[#22c55e] hover:bg-green-600 py-4 rounded-2xl font-bold text-white text-[10px] sm:text-xs btn-transition">🍊 Orange Pix</button>
+                    <button id="openSOS" class="bg-[#22c55e] hover:bg-green-600 py-4 rounded-2xl font-bold text-white text-[10px] sm:text-xs btn-transition">🍊 Orange SOS</button>
                 </div>
             </section>
-            <footer class="mt-10 mb-20 text-gray-500 text-sm">
+
+            <footer class="mt-10 mb-20 text-zinc-500 text-sm">
                 <p class="font-semibold italic">Made By: @085_Teuzinnn</p>
-                <p class="mt-2 opacity-70">© 2026 - All Rights Reserved</p>
+                <p class="mt-2 opacity-70">© 2026 - Todos os Direitos Reservados</p>
             </footer>
-            <button id="up" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl">☝️</button>
+
+            <button id="up" aria-label="Voltar ao topo" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl hover:border-[#ffA500]">☝️</button>
         </div>
 
+        <!-- Modais -->
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
             <div id="mdCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] p-6 rounded-3xl relative overflow-y-auto flex flex-col">
                 <h2 id="mt" class="text-xl font-bold text-[#ffA500] mb-2"></h2>
@@ -72,8 +86,8 @@
                 <div class="flex items-center justify-between pt-3 border-t border-zinc-800 mt-auto">
                     <span id="mcp" class="text-[10px] font-black border px-2 py-0.5 rounded tracking-tighter"></span>
                     <div class="flex gap-4 items-center">
-                        <button id="mdFav" class="text-2xl active:scale-90 transition-transform emoji-fix"></button>
-                        <a id="mdl" href="#" target="_blank" class="text-3xl">📥</a>
+                        <button id="mdFav" aria-label="Favoritar" class="text-2xl active:scale-90 transition-transform emoji-fix"></button>
+                        <a id="mdl" href="#" target="_blank" rel="noopener noreferrer" class="text-3xl" aria-label="Baixar jogo">💾</a>
                     </div>
                 </div>
             </div>
@@ -84,7 +98,7 @@
                 <h2 class="text-2xl font-bold text-[#22c55e] mb-4">🍊 Orange Pix</h2>
                 <img src="pix.png" alt="QR Code Pix" class="w-64 h-64 object-contain rounded-2xl border border-zinc-800 mb-6 bg-white p-2">
                 <button id="btnCopyPix" class="w-full bg-[#22c55e] hover:bg-green-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 text-sm uppercase tracking-wider">
-                    🤍 Copiar Pix!
+                    📋 Copiar Chave Pix
                 </button>
             </div>
         </div>
@@ -118,13 +132,13 @@
                         </div>
                     </div>
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
-                        <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Destaques do Catálogo</p>
+                        <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Resumo do Catálogo</p>
                         <p>⚡ Média por jogo: <span id="stat-avg-size" class="text-white font-bold">0 MB</span></p>
-                        <p>🇧🇷 Traduzidos: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
+                        <p>🇧🇷 Traduzidos em PT-BR: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
                         <p>❤️ Seus Favoritos: <span id="stat-fav-count" class="text-white font-bold">0</span></p>
                     </div>
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
-                        <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Extremos de Armazenamento</p>
+                        <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Tamanhos Limite</p>
                         <div class="flex flex-col gap-1">
                             <p class="text-zinc-400 text-xs">📈 Maior:</p>
                             <span id="stat-max-game" class="text-white font-medium text-xs bg-black/40 p-2 border border-zinc-800 rounded-xl break-words">...</span>
@@ -148,13 +162,14 @@
             const instaUrl = "https://www.instagram.com/085_teuzinnn?igsh=ZGJqaHBoMHliZGNw";
             const pixKey = "00020126360014br.gov.bcb.pix0114+55859912721255204000053039865802BR5925MATEUS VINICIUS DO NASCIM6009Sao Paulo62290525REC69FB573E7D2AC673791518630415AB";
             const ppssppStaticData = { name: "PPSSPP", size: "20-80 MB", link: "https://www.ppsspp.org/download/" };
-            const ppssppStaticInfo = { description: "O melhor emulador de PSP para TODAS plataformas.", release: "01/11/2012", compat: "Perfeito", playtime: "♾️", lang: "🌎" };
+            const ppssppStaticInfo = { description: "O melhor emulador de PSP para todas as plataformas.", release: "01/11/2012", compat: "Perfeito", playtime: "♾️", lang: "🌎" };
+            
             const gs = (window.gamesData || []).filter(g => g && g.name);
             let fv = new Set();
             try { const s = JSON.parse(localStorage.getItem("fav")); if(Array.isArray(s)) fv = new Set(s); } catch(e){}
+            
             let at="Todos", currentPage=1, perPage=20, ord="az", debounceTimer, currentModalGame = "", loadedSuccessfully = false;
             let isTranslatedOnly = false;
-            
             let isMuted = localStorage.getItem("appMuted") === "true";
 
             const bgAudio = new Audio('music.m4a');
@@ -220,9 +235,7 @@
                 const parts = clean.split(/[\/\-\.]/);
                 if (parts.length === 3) {
                     let y = parts[2];
-                    if (y.length === 4) {
-                        y = y.slice(2);
-                    }
+                    if (y.length === 4) y = y.slice(2);
                     return `${parts[0]}/${parts[1]}/${y}`;
                 }
                 return clean;
@@ -236,54 +249,28 @@
             }
 
             function closeAllModals() { 
-                const md = document.getElementById("md");
-                const mg = document.getElementById("modalGeneric");
-                const ms = document.getElementById("modalStats");
-                const mp = document.getElementById("modalPix");
-                if(md) md.style.display="none"; 
-                if(mg) mg.style.display="none"; 
-                if(ms) ms.style.display="none"; 
-                if(mp) mp.style.display="none";
+                ["md", "modalGeneric", "modalStats", "modalPix"].forEach(id => {
+                    const el = document.getElementById(id);
+                    if(el) el.style.display = "none";
+                });
                 document.body.classList.remove("modal-open");
                 currentModalGame = "";
             }
 
-            document.getElementById("md").onclick = function(e) {
-                const card = document.getElementById("mdCard");
-                if (card && !card.contains(e.target)) {
-                    playTapSound();
-                    closeAllModals();
+            ["md", "modalGeneric", "modalStats", "modalPix"].forEach(id => {
+                const modal = document.getElementById(id);
+                if(modal) {
+                    modal.onclick = (e) => {
+                        if (e.target === modal) {
+                            playTapSound();
+                            closeAllModals();
+                        }
+                    };
                 }
-            };
-
-            document.getElementById("modalGeneric").onclick = function(e) {
-                const card = document.getElementById("genericCard");
-                if (card && !card.contains(e.target)) {
-                    playTapSound();
-                    closeAllModals();
-                }
-            };
-
-            document.getElementById("modalStats").onclick = function(e) {
-                const card = document.getElementById("statsCard");
-                if (card && !card.contains(e.target)) {
-                    playTapSound();
-                    closeAllModals();
-                }
-            };
-
-            document.getElementById("modalPix").onclick = function(e) {
-                const card = document.getElementById("pixCard");
-                if (card && !card.contains(e.target)) {
-                    playTapSound();
-                    closeAllModals();
-                }
-            };
+            });
 
             window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeAllModals();
-                }
+                if (e.key === 'Escape') closeAllModals();
             });
 
             function openGeneric(title, items, showSearch = false) {
@@ -295,6 +282,7 @@
                 if(!gt || !gc) return;
                 gt.innerText = title;
                 gsCont.style.display = showSearch ? "block" : "none";
+                
                 const renderItems = (filtered) => {
                     gc.innerHTML = "";
                     filtered.forEach(item => {
@@ -305,6 +293,7 @@
                         gc.appendChild(b);
                     });
                 };
+
                 if(showSearch) {
                     gsInput.value = "";
                     gsInput.oninput = (e) => {
@@ -319,15 +308,11 @@
 
             document.getElementById("openSort").onclick = () => {
                 playTapSound();
-                
-                const topSortOptions = [
-                    { label: "🔠 A-Z", icon: "🔠", action: "az" },
-                    { label: "🔡 Z-A", icon: "🔡", action: "za" }
-                ];
-
-                const filterOption = [
+                const combinedItems = [
+                    { label: "🔠 A-Z", action: () => setSort("az", "🔠") },
+                    { label: "🔡 Z-A", action: () => setSort("za", "🔡") },
                     {
-                        label: "🇧🇷 Traduzidos",
+                        label: "🇧🇷 Apenas Traduzidos",
                         selected: isTranslatedOnly,
                         action: () => {
                             isTranslatedOnly = !isTranslatedOnly;
@@ -336,44 +321,24 @@
                             render();
                             closeAllModals();
                         }
-                    }
+                    },
+                    { label: "📉 Menor Tamanho", action: () => setSort("sizeAsc", "📉") },
+                    { label: "📈 Maior Tamanho", action: () => setSort("sizeDesc", "📈") }
                 ];
-
-                const bottomSortOptions = [
-                    { label: "📉 Menor Tamanho", icon: "📉", action: "sizeAsc" },
-                    { label: "📈 Maior Tamanho", icon: "📈", action: "sizeDesc" }
-                ];
-
-                const combinedItems = [
-                    ...topSortOptions.map(opt => ({
-                        label: opt.label,
-                        action: () => {
-                            ord = opt.action;
-                            document.getElementById("currentSortIcon").innerText = opt.icon;
-                            currentPage = 1;
-                            render();
-                            closeAllModals();
-                        }
-                    })),
-                    ...filterOption,
-                    ...bottomSortOptions.map(opt => ({
-                        label: opt.label,
-                        action: () => {
-                            ord = opt.action;
-                            document.getElementById("currentSortIcon").innerText = opt.icon;
-                            currentPage = 1;
-                            render();
-                            closeAllModals();
-                        }
-                    }))
-                ];
-
-                openGeneric("Filtros e Organização", combinedItems);
+                openGeneric("Filtros e Ordenação", combinedItems);
             };
+
+            function setSort(type, icon) {
+                ord = type;
+                document.getElementById("currentSortIcon").innerText = icon;
+                currentPage = 1;
+                render();
+                closeAllModals();
+            }
 
             document.getElementById("openSOS").onclick = () => {
                 playTapSound();
-                window.open(instaUrl, "_blank");
+                window.open(instaUrl, "_blank", "noopener,noreferrer");
             };
 
             document.getElementById("pix").onclick = function() {
@@ -385,13 +350,13 @@
             document.getElementById("btnCopyPix").onclick = function() {
                 playTapSound();
                 const btn = this;
-                const originalText = "🤍 Copiar Pix!";
+                const originalText = "📋 Copiar Chave Pix";
                 if (window.AndroidJS?.copiarPix) { 
                     window.AndroidJS.copiarPix(pixKey); 
                 } else if (navigator.clipboard) { 
                     navigator.clipboard.writeText(pixKey).catch(() => {});
                 }
-                btn.innerText = "❤️ Pix Copiado!";
+                btn.innerText = "✅ Chave Copiada!";
                 btn.classList.remove("bg-[#22c55e]");
                 btn.classList.add("bg-green-700");
                 setTimeout(() => { 
@@ -412,29 +377,22 @@
                 gs.forEach(g => {
                     const sizeInMB = pz(g.size);
                     totalMB += sizeInMB;
-                    if (sizeInMB > maxGame.size) {
-                        maxGame = { name: g.name, size: sizeInMB, str: g.size };
-                    }
-                    if (sizeInMB < minGame.size && sizeInMB > 0) {
-                        minGame = { name: g.name, size: sizeInMB, str: g.size };
-                    }
-                    if (g.category) {
-                        catCounts[g.category] = (catCounts[g.category] || 0) + 1;
-                    }
+                    if (sizeInMB > maxGame.size) maxGame = { name: g.name, size: sizeInMB, str: g.size };
+                    if (sizeInMB < minGame.size && sizeInMB > 0) minGame = { name: g.name, size: sizeInMB, str: g.size };
+                    if (g.category) catCounts[g.category] = (catCounts[g.category] || 0) + 1;
+                    
                     const info = window.gamesInfo && window.gamesInfo[g.name];
-                    if (info && info.lang && info.lang.includes("🇧🇷")) {
-                        ptBrCount++;
-                    }
+                    if (info && info.lang && info.lang.includes("🇧🇷")) ptBrCount++;
                 });
-                const totalGB = (totalMB / 1024).toFixed(2);
-                const avgSize = (totalMB / gs.length).toFixed(1);
+                
                 document.getElementById("stat-total-games").innerText = gs.length;
-                document.getElementById("stat-total-size").innerText = totalGB + " GB";
-                document.getElementById("stat-avg-size").innerText = avgSize + " MB";
+                document.getElementById("stat-total-size").innerText = (totalMB / 1024).toFixed(2) + " GB";
+                document.getElementById("stat-avg-size").innerText = (totalMB / gs.length).toFixed(1) + " MB";
                 document.getElementById("stat-ptbr-count").innerText = ptBrCount;
                 document.getElementById("stat-fav-count").innerText = fv.size;
                 document.getElementById("stat-max-game").innerText = `${maxGame.name} (${maxGame.str})`;
                 document.getElementById("stat-min-game").innerText = `${minGame.name} (${minGame.str})`;
+                
                 const catListContainer = document.getElementById("stat-categories-list");
                 catListContainer.innerHTML = "";
                 Object.keys(catCounts).sort().forEach(cat => {
@@ -487,15 +445,27 @@
 
             function render() {
                 const container = document.getElementById("ppsspp-card-container");
-                if(container) container.innerHTML = at === "Todos" ? `<button id="dl-ppsspp" class="w-full py-4 bg-[#111] border border-[#22c55e] text-[#22c55e] rounded-xl font-bold italic tracking-widest flex items-center justify-center gap-2">🎮 BAIXAR PPSSPP</button>` : "";
+                if(container) container.innerHTML = at === "Todos" ? `<button id="dl-ppsspp" class="w-full py-4 bg-[#111] border border-[#22c55e] hover:bg-green-950/30 text-[#22c55e] rounded-xl font-bold italic tracking-widest flex items-center justify-center gap-2 transition-all">🎮 EMULADOR PPSSPP</button>` : "";
+                
                 const dlBtn = document.getElementById("dl-ppsspp");
                 if(dlBtn) dlBtn.onclick = () => { playTapSound(); showModal(ppssppStaticData.name, ppssppStaticData.link, ppssppStaticData.size); };
+                
                 const data = getFiltered();
+                const emptyState = document.getElementById("empty-state");
+                const ct = document.getElementById("ct"); 
+                
+                if (!ct) return;
+                ct.innerHTML = "";
+
+                if (data.length === 0) {
+                    if (emptyState) emptyState.classList.remove("hidden");
+                } else {
+                    if (emptyState) emptyState.classList.add("hidden");
+                }
+
                 const start = (currentPage - 1) * perPage;
                 const pageData = data.slice(start, start + perPage);
-                const ct = document.getElementById("ct"); 
-                if(!ct) return;
-                ct.innerHTML = "";
+
                 pageData.forEach(g => {
                     const info = (window.gamesInfo && window.gamesInfo[g.name]) || { description: "Sem descrição disponível.", compat: "Boa", lang: "🇺🇸" };
                     const card = document.createElement("div");
@@ -503,7 +473,7 @@
                     const safeName = g.name ? g.name.replace(/[<>]/g, "") : "Unknown Game";
                     const favIcon = fv.has(g.name) ? "❤️" : "🤍";
                     const cleanFlag = extractFlag(info.lang);
-                    card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${cleanFlag}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform emoji-fix\">${favIcon}</button><a href=\"${g.link || '#'}\" target=\"_blank\" class=\"dl-icon text-xl\">📥</a></div>`;
+                    card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${cleanFlag}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform emoji-fix\" aria-label=\"Favoritar\">${favIcon}</button><a href=\"${g.link || '#'}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"dl-icon text-xl\" aria-label=\"Download\">💾</a></div>`;
                     card.querySelector(".fav-btn").onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
                     card.querySelector(".dl-icon").onclick = (e) => { e.stopPropagation(); playTapSound(); };
                     card.onclick = () => { playTapSound(); showModal(g.name, g.link, g.size); };
@@ -521,7 +491,7 @@
                 for(let i = 1; i <= pages; i++){
                     const b = document.createElement("button"); 
                     b.innerText = i;
-                    b.className = `px-3 py-1 rounded font-bold ${i === currentPage ? "bg-[#ffA500] text-white" : "bg-zinc-800 text-[#ffA500]"}`;
+                    b.className = `px-3 py-1 rounded font-bold transition-all ${i === currentPage ? "bg-[#ffA500] text-black font-extrabold" : "bg-zinc-900 text-zinc-400 border border-zinc-800 hover:text-white"}`;
                     b.onclick = () => { playTapSound(); currentPage = i; render(); window.scrollTo({top: 0, behavior: "smooth"}); };
                     p.appendChild(b);
                 }
@@ -530,25 +500,24 @@
             function showModal(n, l, sizeString) {
                 currentModalGame = n;
                 const info = (n === ppssppStaticData.name) ? ppssppStaticInfo : (window.gamesInfo?.[n] || { description: "Sem descrição disponível.", release: "-", compat: "Boa", playtime: "-", lang: "🇺🇸" });
-                const mt = document.getElementById("mt");
-                const mds = document.getElementById("mds");
+                
+                document.getElementById("mt").innerText = n; 
+                document.getElementById("mds").innerText = info.description || "...";
+                
                 const mdl = document.getElementById("mdl");
-                const mdFav = document.getElementById("mdFav");
-                const mcp = document.getElementById("mcp");
+                if(mdl) { 
+                    mdl.href = l || "#"; 
+                    mdl.onclick = () => playTapSound(); 
+                }
+                
                 const mdTagsContainer = document.getElementById("mdTagsContainer");
-                const md = document.getElementById("md");
-                if(mt) mt.innerText = n; 
-                if(mds) mds.innerText = info.description || "...";
-                if(mdl) { mdl.href = l || "#"; mdl.className = "text-3xl"; mdl.onclick = () => playTapSound(); }
                 if(mdTagsContainer) {
                     const currentSize = sizeString || (n === ppssppStaticData.name ? ppssppStaticData.size : "0MB");
                     const formattedRel = formatDate(info.release);
                     const cleanFlag = extractFlag(info.lang);
                     const playtimeVal = info.playtime || "-";
                     
-                    let tagsHtml = `
-                        <span class="text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${currentSize}</span>
-                    `;
+                    let tagsHtml = `<span class="text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${currentSize}</span>`;
                     if (n !== ppssppStaticData.name && gs.some(g => g.name === n)) {
                         tagsHtml += `<span class="text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider">cso</span>`;
                     }
@@ -559,18 +528,21 @@
                     `;
                     mdTagsContainer.innerHTML = tagsHtml;
                 }
+
+                const mdFav = document.getElementById("mdFav");
                 if(mdFav) {
                     mdFav.style.display = n === ppssppStaticData.name ? "none" : "block"; 
-                    mdFav.className = "text-2xl active:scale-90 transition-transform emoji-fix";
                     mdFav.innerText = fv.has(n) ? "❤️" : "🤍"; 
                     mdFav.onclick = () => toggleFav(n);
                 }
+
+                const mcp = document.getElementById("mcp");
                 if(mcp) {
                     mcp.innerText = info.compat || "Boa"; 
                     mcp.style.color = info.compat === "Perfeito" ? "#22c55e" : "#ffA500";
                     mcp.style.borderColor = info.compat === "Perfeito" ? "#22c55e" : "#ffA500";
                 }
-                if(md) md.style.display = "flex"; 
+                document.getElementById("md").style.display = "flex"; 
                 document.body.classList.add("modal-open");
             }
 
@@ -578,11 +550,7 @@
             const clearSearchBtn = document.getElementById("clearSearch");
 
             searchInput.oninput = () => { 
-                if (searchInput.value.length > 0) {
-                    clearSearchBtn.style.display = "block";
-                } else {
-                    clearSearchBtn.style.display = "none";
-                }
+                clearSearchBtn.style.display = searchInput.value.length > 0 ? "block" : "none";
                 clearTimeout(debounceTimer); 
                 debounceTimer = setTimeout(() => { currentPage = 1; render(); }, 300); 
             };
@@ -661,17 +629,19 @@
                 const loader = document.getElementById("loading-screen");
                 const content = document.getElementById("app-content");
                 const loadBox = document.getElementById("load-box");
+                
                 const loadingTimeout = setTimeout(() => {
                     if (!loadedSuccessfully && loader && loader.style.display !== "none") {
                         if(loadBox) loadBox.style.display = "none";
                         loader.innerHTML = `
                             <h1 class="text-2xl font-black text-red-500 tracking-tighter italic">Erro de Conexão</h1>
-                            <p class="text-zinc-400 text-sm mt-4 px-8">Os dados demoraram muito para carregar.</p>
+                            <p class="text-zinc-400 text-sm mt-4 px-8">Falha ao carregar o catálogo. Verifique sua conexão.</p>
                             <button onclick="window.location.reload()" class="mt-6 bg-[#ffA500] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs">Recarregar</button>
-                            <a href="${instaUrl}" target="_blank" class="mt-4 text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#ffA500] transition-colors">Suporte</a>
+                            <a href="${instaUrl}" target="_blank" rel="noopener noreferrer" class="mt-4 text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#ffA500] transition-colors">Suporte</a>
                         `;
                     }
                 }, 5000);
+
                 if (window.gamesData && window.gamesData.length > 0) {
                     loadedSuccessfully = true;
                     clearTimeout(loadingTimeout);
