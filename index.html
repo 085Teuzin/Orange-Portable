@@ -17,6 +17,9 @@
             .loader { width: 48px; height: 48px; border: 5px solid #111; border-bottom-color: #ffA500; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; margin: 20px 0; }
             @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
             .emoji-fix { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif; display: inline-block; }
+            #toast-container { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); z-index: 90; display: flex; flex-direction: column; gap: 8px; pointer-events: none; width: max-content; }
+            .toast-item { background: #18181b; border: 1px solid #27272a; color: white; padding: 10px 20px; border-radius: 9999px; font-size: 12px; font-weight: 600; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); opacity: 0; transform: translateY(10px); transition: all 0.2s ease; display: flex; align-items: center; gap: 6px; }
+            .toast-item.show { opacity: 1; transform: translateY(0); }
         </style>
     </head>
     <body class="bg-black text-white flex flex-col min-h-screen">
@@ -25,6 +28,8 @@
             <span id="load-box" class="loader"></span>
             <p id="load-msg" class="text-zinc-500 tracking-widest text-sm">Carregando catálogo...</p>
         </div>
+
+        <div id="toast-container"></div>
 
         <div id="app-content" class="w-full flex flex-col p-4 md:p-8 text-center opacity-0 transition-opacity duration-500">
             <header class="mb-6 relative flex flex-col items-center">
@@ -77,7 +82,6 @@
             <button id="up" aria-label="Voltar ao topo" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl hover:border-[#ffA500]">☝️</button>
         </div>
 
-        <!-- Modais -->
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
             <div id="mdCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] p-6 rounded-3xl relative overflow-y-auto flex flex-col">
                 <h2 id="mt" class="text-xl font-bold text-[#ffA500] mb-2"></h2>
@@ -85,7 +89,8 @@
                 <p id="mds" class="text-zinc-400 text-xs leading-relaxed mb-4"></p>
                 <div class="flex items-center justify-between pt-3 border-t border-zinc-800 mt-auto">
                     <span id="mcp" class="text-[10px] font-black border px-2 py-0.5 rounded tracking-tighter"></span>
-                    <div class="flex gap-4 items-center">
+                    <div class="flex gap-3 items-center">
+                        <button id="mdShare" aria-label="Compartilhar jogo" class="text-2xl active:scale-90 transition-transform emoji-fix">🔗</button>
                         <button id="mdFav" aria-label="Favoritar" class="text-2xl active:scale-90 transition-transform emoji-fix"></button>
                         <a id="mdl" href="#" target="_blank" rel="noopener noreferrer" class="text-3xl" aria-label="Baixar jogo">💾</a>
                     </div>
@@ -107,6 +112,7 @@
             <div id="genericCard" class="bg-[#111] border border-zinc-800 w-full max-w-md max-h-[75vh] flex flex-col rounded-3xl relative overflow-hidden">
                 <div class="p-6 border-b border-zinc-800 flex justify-between items-center bg-[#111]">
                     <h2 id="genericTitle" class="text-xl font-bold text-[#ffA500]"></h2>
+                    <button id="genericHeaderAction" class="hidden text-xl text-zinc-400 hover:text-white" aria-label="Ação no cabeçalho"></button>
                 </div>
                 <div id="genericSearchContainer" class="p-4 border-b border-zinc-800 hidden">
                     <input type="text" id="genericSearch" placeholder="Procurar..." class="w-full bg-zinc-900 border border-zinc-800 p-3 rounded-xl outline-none focus:border-[#ffA500]">
@@ -118,7 +124,7 @@
         <div id="modalStats" class="fixed inset-0 z-[70] bg-black/95 hidden items-center justify-center p-4">
             <div id="statsCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] flex flex-col rounded-3xl relative overflow-hidden">
                 <div class="p-6 border-b border-zinc-800 flex justify-between items-center bg-[#111]">
-                    <h2 class="text-xl font-bold text-[#ffA500] flex items-center gap-2">📊 Estatísticas do App</h2>
+                    <h2 class="text-xl font-bold text-[#ffA500] flex items-center gap-2">📊 Estatísticas</h2>
                 </div>
                 <div class="overflow-y-auto scroll-smooth p-6 space-y-5 text-left text-sm text-zinc-300">
                     <div class="grid grid-cols-2 gap-3">
@@ -134,7 +140,7 @@
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
                         <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Resumo do Catálogo</p>
                         <p>⚡ Média por jogo: <span id="stat-avg-size" class="text-white font-bold">0 MB</span></p>
-                        <p>🇧🇷 Traduzidos em PT-BR: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
+                        <p>🇧🇷 em PT-BR: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
                         <p>❤️ Seus Favoritos: <span id="stat-fav-count" class="text-white font-bold">0</span></p>
                     </div>
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
@@ -167,6 +173,9 @@
             const gs = (window.gamesData || []).filter(g => g && g.name);
             let fv = new Set();
             try { const s = JSON.parse(localStorage.getItem("fav")); if(Array.isArray(s)) fv = new Set(s); } catch(e){}
+
+            let recentGames = [];
+            try { const r = JSON.parse(localStorage.getItem("recent")); if(Array.isArray(r)) recentGames = r; } catch(e){}
             
             let at="Todos", currentPage=1, perPage=20, ord="az", debounceTimer, currentModalGame = "", loadedSuccessfully = false;
             let isTranslatedOnly = false;
@@ -198,6 +207,29 @@
                 gain.connect(audioCtx.destination);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.05);
+            }
+
+            function showToast(text) {
+                const container = document.getElementById("toast-container");
+                if(!container) return;
+                const toast = document.createElement("div");
+                toast.className = "toast-item";
+                toast.innerHTML = text;
+                container.appendChild(toast);
+                setTimeout(() => toast.classList.add("show"), 10);
+                setTimeout(() => {
+                    toast.classList.remove("show");
+                    setTimeout(() => toast.remove(), 200);
+                }, 900);
+            }
+
+            function addRecentGame(gameName) {
+                if (!gameName || gameName === ppssppStaticData.name) return;
+                recentGames = recentGames.filter(n => n !== gameName);
+                recentGames.unshift(gameName);
+                if (recentGames.length > 5) recentGames.pop();
+                try { localStorage.setItem("recent", JSON.stringify(recentGames)); } catch(e){}
+                initCategories();
             }
 
             function tryPlayAudio() {
@@ -273,16 +305,25 @@
                 if (e.key === 'Escape') closeAllModals();
             });
 
-            function openGeneric(title, items, showSearch = false) {
+            function openGeneric(title, items, showSearch = false, headerActionConfig = null) {
                 playTapSound();
                 const gt = document.getElementById("genericTitle");
                 const gc = document.getElementById("genericContent");
                 const gsCont = document.getElementById("genericSearchContainer");
                 const gsInput = document.getElementById("genericSearch");
+                const gHeaderAction = document.getElementById("genericHeaderAction");
                 if(!gt || !gc) return;
                 gt.innerText = title;
                 gsCont.style.display = showSearch ? "block" : "none";
                 
+                if (headerActionConfig) {
+                    gHeaderAction.style.display = "block";
+                    gHeaderAction.innerText = headerActionConfig.icon;
+                    gHeaderAction.onclick = headerActionConfig.action;
+                } else {
+                    gHeaderAction.style.display = "none";
+                }
+
                 const renderItems = (filtered) => {
                     gc.innerHTML = "";
                     filtered.forEach(item => {
@@ -356,6 +397,7 @@
                 } else if (navigator.clipboard) { 
                     navigator.clipboard.writeText(pixKey).catch(() => {});
                 }
+                showToast("Pix copiado");
                 btn.innerText = "✅ Chave Copiada!";
                 btn.classList.remove("bg-[#22c55e]");
                 btn.classList.add("bg-green-700");
@@ -407,7 +449,13 @@
 
             function toggleFav(n) { 
                 playTapSound();
-                if(fv.has(n)) fv.delete(n); else fv.add(n); 
+                if(fv.has(n)) {
+                    fv.delete(n);
+                    showToast("Removido 💔");
+                } else {
+                    fv.add(n);
+                    showToast("Adicionado ❤️");
+                }
                 localStorage.setItem("fav", JSON.stringify([...fv])); 
                 if(currentModalGame === n) { 
                     const fBtn = document.getElementById("mdFav");
@@ -430,6 +478,7 @@
 
                     if (at === "Todos") return true;
                     if (at === "❤️ Favoritos") return fv.has(g.name);
+                    if (at === "⏰") return recentGames.includes(g.name);
                     return g.category === at;
                 });
                 const mapped = res.map(g => ({ game: g, computedSize: pz(g.size) }));
@@ -476,7 +525,11 @@
                     card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${cleanFlag}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform emoji-fix\" aria-label=\"Favoritar\">${favIcon}</button><a href=\"${g.link || '#'}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"dl-icon text-xl\" aria-label=\"Download\">💾</a></div>`;
                     card.querySelector(".fav-btn").onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
                     card.querySelector(".dl-icon").onclick = (e) => { e.stopPropagation(); playTapSound(); };
-                    card.onclick = () => { playTapSound(); showModal(g.name, g.link, g.size); };
+                    card.onclick = () => { 
+                        playTapSound(); 
+                        addRecentGame(g.name);
+                        showModal(g.name, g.link, g.size); 
+                    };
                     ct.appendChild(card);
                 });
                 renderPagination(data.length);
@@ -508,6 +561,24 @@
                 if(mdl) { 
                     mdl.href = l || "#"; 
                     mdl.onclick = () => playTapSound(); 
+                }
+
+                const mdShare = document.getElementById("mdShare");
+                if(mdShare) {
+                    mdShare.onclick = () => {
+                        playTapSound();
+                        const shareUrl = `https://085teuzin.github.io/Orange-Portable/?game=${encodeURIComponent(n)}`;
+                        if (navigator.share) {
+                            navigator.share({
+                                title: `Orange Portable - ${n}`,
+                                text: `Confira o jogo ${n} no Orange Portable!`,
+                                url: shareUrl
+                            }).catch(() => {});
+                        } else if (navigator.clipboard) {
+                            navigator.clipboard.writeText(shareUrl).catch(() => {});
+                        }
+                        showToast("Link copiado");
+                    };
                 }
                 
                 const mdTagsContainer = document.getElementById("mdTagsContainer");
@@ -569,6 +640,7 @@
                 const f = getFiltered(); 
                 if(f.length) { 
                     const r = f[Math.floor(Math.random() * f.length)]; 
+                    addRecentGame(r.name);
                     showModal(r.name, r.link, r.size); 
                 } 
             };
@@ -600,6 +672,9 @@
                 const favCount = [...fv].filter(name => !isTranslatedOnly || window.gamesInfo?.[name]?.lang?.includes("🇧🇷")).length;
                 if(favCount > 0) list.push({n: "❤️ Favoritos", c: favCount});
 
+                const validRecent = recentGames.filter(name => gs.some(g => g.name === name) && (!isTranslatedOnly || window.gamesInfo?.[name]?.lang?.includes("🇧🇷")));
+                if(validRecent.length > 0) list.push({n: "⏰", c: validRecent.length});
+
                 cats.forEach(c => { if(counts[c]) list.push({n: c, c: counts[c]}); });
 
                 t.innerHTML = "";
@@ -607,8 +682,42 @@
                     const e = document.createElement("div"); 
                     const isSelected = item.n === at;
                     e.className = `px-5 py-2 rounded-full text-xs whitespace-nowrap cursor-pointer border transition-all ${isSelected ? "cat-selected" : "bg-zinc-900 text-zinc-500 border-zinc-800"}`;
-                    e.innerHTML = `${item.n} <span class="ml-1 italic font-bold">(${item.c})</span>`;
-                    e.onclick = () => { playTapSound(); at = item.n; currentPage = 1; initCategories(); render(); };
+                    e.innerHTML = item.n === "⏰" ? `⏰ <span class="ml-1 italic font-bold">(${item.c})</span>` : `${item.n} <span class="ml-1 italic font-bold">(${item.c})</span>`;
+                    e.onclick = () => { 
+                        playTapSound(); 
+                        if (item.n === "⏰") {
+                            const validR = recentGames.filter(name => gs.some(g => g.name === name));
+                            if (validR.length > 0) {
+                                openGeneric("⏰ Recentes", validR.map(gameName => {
+                                    const gObj = gs.find(x => x.name === gameName);
+                                    return {
+                                        label: gameName,
+                                        action: () => {
+                                            closeAllModals();
+                                            addRecentGame(gameName);
+                                            showModal(gameName, gObj ? gObj.link : "", gObj ? gObj.size : "");
+                                        }
+                                    };
+                                }), false, {
+                                    icon: "🗑️",
+                                    action: () => {
+                                        playTapSound();
+                                        recentGames = [];
+                                        localStorage.removeItem("recent");
+                                        showToast("Removido");
+                                        closeAllModals();
+                                        initCategories();
+                                        render();
+                                    }
+                                });
+                            }
+                            return;
+                        }
+                        at = item.n; 
+                        currentPage = 1; 
+                        initCategories(); 
+                        render(); 
+                    };
                     t.appendChild(e);
                 });
             }
@@ -626,6 +735,17 @@
             window.addEventListener("load", () => {
                 initCategories(); 
                 render();
+
+                const urlParams = new URLSearchParams(window.location.search);
+                const gameFromUrl = urlParams.get('game');
+                if (gameFromUrl) {
+                    const foundGame = gs.find(g => g.name === gameFromUrl);
+                    if (foundGame) {
+                        addRecentGame(foundGame.name);
+                        showModal(foundGame.name, foundGame.link, foundGame.size);
+                    }
+                }
+
                 const loader = document.getElementById("loading-screen");
                 const content = document.getElementById("app-content");
                 const loadBox = document.getElementById("load-box");
