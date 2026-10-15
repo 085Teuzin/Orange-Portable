@@ -451,7 +451,7 @@
                 playTapSound();
                 if(fv.has(n)) {
                     fv.delete(n);
-                    showToast("Removido");
+                    showToast("Removido 💔");
                 } else {
                     fv.add(n);
                     showToast("Favoritado ❤️");
@@ -713,7 +713,7 @@
                                         playTapSound();
                                         recentGames = [];
                                         localStorage.removeItem("recent");
-                                        showToast("Removido");
+                                        showToast("Limpado ✅️");
                                         closeAllModals();
                                         initCategories();
                                         render();
