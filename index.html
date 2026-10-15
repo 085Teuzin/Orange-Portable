@@ -17,9 +17,10 @@
             .loader { width: 48px; height: 48px; border: 5px solid #111; border-bottom-color: #ffA500; border-radius: 50%; display: inline-block; box-sizing: border-box; animation: rotation 1s linear infinite; margin: 20px 0; }
             @keyframes rotation { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
             .emoji-fix { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", "Android Emoji", sans-serif; display: inline-block; }
-            #toast-container { position: fixed; bottom: 85px; left: 50%; transform: translateX(-50%); z-index: 90; display: flex; flex-direction: column; gap: 8px; pointer-events: none; width: max-content; }
+            #toast-container { position: fixed; bottom: calc(85px + env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); z-index: 90; display: flex; flex-direction: column; gap: 8px; pointer-events: none; width: max-content; }
             .toast-item { background: #18181b; border: 1px solid #27272a; color: white; padding: 10px 20px; border-radius: 9999px; font-size: 12px; font-weight: 600; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); opacity: 0; transform: translateY(10px); transition: all 0.2s ease; display: flex; align-items: center; gap: 6px; }
             .toast-item.show { opacity: 1; transform: translateY(0); }
+            #up { bottom: calc(1.5rem + env(safe-area-inset-bottom)); right: 1.5rem; }
         </style>
     </head>
     <body class="bg-black text-white flex flex-col min-h-screen">
@@ -79,7 +80,7 @@
                 <p class="mt-2 opacity-70">© 2026 - Todos os Direitos Reservados</p>
             </footer>
 
-            <button id="up" aria-label="Voltar ao topo" class="fixed bottom-6 right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl hover:border-[#ffA500]">☝️</button>
+            <button id="up" aria-label="Voltar ao topo" class="fixed right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl hover:border-[#ffA500]">☝️</button>
         </div>
 
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
@@ -397,7 +398,6 @@
                 } else if (navigator.clipboard) { 
                     navigator.clipboard.writeText(pixKey).catch(() => {});
                 }
-                showToast("Pix copiado");
                 btn.innerText = "✅ Chave Copiada!";
                 btn.classList.remove("bg-[#22c55e]");
                 btn.classList.add("bg-green-700");
@@ -461,6 +461,9 @@
                     const fBtn = document.getElementById("mdFav");
                     if(fBtn) fBtn.innerText = fv.has(n) ? "❤️" : "🤍"; 
                 }
+                if (window.location.search.includes('game=')) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
                 initCategories(); 
                 render(); 
             }
@@ -478,7 +481,6 @@
 
                     if (at === "Todos") return true;
                     if (at === "❤️ Favoritos") return fv.has(g.name);
-                    if (at === "⏰") return recentGames.includes(g.name);
                     return g.category === at;
                 });
                 const mapped = res.map(g => ({ game: g, computedSize: pz(g.size) }));
@@ -568,25 +570,9 @@
                     mdShare.onclick = () => {
                         playTapSound();
                         const shareUrl = `https://085teuzin.github.io/Orange-Portable/?game=${encodeURIComponent(n)}`;
-                        
-                        const textArea = document.createElement("textarea");
-                        textArea.value = shareUrl;
-                        textArea.style.position = "fixed";
-                        textArea.style.top = "0";
-                        textArea.style.left = "0";
-                        textArea.style.opacity = "0";
-                        document.body.appendChild(textArea);
-                        textArea.focus();
-                        textArea.select();
-                        
-                        try {
-                            document.execCommand('copy');
-                            showToast("Link copiado");
-                        } catch (err) {
-                            showToast("Erro ao copiar");
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(shareUrl).catch(() => {});
                         }
-                        
-                        document.body.removeChild(textArea);
                     };
                 }
                 
@@ -713,7 +699,6 @@
                                         playTapSound();
                                         recentGames = [];
                                         localStorage.removeItem("recent");
-                                        showToast("Limpado ✅️");
                                         closeAllModals();
                                         initCategories();
                                         render();
