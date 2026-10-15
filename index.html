@@ -124,7 +124,7 @@
         <div id="modalStats" class="fixed inset-0 z-[70] bg-black/95 hidden items-center justify-center p-4">
             <div id="statsCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] flex flex-col rounded-3xl relative overflow-hidden">
                 <div class="p-6 border-b border-zinc-800 flex justify-between items-center bg-[#111]">
-                    <h2 class="text-xl font-bold text-[#ffA500] flex items-center gap-2">📊 Estatísticas</h2>
+                    <h2 class="text-xl font-bold text-[#ffA500] flex items-center gap-2">📊 Estatísticas do App</h2>
                 </div>
                 <div class="overflow-y-auto scroll-smooth p-6 space-y-5 text-left text-sm text-zinc-300">
                     <div class="grid grid-cols-2 gap-3">
@@ -140,7 +140,7 @@
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
                         <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Resumo do Catálogo</p>
                         <p>⚡ Média por jogo: <span id="stat-avg-size" class="text-white font-bold">0 MB</span></p>
-                        <p>🇧🇷 em PT-BR: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
+                        <p>🇧🇷 Traduzidos em PT-BR: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
                         <p>❤️ Seus Favoritos: <span id="stat-fav-count" class="text-white font-bold">0</span></p>
                     </div>
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
@@ -451,10 +451,10 @@
                 playTapSound();
                 if(fv.has(n)) {
                     fv.delete(n);
-                    showToast("Removido 💔");
+                    showToast("Removido");
                 } else {
                     fv.add(n);
-                    showToast("Adicionado ❤️");
+                    showToast("Favoritado ❤️");
                 }
                 localStorage.setItem("fav", JSON.stringify([...fv])); 
                 if(currentModalGame === n) { 
@@ -568,16 +568,25 @@
                     mdShare.onclick = () => {
                         playTapSound();
                         const shareUrl = `https://085teuzin.github.io/Orange-Portable/?game=${encodeURIComponent(n)}`;
-                        if (navigator.share) {
-                            navigator.share({
-                                title: `Orange Portable - ${n}`,
-                                text: `Confira o jogo ${n} no Orange Portable!`,
-                                url: shareUrl
-                            }).catch(() => {});
-                        } else if (navigator.clipboard) {
-                            navigator.clipboard.writeText(shareUrl).catch(() => {});
+                        
+                        const textArea = document.createElement("textarea");
+                        textArea.value = shareUrl;
+                        textArea.style.position = "fixed";
+                        textArea.style.top = "0";
+                        textArea.style.left = "0";
+                        textArea.style.opacity = "0";
+                        document.body.appendChild(textArea);
+                        textArea.focus();
+                        textArea.select();
+                        
+                        try {
+                            document.execCommand('copy');
+                            showToast("Link copiado");
+                        } catch (err) {
+                            showToast("Erro ao copiar");
                         }
-                        showToast("Link copiado");
+                        
+                        document.body.removeChild(textArea);
                     };
                 }
                 
