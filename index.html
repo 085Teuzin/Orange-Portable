@@ -103,9 +103,7 @@
             <div id="pixCard" class="bg-[#111] border border-[#22c55e] w-full max-w-md p-6 rounded-3xl flex flex-col items-center text-center relative">
                 <h2 class="text-2xl font-bold text-[#22c55e] mb-4">🍊 Orange Pix</h2>
                 <img src="pix.png" alt="QR Code Pix" class="w-64 h-64 object-contain rounded-2xl border border-zinc-800 mb-6 bg-white p-2">
-                <button id="btnCopyPix" class="w-full bg-[#22c55e] hover:bg-green-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 text-sm uppercase tracking-wider">
-                    📋 Copiar Pix
-                </button>
+                <button id="btnCopyPix" class="w-full bg-[#22c55e] hover:bg-green-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 text-sm uppercase tracking-wider">📋 Copiar Pix!</button>
             </div>
         </div>
 
@@ -392,13 +390,13 @@
             document.getElementById("btnCopyPix").onclick = function() {
                 playTapSound();
                 const btn = this;
-                const originalText = "📋 Copiar Chave Pix";
+                const originalText = "📋 Copiar Pix!";
                 if (window.AndroidJS?.copiarPix) { 
                     window.AndroidJS.copiarPix(pixKey); 
                 } else if (navigator.clipboard) { 
                     navigator.clipboard.writeText(pixKey).catch(() => {});
                 }
-                btn.innerText = "✅ Chave Copiada!";
+                btn.innerText = "📝 Pix Copiado!";
                 btn.classList.remove("bg-[#22c55e]");
                 btn.classList.add("bg-green-700");
                 setTimeout(() => { 
