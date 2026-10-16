@@ -1,4 +1,4 @@
-# 🍊 Orange Portable (v2.7)
+# 🍊 Orange Portable
 
 <p align="center">
   <img src="https://img.shields.io/badge/Vers%C3%A3o-v2.7-ffA500?style=for-the-badge&logo=psp&logoColor=black" alt="Versão v2.7">
