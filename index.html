@@ -27,7 +27,7 @@
         <div id="loading-screen">
             <h1 class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
             <span id="load-box" class="loader"></span>
-            <p id="load-msg" class="text-zinc-500 tracking-widest text-sm">Carregando catálogo...</p>
+            <p id="load-msg" class="text-zinc-500 tracking-widest text-sm">Carregando...</p>
         </div>
 
         <div id="toast-container"></div>
@@ -41,8 +41,8 @@
                     🔊
                 </button>
                 <h1 id="main-title" class="text-4xl font-black text-[#ffA500] tracking-tighter italic">Orange Portable</h1>
-                <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Jogos CSO otimizados para PPSSPP</h2>
-                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v2.5</span>
+                <h2 id="sub-title" class="text-sm tracking-widest opacity-50 mt-1">Games CSO for PPSSPP</h2>
+                <span class="inline-block mt-2 px-2 py-0.5 bg-zinc-900 border border-zinc-800 text-[#ffA500] text-[9px] font-bold rounded-md uppercase tracking-widest">v2.7</span>
             </header>
 
             <section class="sticky top-0 z-40 bg-black/80 backdrop-blur-md pb-4 text-left flex gap-2">
@@ -62,8 +62,8 @@
             <main id="ct" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 flex-grow text-left"></main>
             <div id="empty-state" class="hidden my-12 text-center text-zinc-500">
                 <p class="text-4xl mb-2">🍊</p>
-                <p class="font-bold text-lg text-zinc-400">Nenhum jogo encontrado</p>
-                <p class="text-xs mt-1">Tente ajustar a busca ou os filtros aplicados.</p>
+                <p class="font-bold text-lg text-zinc-400">Não tem nada aqui</p>
+                <p class="text-xs mt-1">Ajuste a busca ou os filtros.</p>
             </div>
 
             <div id="pagination" class="flex justify-center gap-2 mt-6"></div>
@@ -77,7 +77,7 @@
 
             <footer class="mt-10 mb-20 text-zinc-500 text-sm">
                 <p class="font-semibold italic">Made By: @085_Teuzinnn</p>
-                <p class="mt-2 opacity-70">© 2026 - Todos os Direitos Reservados</p>
+                <p class="mt-2 opacity-70">© 2026 - All Rights Reserved</p>
             </footer>
 
             <button id="up" aria-label="Voltar ao topo" class="fixed right-6 w-12 h-12 rounded-full hidden z-50 text-xl items-center justify-center bg-zinc-900 border border-zinc-800 shadow-xl hover:border-[#ffA500]">☝️</button>
@@ -104,7 +104,7 @@
                 <h2 class="text-2xl font-bold text-[#22c55e] mb-4">🍊 Orange Pix</h2>
                 <img src="pix.png" alt="QR Code Pix" class="w-64 h-64 object-contain rounded-2xl border border-zinc-800 mb-6 bg-white p-2">
                 <button id="btnCopyPix" class="w-full bg-[#22c55e] hover:bg-green-600 text-white font-bold py-3.5 rounded-xl transition-all active:scale-95 text-sm uppercase tracking-wider">
-                    📋 Copiar Chave Pix
+                    📋 Copiar Pix
                 </button>
             </div>
         </div>
@@ -125,7 +125,7 @@
         <div id="modalStats" class="fixed inset-0 z-[70] bg-black/95 hidden items-center justify-center p-4">
             <div id="statsCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] flex flex-col rounded-3xl relative overflow-hidden">
                 <div class="p-6 border-b border-zinc-800 flex justify-between items-center bg-[#111]">
-                    <h2 class="text-xl font-bold text-[#ffA500] flex items-center gap-2">📊 Estatísticas do App</h2>
+                    <h2 class="text-xl font-bold text-[#ffA500] flex items-center gap-2">📊 Dados Gerais</h2>
                 </div>
                 <div class="overflow-y-auto scroll-smooth p-6 space-y-5 text-left text-sm text-zinc-300">
                     <div class="grid grid-cols-2 gap-3">
@@ -454,7 +454,7 @@
                     showToast("Removido 💔");
                 } else {
                     fv.add(n);
-                    showToast("Favoritado ❤️");
+                    showToast("Favorito ❤️");
                 }
                 localStorage.setItem("fav", JSON.stringify([...fv])); 
                 if(currentModalGame === n) { 
@@ -749,7 +749,7 @@
                         if(loadBox) loadBox.style.display = "none";
                         loader.innerHTML = `
                             <h1 class="text-2xl font-black text-red-500 tracking-tighter italic">Erro de Conexão</h1>
-                            <p class="text-zinc-400 text-sm mt-4 px-8">Falha ao carregar o catálogo. Verifique sua conexão.</p>
+                            <p class="text-zinc-400 text-sm mt-4 px-8">Falha ao carregar o catálogo.</p>
                             <button onclick="window.location.reload()" class="mt-6 bg-[#ffA500] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs">Recarregar</button>
                             <a href="${instaUrl}" target="_blank" rel="noopener noreferrer" class="mt-4 text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#ffA500] transition-colors">Suporte</a>
                         `;
