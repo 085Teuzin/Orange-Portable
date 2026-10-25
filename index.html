@@ -139,7 +139,7 @@
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
                         <p class="text-zinc-500 text-xs uppercase font-bold mb-1">Resumo do Catálogo</p>
                         <p>⚡ Média por jogo: <span id="stat-avg-size" class="text-white font-bold">0 MB</span></p>
-                        <p>🇧🇷 Traduzidos em PT-BR: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
+                        <p>🇧🇷 Traduzidos: <span id="stat-ptbr-count" class="text-white font-bold">0</span></p>
                         <p>❤️ Seus Favoritos: <span id="stat-fav-count" class="text-white font-bold">0</span></p>
                     </div>
                     <div class="bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl space-y-2">
@@ -352,7 +352,7 @@
                     { label: "🔠 A-Z", action: () => setSort("az", "🔠") },
                     { label: "🔡 Z-A", action: () => setSort("za", "🔡") },
                     {
-                        label: "🇧🇷 Apenas Traduzidos",
+                        label: "🇧🇷 Traduzidos",
                         selected: isTranslatedOnly,
                         action: () => {
                             isTranslatedOnly = !isTranslatedOnly;
