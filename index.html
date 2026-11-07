@@ -85,6 +85,9 @@
 
         <div id="md" class="fixed inset-0 z-[60] bg-black/95 hidden items-center justify-center p-4">
             <div id="mdCard" class="bg-[#111] border border-[#ffA500] w-full max-w-md max-h-[75vh] p-6 rounded-3xl relative overflow-y-auto flex flex-col">
+                <div id="mdCoverContainer" class="w-full flex justify-center mb-4">
+                    <img id="mdCover" src="" alt="Capa do Jogo" class="w-32 h-44 object-cover rounded-xl border border-zinc-800 shadow-lg bg-black/50" onerror="this.style.display='none'">
+                </div>
                 <h2 id="mt" class="text-xl font-bold text-[#ffA500] mb-2"></h2>
                 <div id="mdTagsContainer" class="flex flex-wrap gap-1.5 items-center mb-3"></div>
                 <p id="mds" class="text-zinc-400 text-xs leading-relaxed mb-4"></p>
@@ -277,6 +280,10 @@
                 const match = langStr.match(/([\uD83C][\uDDE6-\uDDFF][\uD83C][\uDDE6-\uDDFF])/);
                 if (match) return match[1];
                 return langStr.replace(/[🌐🌍🌎🌏]/g, "").trim() || "🇺🇸";
+            }
+
+            function getGameCoverUrl(gameName) {
+                return `https://raw.githubusercontent.com/libretro/libretro-thumbnails/master/Sony%20-%20PlayStation%20Portable/Named_Boxarts/${encodeURIComponent(gameName)}.png`;
             }
 
             function closeAllModals() { 
@@ -518,11 +525,27 @@
                 pageData.forEach(g => {
                     const info = (window.gamesInfo && window.gamesInfo[g.name]) || { description: "Sem descrição disponível.", compat: "Boa", lang: "🇺🇸" };
                     const card = document.createElement("div");
-                    card.className = "bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex justify-between items-center cursor-pointer hover:border-[#ffA500] transition-all";
+                    card.className = "bg-zinc-900/50 border border-zinc-800 p-4 rounded-2xl flex items-center gap-4 cursor-pointer hover:border-[#ffA500] transition-all";
                     const safeName = g.name ? g.name.replace(/[<>]/g, "") : "Unknown Game";
                     const favIcon = fv.has(g.name) ? "❤️" : "🤍";
                     const cleanFlag = extractFlag(info.lang);
-                    card.innerHTML = `<div class=\"overflow-hidden flex-grow pr-2\"><h3 class=\"text-zinc-100 font-medium truncate\">${safeName}</h3><div class=\"flex gap-2 items-center mt-1\"><span class=\"text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${g.size || "0MB"}</span><span class=\"text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider\">cso</span><span class=\"text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold\">${cleanFlag}</span></div></div><div class=\"flex gap-4 items-center\"><button class=\"fav-btn text-xl active:scale-90 transition-transform emoji-fix\" aria-label=\"Favoritar\">${favIcon}</button><a href=\"${g.link || '#'}\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"dl-icon text-xl\" aria-label=\"Download\">💾</a></div>`;
+                    const coverUrl = getGameCoverUrl(g.name);
+                    
+                    card.innerHTML = `
+                        <img src="${coverUrl}" alt="${safeName}" class="w-12 h-16 object-cover rounded-lg border border-zinc-800 shrink-0 bg-black/50" onerror="this.style.display='none'">
+                        <div class="overflow-hidden flex-grow pr-2">
+                            <h3 class="text-zinc-100 font-medium truncate">${safeName}</h3>
+                            <div class="flex gap-2 items-center mt-1">
+                                <span class="text-[9px] bg-black text-emerald-400 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${g.size || "0MB"}</span>
+                                <span class="text-[9px] bg-purple-900/30 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800/50 font-bold uppercase tracking-wider">cso</span>
+                                <span class="text-[9px] bg-black text-zinc-300 px-1.5 py-0.5 rounded border border-zinc-800 font-bold">${cleanFlag}</span>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-center shrink-0">
+                            <button class="fav-btn text-xl active:scale-90 transition-transform emoji-fix" aria-label="Favoritar">${favIcon}</button>
+                            <a href="${g.link || '#'}" target="_blank" rel="noopener noreferrer" class="dl-icon text-xl" aria-label="Download">💾</a>
+                        </div>
+                    `;
                     card.querySelector(".fav-btn").onclick = (e) => { e.stopPropagation(); toggleFav(g.name); };
                     card.querySelector(".dl-icon").onclick = (e) => { e.stopPropagation(); playTapSound(); };
                     card.onclick = () => { 
@@ -554,6 +577,17 @@
                 currentModalGame = n;
                 const info = (n === ppssppStaticData.name) ? ppssppStaticInfo : (window.gamesInfo?.[n] || { description: "Sem descrição disponível.", release: "-", compat: "Boa", playtime: "-", lang: "🇺🇸" });
                 
+                const mdCover = document.getElementById("mdCover");
+                const mdCoverContainer = document.getElementById("mdCoverContainer");
+                if (mdCover && mdCoverContainer) {
+                    if (n === ppssppStaticData.name) {
+                        mdCoverContainer.style.display = "none";
+                    } else {
+                        mdCoverContainer.style.display = "flex";
+                        mdCover.src = getGameCoverUrl(n);
+                    }
+                }
+
                 document.getElementById("mt").innerText = n; 
                 document.getElementById("mds").innerText = info.description || "...";
                 
@@ -748,7 +782,7 @@
                         loader.innerHTML = `
                             <h1 class="text-2xl font-black text-red-500 tracking-tighter italic">Erro de Conexão</h1>
                             <p class="text-zinc-400 text-sm mt-4 px-8">Falha ao carregar o catálogo.</p>
-                            <button onclick="window.location.reload()" class="mt-6 bg-[#ffA500] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs">Recarregar</button>
+                            <button onclick="window.location.reload()" class="mt-6 bg-[#ffA500] text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-xs">Recarregar</h1>
                             <a href="${instaUrl}" target="_blank" rel="noopener noreferrer" class="mt-4 text-zinc-500 font-bold uppercase tracking-widest text-[10px] hover:text-[#ffA500] transition-colors">Suporte</a>
                         `;
                     }
