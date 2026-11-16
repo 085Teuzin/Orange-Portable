@@ -32,7 +32,7 @@ const gamesData = [
     { name: "Dynasty Warriors", size: "107.80 MB", link: "https://seulink.net/4M1D5fRUr", category: "🗡️ Ação / Aventura" },
     { name: "Eragon", size: "136.26 MB", link: "https://seulink.net/qt9mko8", category: "🗡️ Ação / Aventura" },
     { name: "Exit", size: "60.68 MB", link: "https://seulink.net/IPMB", category: "🎮 Plataforma / Puzzle / Família" },
-    { name: "FIFA Street 2", size: "206.33 MB", link: "https://seulink.net/elku", category: "🏆 Esportes" },
+    { name: "FIFA Street 2", size: "86.01 MB", link: "https://seulink.net/elku", category: "🏆 Esportes" },
     { name: "FlatOut - Head On", size: "356.96 MB", link: "https://seulink.digital/a58UX1", category: "🏎️ Corrida" },
     { name: "Ford Racing Off Road", size: "324.12 MB", link: "https://seulink.net/7apu3c1Gu", category: "🏎️ Corrida" },
     { name: "Gladiator Begins", size: "237.12 MB", link: "https://seulink.net/ix851vM1zT", category: "🗡️ Ação / Aventura" },
